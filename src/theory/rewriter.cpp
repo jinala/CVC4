@@ -23,6 +23,9 @@
 #include "theory/rewriter_tables.h"
 #include "util/resource_manager.h"
 
+#include "theory/bv/theory_bv_special_rewriter.h"
+
+
 using namespace std;
 
 namespace CVC4 {
@@ -40,7 +43,7 @@ static CVC4_THREADLOCAL(std::hash_set<Node, NodeHashFunction>*) s_rewriteStack =
 
 class RewriterInitializer {
   static RewriterInitializer s_rewriterInitializer;
-  RewriterInitializer() { Rewriter::init(); }
+  RewriterInitializer() { Rewriter::init();  ::CVC4::theory::bv::TheoryBVSpecialRewriter::initializeRewrites(); }
   ~RewriterInitializer() { Rewriter::shutdown(); }
 };/* class RewriterInitializer */
 
@@ -82,11 +85,11 @@ struct RewriteStackElement {
   }
 };
 
-Node Rewriter::rewrite(TNode node) throw (UnsafeInterruptException){
-  return rewriteTo(theoryOf(node), node);
+Node Rewriter::rewrite(TNode node, bool special) throw (UnsafeInterruptException){
+  return rewriteTo(theoryOf(node), node, special);
 }
 
-Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node) {
+Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node, bool special) {
 
 #ifdef CVC4_ASSERTIONS
   bool isEquality = node.getKind() == kind::EQUAL;
@@ -136,7 +139,9 @@ Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node) {
         // Rewrite until fix-point is reached
         for(;;) {
           // Perform the pre-rewrite
-          RewriteResponse response = Rewriter::callPreRewrite((TheoryId) rewriteStackTop.theoryId, rewriteStackTop.node);
+          RewriteResponse response = special?
+                Rewriter::callSpecialPreRewrite((TheoryId) rewriteStackTop.theoryId, rewriteStackTop.node) :
+                Rewriter::callPreRewrite((TheoryId) rewriteStackTop.theoryId, rewriteStackTop.node);
           // Put the rewritten node to the top of the stack
           rewriteStackTop.node = response.node;
           TheoryId newTheory = theoryOf(rewriteStackTop.node);
@@ -197,7 +202,9 @@ Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node) {
       // Done with all pre-rewriting, so let's do the post rewrite
       for(;;) {
         // Do the post-rewrite
-        RewriteResponse response = Rewriter::callPostRewrite((TheoryId) rewriteStackTop.theoryId, rewriteStackTop.node);
+        RewriteResponse response = special ?
+              Rewriter::callSpecialPostRewrite((TheoryId) rewriteStackTop.theoryId, rewriteStackTop.node):
+              Rewriter::callPostRewrite((TheoryId) rewriteStackTop.theoryId, rewriteStackTop.node);  
         // We continue with the response we got
         TheoryId newTheoryId = theoryOf(response.node);
         if (newTheoryId != (TheoryId) rewriteStackTop.theoryId || response.status == REWRITE_AGAIN_FULL) {
@@ -215,7 +222,7 @@ Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node) {
           break;
         } else if (response.status == REWRITE_DONE) {
 #ifdef CVC4_ASSERTIONS
-	  RewriteResponse r2 = Rewriter::callPostRewrite(newTheoryId, response.node);
+          RewriteResponse r2 = special ? Rewriter::callSpecialPostRewrite(newTheoryId, response.node) : Rewriter::callPostRewrite(newTheoryId, response.node);
 	  Assert(r2.node == response.node);
 #endif
 	  rewriteStackTop.node = response.node;
@@ -223,7 +230,7 @@ Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node) {
         }
         // Check for trivial rewrite loops of size 1 or 2
         Assert(response.node != rewriteStackTop.node);
-        Assert(Rewriter::callPostRewrite((TheoryId) rewriteStackTop.theoryId, response.node).node != rewriteStackTop.node);
+        Assert((special ? Rewriter::callSpecialPostRewrite((TheoryId) rewriteStackTop.theoryId, response.node) :Rewriter::callPostRewrite((TheoryId) rewriteStackTop.theoryId, response.node)).node != rewriteStackTop.node);
 	rewriteStackTop.node = response.node;
       }
       // We're done with the post rewrite, so we add to the cache
@@ -249,6 +256,24 @@ Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node) {
   Unreachable();
   return Node::null();
 }/* Rewriter::rewriteTo() */
+  
+  
+RewriteResponse Rewriter::callSpecialPreRewrite(theory::TheoryId theoryId, TNode node) {
+  switch(theoryId) {
+    case THEORY_BV: return ::CVC4::theory::bv::TheoryBVSpecialRewriter::preRewrite(node);
+    default:
+      Unreachable();
+  }
+}
+
+RewriteResponse Rewriter::callSpecialPostRewrite(theory::TheoryId theoryId, TNode node) {
+  switch(theoryId) {
+    case THEORY_BV: return ::CVC4::theory::bv::TheoryBVSpecialRewriter::postRewrite(node);
+    default:
+      Unreachable();
+  }
+}
+
 
 void Rewriter::clearCaches() {
 #ifdef CVC4_ASSERTIONS

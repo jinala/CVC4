@@ -23,11 +23,19 @@
 #include <vector>
 #include <sstream>
 #include "expr/node_manager.h"
+#include "expr/attribute.h"
 
 namespace CVC4 {
 namespace theory {
 namespace bv {
 
+namespace attr {
+  struct IdTag {};
+}/* CVC4::theory::bv::attr namespace */
+  
+typedef expr::Attribute<attr::IdTag, uint64_t> IdAttr;
+
+  
 typedef __gnu_cxx::hash_set<Node, NodeHashFunction> NodeSet;
 typedef __gnu_cxx::hash_set<TNode, TNodeHashFunction> TNodeSet;
 
@@ -332,6 +340,18 @@ inline Node mkAnd(const std::vector<Node>& conjunctions) {
 
   return conjunction;
 }/* mkAnd() */
+  
+inline Node mkSpecialFixedWidth(const std::vector<Node>& inputs, int idTag) {
+  Node node = NodeManager::currentNM()->mkNode(kind::BITVECTOR_SPECIAL_FIXED_WIDTH, inputs);
+  node.setAttribute(IdAttr(), idTag);
+  return node;
+}
+  
+inline Node mkSpecialPredicate(const std::vector<Node>& inputs, int idTag) {
+  Node node = NodeManager::currentNM()->mkNode(kind::BITVECTOR_SPECIAL_PREDICATE, inputs);
+  node.setAttribute(IdAttr(), idTag);
+  return node;
+}
 
 inline bool isZero(TNode node) {
   if (!node.isConst()) return false; 

@@ -182,6 +182,7 @@ libcvc4_la_SOURCES = \
 	theory/bv/bv_inequality_graph.h \
 	theory/bv/bv_inequality_graph.cpp \
 	theory/bv/bitblast_strategies_template.h \
+  theory/bv/bitblast_generated_encodings.h \
 	theory/bv/bitblaster_template.h \
 	theory/bv/lazy_bitblaster.cpp \
 	theory/bv/eager_bitblaster.cpp \
@@ -201,6 +202,9 @@ libcvc4_la_SOURCES = \
 	theory/bv/theory_bv_type_rules.h \
 	theory/bv/theory_bv_rewriter.h \
 	theory/bv/theory_bv_rewriter.cpp \
+  theory/bv/theory_bv_special_rewriter.h \
+  theory/bv/theory_bv_special_rewriter.cpp \
+  theory/bv/theory_bv_generated_rewriter.cpp \
 	theory/bv/cd_set_collection.h \
 	theory/bv/abstraction.h \
 	theory/bv/abstraction.cpp \

@@ -3873,6 +3873,24 @@ void SmtEnginePrivate::processAssertions() {
   }
   Trace("smt-proc") << "SmtEnginePrivate::processAssertions() : post-theory-preprocessing" << endl;
   dumpAssertions("post-theory-preprocessing", d_assertions);
+  
+  // Rewrite identified common patterns with a special node
+  Trace("smt-proc") << "SmtEnginePrivate::processAssertions() : pre-substitution-special" << endl;
+  dumpAssertions("pre-substitution-special", d_assertions);
+  
+  Chat() << "applying substitutions special ..." << endl;
+  Trace("simplify") << "SmtEnginePrivate::nonClausalSimplify(): "
+    << "applying substitutions special" << endl;
+  for (unsigned i = 0; i < d_assertions.size(); ++ i) {
+    Trace("simplify") << "applying to " << d_assertions[i] << endl;
+    spendResource(options::preprocessStep());
+    d_assertions.replace(i, Rewriter::rewrite(d_topLevelSubstitutions.apply(d_assertions[i])));
+    Trace("simplify") << "  got " << d_assertions[i] << endl;
+  }
+  Trace("smt-proc") << "SmtEnginePrivate::processAssertions() : post-substitution-special" << endl;
+  dumpAssertions("post-substitution-special", d_assertions);
+
+  
 
   // If we are using eager bit-blasting wrap assertions in fake atom so that
   // everything gets bit-blasted to internal SAT solver

@@ -23,6 +23,7 @@
 #include <vector>
 
 #include "bitblast_strategies_template.h"
+#include "bitblast_generated_encodings.h"
 #include "context/cdhashmap.h"
 #include "expr/node.h"
 #include "prop/sat_solver.h"
@@ -400,6 +401,7 @@ template <class T> void TBitblaster<T>::initTermBBStrategies() {
   d_termBBStrategies [ kind::BITVECTOR_SIGN_EXTEND ]  = DefaultSignExtendBB<T>;
   d_termBBStrategies [ kind::BITVECTOR_ROTATE_RIGHT ] = DefaultRotateRightBB<T>;
   d_termBBStrategies [ kind::BITVECTOR_ROTATE_LEFT ]  = DefaultRotateLeftBB<T>;
+  d_termBBStrategies [ kind::BITVECTOR_SPECIAL_FIXED_WIDTH] = DefaultSpecialFixedWidthBB<T>;
 }
 
 template <class T>

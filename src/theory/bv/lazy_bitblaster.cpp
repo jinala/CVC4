@@ -110,9 +110,11 @@ void TLazyBitblaster::bbAtom(TNode node) {
       std::vector<Node> atoms;
       for (unsigned i = 0; i < expansion.getNumChildren(); ++i) {
         Node normalized_i = Rewriter::rewrite(expansion[i]);
-        Node atom_i = normalized_i.getKind() != kind::CONST_BOOLEAN ?
-          Rewriter::rewrite(d_atomBBStrategies[normalized_i.getKind()](normalized_i, this)) :
-          normalized_i;
+        Rewriter::clearCaches(); // TODO: it may be ideal to have separate caches and not clear them everytime we switch
+        Node reduced_i = Rewriter::rewrite(normalized_i, true);
+        Node atom_i = reduced_i.getKind() != kind::CONST_BOOLEAN ?
+          Rewriter::rewrite(d_atomBBStrategies[reduced_i.getKind()](reduced_i, this)) :
+          reduced_i;
         atoms.push_back(atom_i);
       }
       atom_bb = utils::mkAnd(atoms);
@@ -126,9 +128,11 @@ void TLazyBitblaster::bbAtom(TNode node) {
 
   // the bitblasted definition of the atom
   Node normalized = Rewriter::rewrite(node);
-  Node atom_bb = normalized.getKind() != kind::CONST_BOOLEAN ?
-    Rewriter::rewrite(d_atomBBStrategies[normalized.getKind()](normalized, this)) :
-    normalized;
+  Rewriter::clearCaches();
+  Node reduced = Rewriter::rewrite(normalized, true);
+  Node atom_bb = reduced.getKind() != kind::CONST_BOOLEAN ?
+    Rewriter::rewrite(d_atomBBStrategies[reduced.getKind()](reduced, this)) :
+    reduced;
   // asserting that the atom is true iff the definition holds
   Node atom_definition = utils::mkNode(kind::IFF, node, atom_bb);
   storeBBAtom(node, atom_bb);

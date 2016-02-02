@@ -78,13 +78,19 @@ class Rewriter {
   /**
    * Rewrites the node using the given theory rewriter.
    */
-  static Node rewriteTo(theory::TheoryId theoryId, Node node);
+  static Node rewriteTo(theory::TheoryId theoryId, Node node, bool special = false);
 
   /** Calls the pre-rewriter for the given theory */
   static RewriteResponse callPreRewrite(theory::TheoryId theoryId, TNode node);
 
   /** Calls the post-rewriter for the given theory */
   static RewriteResponse callPostRewrite(theory::TheoryId theoryId, TNode node);
+  
+  /** Calls the special pre-rewriter for the given theory */
+  static RewriteResponse callSpecialPreRewrite(theory::TheoryId theoryId, TNode node);
+  
+  /** Calls the special post-rewriter for the given theory */
+  static RewriteResponse callSpecialPostRewrite(theory::TheoryId theoryId, TNode node);
 
   /**
    * Calls the equality-rewriter for the given theory.
@@ -107,7 +113,7 @@ public:
    * Rewrites the node using theoryOf() to determine which rewriter to
    * use on the node.
    */
-  static Node rewrite(TNode node) throw (UnsafeInterruptException);
+  static Node rewrite(TNode node, bool special = false) throw (UnsafeInterruptException);
 
   /**
    * Garbage collects the rewrite caches.

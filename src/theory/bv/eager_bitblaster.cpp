@@ -84,9 +84,11 @@ void EagerBitblaster::bbAtom(TNode node) {
 
   // the bitblasted definition of the atom
   Node normalized = Rewriter::rewrite(node);
-  Node atom_bb = normalized.getKind() != kind::CONST_BOOLEAN ?
-      Rewriter::rewrite(d_atomBBStrategies[normalized.getKind()](normalized, this)) :
-      normalized;
+  Rewriter::clearCaches();
+  Node reduced = Rewriter::rewrite(normalized, true);
+  Node atom_bb = reduced.getKind() != kind::CONST_BOOLEAN ?
+      Rewriter::rewrite(d_atomBBStrategies[reduced.getKind()](reduced, this)) :
+      reduced;
   // asserting that the atom is true iff the definition holds
   Node atom_definition = utils::mkNode(kind::IFF, node, atom_bb);
 
