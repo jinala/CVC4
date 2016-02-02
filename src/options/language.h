@@ -139,6 +139,7 @@ enum CVC4_PUBLIC Language {
 
   /** The AST output language */
   LANG_AST = 10,
+  LANG_DAG,
   /** The CVC3-compatibility output language */
   LANG_CVC3,
 

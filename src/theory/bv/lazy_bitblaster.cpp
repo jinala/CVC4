@@ -26,11 +26,15 @@
 #include "theory/rewriter.h"
 #include "theory/theory_model.h"
 #include "theory_bv_utils.h"
+#include "options/language.h" // for LANG_AST
+#include "printer/printer.h"
+#include <fstream>
 
 namespace CVC4 {
 namespace theory {
 namespace bv {
 
+int fileId = 0;
 
 TLazyBitblaster::TLazyBitblaster(context::Context* c, bv::TheoryBV* bv,
                                  const std::string name, bool emptyNotify)
@@ -91,7 +95,15 @@ void TLazyBitblaster::bbAtom(TNode node) {
 
   // make sure it is marked as an atom
   addAtom(node);
-
+  std::ofstream outFile;
+  std::string outFileName = "example" + std::to_string(fileId++ ) + ".txt";
+  outFile.open(outFileName);
+  if (!outFile.is_open()) {
+    Chat() << "File cannot be opened" << std::endl;
+    assert(false);
+  }
+  Printer::getPrinter(::CVC4::language::output::LANG_DAG)->toStream(outFile, node, -1, true, 1);
+  outFile.close();
   Debug("bitvector-bitblast") << "Bitblasting node " << node <<"\n";
   ++d_statistics.d_numAtoms;
 

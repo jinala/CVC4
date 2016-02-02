@@ -68,6 +68,8 @@ libcvc4_la_SOURCES = \
 	printer/dagification_visitor.cpp \
 	printer/ast/ast_printer.h \
 	printer/ast/ast_printer.cpp \
+  printer/dag/dag_printer.h \
+  printer/dag/dag_printer.cpp \
 	printer/smt1/smt1_printer.h \
 	printer/smt1/smt1_printer.cpp \
 	printer/smt2/smt2_printer.h \

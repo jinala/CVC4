@@ -24,6 +24,7 @@
 #include "printer/smt1/smt1_printer.h"
 #include "printer/smt2/smt2_printer.h"
 #include "printer/tptp/tptp_printer.h"
+#include "printer/dag/dag_printer.h"
 
 using namespace std;
 
@@ -61,6 +62,9 @@ Printer* Printer::makePrinter(OutputLanguage lang) throw() {
 
   case LANG_CVC3:
     return new printer::cvc::CvcPrinter(/* cvc3-mode = */ true);
+  
+  case LANG_DAG:
+    return new printer::dag::DagPrinter();
 
   default:
     Unhandled(lang);
