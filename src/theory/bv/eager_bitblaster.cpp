@@ -17,6 +17,7 @@
 #include "cvc4_private.h"
 
 #include "options/bv_options.h"
+#include "options/main_options.h"
 #include "prop/cnf_stream.h"
 #include "prop/sat_solver_factory.h"
 #include "smt/smt_statistics_registry.h"
@@ -85,7 +86,12 @@ void EagerBitblaster::bbAtom(TNode node) {
   // the bitblasted definition of the atom
   Node normalized = Rewriter::rewrite(node);
   Rewriter::clearCaches();
-  Node reduced = Rewriter::rewrite(normalized, true);
+  Node reduced;
+  if (options::doOptimization()) {
+    reduced = Rewriter::rewrite(normalized, true);
+  } else {
+    reduced = normalized;
+  }
   Node atom_bb = reduced.getKind() != kind::CONST_BOOLEAN ?
       Rewriter::rewrite(d_atomBBStrategies[reduced.getKind()](reduced, this)) :
       reduced;

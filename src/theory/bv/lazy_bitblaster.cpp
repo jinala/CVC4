@@ -16,7 +16,9 @@
 
 #include "bitblaster_template.h"
 #include "cvc4_private.h"
+#include "options/main_options.h"
 #include "options/bv_options.h"
+#include "options/base_options.h"
 #include "prop/cnf_stream.h"
 #include "prop/sat_solver.h"
 #include "prop/sat_solver_factory.h"
@@ -95,15 +97,17 @@ void TLazyBitblaster::bbAtom(TNode node) {
 
   // make sure it is marked as an atom
   addAtom(node);
-  std::ofstream outFile;
-  std::string outFileName = "example" + std::to_string(fileId++ ) + ".txt";
-  outFile.open(outFileName);
-  if (!outFile.is_open()) {
-    Chat() << "File cannot be opened" << std::endl;
-    assert(false);
+  if (options::printDags()) {
+    std::ofstream outFile;
+    std::string outFileName = options::fileName() + "_bv" +  std::to_string(fileId++ ) + ".txt";
+    outFile.open(outFileName);
+    if (!outFile.is_open()) {
+      Chat() << "File cannot be opened" << std::endl;
+      assert(false);
+    }
+    Printer::getPrinter(::CVC4::language::output::LANG_DAG)->toStream(outFile, node, 0, true, 1);
+    outFile.close();
   }
-  Printer::getPrinter(::CVC4::language::output::LANG_DAG)->toStream(outFile, node, -1, true, 1);
-  outFile.close();
   Debug("bitvector-bitblast") << "Bitblasting node " << node <<"\n";
   ++d_statistics.d_numAtoms;
 
@@ -123,7 +127,12 @@ void TLazyBitblaster::bbAtom(TNode node) {
       for (unsigned i = 0; i < expansion.getNumChildren(); ++i) {
         Node normalized_i = Rewriter::rewrite(expansion[i]);
         Rewriter::clearCaches(); // TODO: it may be ideal to have separate caches and not clear them everytime we switch
-        Node reduced_i = Rewriter::rewrite(normalized_i, true);
+        Node reduced_i;
+        if (options::doOptimization()) {
+          reduced_i = Rewriter::rewrite(normalized_i, true);
+        } else {
+          reduced_i = normalized_i;
+        }
         Node atom_i = reduced_i.getKind() != kind::CONST_BOOLEAN ?
           Rewriter::rewrite(d_atomBBStrategies[reduced_i.getKind()](reduced_i, this)) :
           reduced_i;
@@ -141,7 +150,13 @@ void TLazyBitblaster::bbAtom(TNode node) {
   // the bitblasted definition of the atom
   Node normalized = Rewriter::rewrite(node);
   Rewriter::clearCaches();
-  Node reduced = Rewriter::rewrite(normalized, true);
+  Node reduced;
+  if (options::doOptimization()) {
+    reduced = Rewriter::rewrite(normalized, true);
+  } else {
+    reduced = normalized;
+  }
+
   Node atom_bb = reduced.getKind() != kind::CONST_BOOLEAN ?
     Rewriter::rewrite(d_atomBBStrategies[reduced.getKind()](reduced, this)) :
     reduced;

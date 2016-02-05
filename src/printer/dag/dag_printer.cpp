@@ -26,6 +26,7 @@
 #include "smt_util/command.h"
 #include "smt_util/node_visitor.h"
 #include "theory/substitutions.h"
+#include "theory/theory.h"
 
 
 
@@ -34,7 +35,7 @@ namespace printer {
 namespace dag {
 
 void DagPrinter::toStream(std::ostream& out, TNode n,
-                          int toDepth, bool types, size_t dag) const throw() {
+                          int onlyBool, bool types, size_t dag) const throw() {
   Chat() << n << endl;
   int nextId = 1;
   map<string, int> nodesMap;
@@ -47,7 +48,7 @@ void DagPrinter::toStream(std::ostream& out, TNode n,
       for(theory::SubstitutionMap::const_iterator i = lets.begin();
           i != lets.end();
           ++i) {
-        int node_id = printDag(out, (*i).first, toDepth, types, nextId, nodesMap);
+        int node_id = printDag(out, (*i).first, onlyBool, types, nextId, nodesMap);
         string s;
         (*i).second.getAttribute(expr::VarNameAttr(), s);
         nodesMap[s] = node_id;
@@ -55,9 +56,9 @@ void DagPrinter::toStream(std::ostream& out, TNode n,
       }
     }
     Node body = dv.getDagifiedBody();
-    printDag(out, body, toDepth, types, nextId, nodesMap);
+    printDag(out, body, onlyBool, types, nextId, nodesMap);
   } else {
-    printDag(out, n, toDepth, types, nextId, nodesMap);
+    printDag(out, n, onlyBool, types, nextId, nodesMap);
   }
 }
 
@@ -98,7 +99,7 @@ static void printBvParameterizedOp(std::ostream& out, TNode n) throw() {
 }
 
 int DagPrinter::printDag(std::ostream& out, TNode n,
-                         int toDepth, bool types, int& nextId, map<string, int>& nodesMap) const throw() {
+                         int onlyBool, bool types, int& nextId, map<string, int>& nodesMap) const throw() {
   // null
   if(n.getKind() == kind::NULL_EXPR) {
     out << nextId << " NULL" << "\n";
@@ -120,6 +121,20 @@ int DagPrinter::printDag(std::ostream& out, TNode n,
     out << "\n";
 
     return nextId++;
+  }
+  if (onlyBool == 1) {
+    if (theory::Theory::theoryOf(theory::THEORY_OF_TYPE_BASED, n) != theory::THEORY_BOOL) {
+      // Make it a src node
+      out << nextId << " var_" << n.getId();
+      if(types) {
+        // print the whole type, but not *its* type
+        out << " ";
+        n.getType().toStream(out, language::output::LANG_DAG);
+      }
+      out << "\n";
+      
+      return nextId++;
+    }
   }
   if(n.getMetaKind() == kind::metakind::CONSTANT) {
     switch(n.getKind()) {
@@ -194,7 +209,7 @@ int DagPrinter::printDag(std::ostream& out, TNode n,
             }
           }
         }
-        int node_id = printDag(out, *i, toDepth < 0 ? toDepth : toDepth - 1, types, nextId, nodesMap);
+        int node_id = printDag(out, *i, onlyBool, types, nextId, nodesMap);
         parent_ids.push_back(node_id);
       }
       

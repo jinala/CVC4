@@ -111,6 +111,8 @@ using namespace CVC4::theory;
 namespace CVC4 {
 
 namespace smt {
+  
+int fileId = 0;
 
 /** Useful for counting the number of recursive calls. */
 class ScopeCounter {
@@ -3931,6 +3933,17 @@ void SmtEnginePrivate::processAssertions() {
     TimerStat::CodeTimer codeTimer(d_smt.d_stats->d_cnfConversionTime);
     for (unsigned i = 0; i < d_assertions.size(); ++ i) {
       Chat() << "+ " << d_assertions[i] << std::endl;
+      if (options::printDags()) {
+        std::ofstream outFile;
+        std::string outFileName = options::fileName() + "_bv_2_" +  std::to_string(fileId++ ) + ".txt";
+        outFile.open(outFileName);
+        if (!outFile.is_open()) {
+          Chat() << "File cannot be opened" << std::endl;
+          assert(false);
+        }
+        Printer::getPrinter(::CVC4::language::output::LANG_DAG)->toStream(outFile, d_assertions[i], 1, true, 1);
+        outFile.close();
+      }
       d_smt.d_propEngine->assertFormula(d_assertions[i]);
     }
   }

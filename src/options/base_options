@@ -80,6 +80,7 @@
 module BASE "options/base_options.h" Base
 
 option binary_name std::string
+expert-option fileName --file-name std::string :default ""
 
 option in std::istream* :default &std::cin :include <iosfwd>
 option out std::ostream* :default &std::cout :include <iosfwd>

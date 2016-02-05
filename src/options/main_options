@@ -60,4 +60,10 @@ expert-option tearDownIncremental : --tear-down-incremental int :default 0
 expert-option waitToJoin --wait-to-join bool :default true
  wait for other threads to join before quitting
 
+expert-option printDags --print-dags bool :default false
+  print dags for sampling
+  
+expert-option doOptimization --do-optimization bool :default false
+  use optimized encodings
+
 endmodule
