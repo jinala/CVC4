@@ -24,6 +24,7 @@
 #include "util/resource_manager.h"
 
 #include "theory/bv/theory_bv_special_rewriter.h"
+#include "theory/booleans/theory_bool_special_rewriter.h"
 
 
 using namespace std;
@@ -43,7 +44,11 @@ static CVC4_THREADLOCAL(std::hash_set<Node, NodeHashFunction>*) s_rewriteStack =
 
 class RewriterInitializer {
   static RewriterInitializer s_rewriterInitializer;
-  RewriterInitializer() { Rewriter::init();  ::CVC4::theory::bv::TheoryBVSpecialRewriter::initializeRewrites(); }
+  RewriterInitializer() {
+    Rewriter::init();
+    ::CVC4::theory::bv::TheoryBVSpecialRewriter::initializeRewrites();
+    ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::initializeRewrites();
+  }
   ~RewriterInitializer() { Rewriter::shutdown(); }
 };/* class RewriterInitializer */
 
@@ -261,16 +266,18 @@ Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node, bool special) {
 RewriteResponse Rewriter::callSpecialPreRewrite(theory::TheoryId theoryId, TNode node) {
   switch(theoryId) {
     case THEORY_BV: return ::CVC4::theory::bv::TheoryBVSpecialRewriter::preRewrite(node);
+    case THEORY_BOOL: return ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::preRewrite(node);
     default:
-      Unreachable();
+      return RewriteResponse(REWRITE_DONE, node);
   }
 }
 
 RewriteResponse Rewriter::callSpecialPostRewrite(theory::TheoryId theoryId, TNode node) {
   switch(theoryId) {
     case THEORY_BV: return ::CVC4::theory::bv::TheoryBVSpecialRewriter::postRewrite(node);
+    case THEORY_BOOL: return ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::postRewrite(node);
     default:
-      Unreachable();
+      return RewriteResponse(REWRITE_DONE, node);
   }
 }
 

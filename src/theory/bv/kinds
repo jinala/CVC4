@@ -76,8 +76,8 @@ operator BITVECTOR_REDAND 1 "bit-vector redand"
 operator BITVECTOR_EAGER_ATOM 1 "formula to be treated as a bv atom via eager bit-blasting (internal-only symbol)"
 operator BITVECTOR_ACKERMANIZE_UDIV 1 "term to be treated as a variable; used for eager bit-blasting Ackermann expansion of bvudiv (internal-only symbol)"
 operator BITVECTOR_ACKERMANIZE_UREM 1 "term to be treated as a variable; used for eager bit-blasting Ackermann expansion of bvurem (internal-only symbol)"
-operator BITVECTOR_SPECIAL_FIXED_WIDTH 2 "Operator to denote special fixed width nodes (internal-only symbol)"
-operator BITVECTOR_SPECIAL_PREDICATE 2 "Operator to denote special predicate nodes (internal-only symbol)"
+operator BITVECTOR_SPECIAL_FIXED_WIDTH 2: "Operator to denote special fixed width nodes (internal-only symbol)"
+operator BITVECTOR_SPECIAL_PREDICATE 2: "Operator to denote special predicate nodes (internal-only symbol)"
 
 
 constant BITVECTOR_BITOF_OP \

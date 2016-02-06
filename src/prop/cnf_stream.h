@@ -321,6 +321,7 @@ private:
   SatLiteral handleIte(TNode node);
   SatLiteral handleAnd(TNode node);
   SatLiteral handleOr(TNode node);
+  SatLiteral handleSpecial(TNode spNode);
 
   void convertAndAssertAnd(TNode node, bool negated, ProofRule proof_id);
   void convertAndAssertOr(TNode node, bool negated, ProofRule proof_id);

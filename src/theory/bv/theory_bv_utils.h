@@ -353,6 +353,12 @@ inline Node mkSpecialPredicate(const std::vector<Node>& inputs, int idTag) {
   return node;
 }
 
+inline Node mkSpecialBool(const std::vector<Node>& inputs, int idTag) {
+  Node node = NodeManager::currentNM()->mkNode(kind::SPECIAL_BOOL, inputs);
+  node.setAttribute(IdAttr(), idTag);
+  return node;
+}
+  
 inline bool isZero(TNode node) {
   if (!node.isConst()) return false; 
   return node == utils::mkConst(utils::getSize(node), 0u); 

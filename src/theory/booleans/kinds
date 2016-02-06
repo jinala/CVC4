@@ -34,6 +34,7 @@ operator IFF 2 "logical equivalence (exactly two parameters)"
 operator IMPLIES 2 "logical implication (exactly two parameters)"
 operator OR 2: "logical or (N-ary)"
 operator XOR 2 "exclusive or (exactly two parameters)"
+operator SPECIAL_BOOL 2: "Special node for optimal encoding (N-ary)"
 operator ITE 3 "if-then-else, used for both Boolean and term ITE constructs; first parameter is (Boolean-sorted) condition, second is 'then', third is 'else' and these two parameters must have same base sort"
 
 typerule CONST_BOOLEAN ::CVC4::theory::boolean::BooleanTypeRule
@@ -45,5 +46,6 @@ typerule IMPLIES ::CVC4::theory::boolean::BooleanTypeRule
 typerule OR ::CVC4::theory::boolean::BooleanTypeRule
 typerule XOR ::CVC4::theory::boolean::BooleanTypeRule
 typerule ITE ::CVC4::theory::boolean::IteTypeRule
+typerule SPECIAL_BOOL ::CVC4::theory::boolean::BooleanTypeRule
 
 endtheory

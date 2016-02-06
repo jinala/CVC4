@@ -32,6 +32,7 @@
 #include "smt_util/command.h"
 #include "theory/theory.h"
 #include "theory/theory_engine.h"
+#include "theory/booleans/bool_generated_encodings.h"
 
 using namespace std;
 using namespace CVC4::kind;
@@ -417,6 +418,13 @@ SatLiteral TseitinCnfStream::handleNot(TNode notNode) {
 
   return notLit;
 }
+  
+SatLiteral TseitinCnfStream::handleSpecial(TNode spNode) {
+  Assert(!hasLiteral(spNode), "Atom already mapped!");
+  Node out = theory::booleans::defaultSpecial(spNode, this);
+  SatLiteral lit = toCNF(out);
+  return lit;
+}
 
 SatLiteral TseitinCnfStream::handleIte(TNode iteNode) {
   Assert(iteNode.getKind() == ITE);
@@ -489,6 +497,9 @@ SatLiteral TseitinCnfStream::toCNF(TNode node, bool negated) {
     case AND:
       nodeLit = handleAnd(node);
       break;
+    case SPECIAL_BOOL:
+      nodeLit = handleSpecial(node);
+        break;
     case EQUAL:
       if(node[0].getType().isBoolean()) {
         // normally this is an IFF, but EQUAL is possible with pseudobooleans

@@ -3892,8 +3892,6 @@ void SmtEnginePrivate::processAssertions() {
   Trace("smt-proc") << "SmtEnginePrivate::processAssertions() : post-substitution-special" << endl;
   dumpAssertions("post-substitution-special", d_assertions);
 
-  
-
   // If we are using eager bit-blasting wrap assertions in fake atom so that
   // everything gets bit-blasted to internal SAT solver
   if (options::bitblastMode() == theory::bv::BITBLAST_MODE_EAGER) {
@@ -3931,6 +3929,7 @@ void SmtEnginePrivate::processAssertions() {
   {
     Chat() << "converting to CNF..." << endl;
     TimerStat::CodeTimer codeTimer(d_smt.d_stats->d_cnfConversionTime);
+    Rewriter::clearCaches();
     for (unsigned i = 0; i < d_assertions.size(); ++ i) {
       Chat() << "+ " << d_assertions[i] << std::endl;
       if (options::printDags()) {
@@ -3944,7 +3943,11 @@ void SmtEnginePrivate::processAssertions() {
         Printer::getPrinter(::CVC4::language::output::LANG_DAG)->toStream(outFile, d_assertions[i], 1, true, 1);
         outFile.close();
       }
-      d_smt.d_propEngine->assertFormula(d_assertions[i]);
+      Node n = d_assertions[i];
+      if (options::doOptimization()) {
+        n = Rewriter::rewrite(n, true);
+      }
+      d_smt.d_propEngine->assertFormula(n);
     }
   }
 
