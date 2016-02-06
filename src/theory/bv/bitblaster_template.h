@@ -23,7 +23,6 @@
 #include <vector>
 
 #include "bitblast_strategies_template.h"
-#include "bitblast_generated_encodings.h"
 #include "context/cdhashmap.h"
 #include "expr/node.h"
 #include "prop/sat_solver.h"
@@ -102,6 +101,7 @@ public:
   virtual T getBBAtom(TNode atom) const = 0;
   virtual bool hasBBAtom(TNode atom) const = 0;
   virtual void storeBBAtom(TNode atom, T atom_bb) = 0;
+  virtual CVC4::prop::CnfStream* getCnfStream() = 0;
 
 
   bool hasBBTerm(TNode node) const;
@@ -168,6 +168,7 @@ class TLazyBitblaster :  public TBitblaster<Node> {
   Node getModelFromSatSolver(TNode a, bool fullModel);
 
 public:
+  CVC4::prop::CnfStream* getCnfStream() { return d_cnfStream; }
   void bbTerm(TNode node, Bits&  bits);
   void bbAtom(TNode node);
   Node getBBAtom(TNode atom) const;
@@ -269,7 +270,7 @@ class EagerBitblaster : public TBitblaster<Node> {
 public:
   EagerBitblaster(theory::bv::TheoryBV* theory_bv);
   ~EagerBitblaster();
-
+  CVC4::prop::CnfStream* getCnfStream() { return d_cnfStream; }
   void addAtom(TNode atom);
   void makeVariable(TNode node, Bits& bits);
   void bbTerm(TNode node, Bits&  bits);
@@ -305,7 +306,6 @@ class AigBitblaster : public TBitblaster<Abc_Obj_t*> {
   NodeAigMap d_nodeToAigInput;
   // the thing we are checking for sat
   Abc_Obj_t* d_aigOutputNode;
-
   void addAtom(TNode atom);
   void simplifyAig();
   void storeBBAtom(TNode atom, Abc_Obj_t* atom_bb);
@@ -322,7 +322,7 @@ class AigBitblaster : public TBitblaster<Abc_Obj_t*> {
 public:
   AigBitblaster();
   ~AigBitblaster();
-
+  CVC4::prop::CnfStream* getCnfStream() { return NULL; }
   void makeVariable(TNode node, Bits& bits);
   void bbTerm(TNode node, Bits&  bits);
   void bbAtom(TNode node);
@@ -364,6 +364,7 @@ template <class T> void TBitblaster<T>::initAtomBBStrategies() {
   d_atomBBStrategies [ kind::BITVECTOR_SLE ]   = DefaultSleBB<T>;
   d_atomBBStrategies [ kind::BITVECTOR_SGT ]   = DefaultSgtBB<T>;
   d_atomBBStrategies [ kind::BITVECTOR_SGE ]   = DefaultSgeBB<T>;
+  d_atomBBStrategies [ kind::BITVECTOR_SPECIAL_PREDICATE] = DefaultSpecialPredicateBB<T>;
 }
 
 template <class T> void TBitblaster<T>::initTermBBStrategies() {

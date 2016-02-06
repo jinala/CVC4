@@ -21,6 +21,7 @@
 #include "expr/node.h"
 #include "theory/bv/bitblast_utils.h"
 #include "theory/bv/theory_bv_utils.h"
+#include "theory/bv/bitblast_generated_encodings.h"
 #include <ostream>
 #include <cmath>
 namespace CVC4 {
@@ -820,6 +821,28 @@ void DefaultRotateLeftBB (TNode node, std::vector<T>& bits, TBitblaster<T>* bb) 
                      << node.getKind() << "\n";
   Unimplemented(); 
 }
+
+template <class T>
+void DefaultSpecialFixedWidthBB(TNode node, std::vector<T>& res, TBitblaster<T>* bb) {
+  std::vector<T> mval, fval;
+  bb->bbTerm(node[0], mval);
+  bb->bbTerm(node[1], fval);
+  Assert(mval.size() == fval.size());
+  int enc_id = node.getAttribute(IdAttr());
+  optimalEncodingFixedWidth(enc_id, mval, fval, res, bb->getCnfStream());
+}
+  
+template <class T>
+T DefaultSpecialPredicateBB(TNode node, TBitblaster<T>* bb) {
+  std::vector<T> mval, fval;
+  bb->bbTerm(node[0], mval);
+  bb->bbTerm(node[1], fval);
+  Assert(mval.size() == fval.size());
+  int enc_id = node.getAttribute(IdAttr());
+  return optimalEncodingPredicate(enc_id, mval, fval, bb->getCnfStream());
+}
+
+  
 
 
 }
