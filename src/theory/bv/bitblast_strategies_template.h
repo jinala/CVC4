@@ -828,8 +828,11 @@ void DefaultSpecialFixedWidthBB(TNode node, std::vector<T>& res, TBitblaster<T>*
   bb->bbTerm(node[0], mval);
   bb->bbTerm(node[1], fval);
   Assert(mval.size() == fval.size());
+  std::vector<std::vector<T> > inputs;
+  inputs.push_back(mval);
+  inputs.push_back(fval);
   int enc_id = node.getAttribute(IdAttr());
-  optimalEncodingFixedWidth(enc_id, mval, fval, res, bb->getCnfStream());
+  optimalEncodingFixedWidth(enc_id, inputs, res, bb->getCnfStream());
 }
   
 template <class T>
@@ -839,7 +842,10 @@ T DefaultSpecialPredicateBB(TNode node, TBitblaster<T>* bb) {
   bb->bbTerm(node[1], fval);
   Assert(mval.size() == fval.size());
   int enc_id = node.getAttribute(IdAttr());
-  return optimalEncodingPredicate(enc_id, mval, fval, bb->getCnfStream());
+  std::vector<std::vector<T> > inputs;
+  inputs.push_back(mval);
+  inputs.push_back(fval);
+  return optimalEncodingPredicate(enc_id, inputs, bb->getCnfStream());
 }
 
   
