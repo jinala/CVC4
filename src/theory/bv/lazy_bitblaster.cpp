@@ -99,7 +99,9 @@ void TLazyBitblaster::bbAtom(TNode node) {
   addAtom(node);
   if (options::printDags()) {
     std::ofstream outFile;
-    std::string outFileName = options::fileName() + "_bv" +  std::to_string(fileId++ ) + ".txt";
+    std::stringstream ss;
+    ss << options::fileName() << "_bv" << (fileId++) << ".txt";
+    std::string outFileName = ss.str();
     outFile.open(outFileName);
     if (!outFile.is_open()) {
       Chat() << "File cannot be opened" << std::endl;

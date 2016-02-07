@@ -21,7 +21,9 @@ void inline optimalEncodingFixedWidth(int enc_id, const std::vector<std::vector<
     std::vector<Node> in1 = inputs[1];
 
     for (int i = 0; i < in0.size(); i++) {
-      out.push_back(nm->mkSkolem("out_"+std::to_string(i), nm->booleanType())); 
+      std::stringstream ss;
+      ss << "out_" << i;
+      out.push_back(nm->mkSkolem(ss.str(), nm->booleanType()));
     }
     Node true_n = nm->mkConst<bool>(true);
     Node false_n = nm->mkConst<bool>(false);
@@ -46,7 +48,9 @@ void inline optimalEncodingFixedWidth(int enc_id, const std::vector<std::vector<
     }
     else
     {
-          tt_3 = nm->mkSkolem("temp_3_"+std::to_string(k), nm->booleanType());
+          std::stringstream ss;
+          ss << "temp_3_" << k;
+          tt_3 = nm->mkSkolem(ss.str(), nm->booleanType());
           neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
     }
         Node tt_4;
@@ -58,7 +62,10 @@ void inline optimalEncodingFixedWidth(int enc_id, const std::vector<std::vector<
     }
     else
     {
-          tt_4 = nm->mkSkolem("temp_4_"+std::to_string(k), nm->booleanType());
+          std::stringstream ss;
+          ss << "temp_4_" << k;
+      
+          tt_4 = nm->mkSkolem(ss.str(), nm->booleanType());
           neg_tt_4 = nm->mkNode(kind::NOT, tt_4);
     }
 
@@ -86,7 +93,9 @@ void inline optimalEncodingFixedWidth(int enc_id, const std::vector<std::vector<
     std::vector<Node> in1 = inputs[1];
 
     for (int i = 0; i < in0.size(); i++) {
-      out.push_back(nm->mkSkolem("out_"+std::to_string(i), nm->booleanType())); 
+      std::stringstream ss;
+      ss << "out_" << i;
+      out.push_back(nm->mkSkolem(ss.str(), nm->booleanType()));
     }
     // Begin iterator
     for (int k = 0; k < in0.size(); k++) {
@@ -144,7 +153,10 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     }
     else
     {
-          tt_2 = nm->mkSkolem("temp_2_"+std::to_string(k), nm->booleanType());
+      std::stringstream ss;
+      ss << "temp_2_" << k;
+      
+          tt_2 = nm->mkSkolem(ss.str(), nm->booleanType());
           neg_tt_2 = nm->mkNode(kind::NOT, tt_2);
     }
         Node tt_3;
@@ -156,7 +168,10 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     }
     else
     {
-          tt_3 = nm->mkSkolem("temp_3_"+std::to_string(k), nm->booleanType());
+      std::stringstream ss;
+      ss << "temp_3_" << k;
+      
+          tt_3 = nm->mkSkolem(ss.str(), nm->booleanType());
           neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
     }
 

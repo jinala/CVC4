@@ -3934,7 +3934,10 @@ void SmtEnginePrivate::processAssertions() {
       Chat() << "+ " << d_assertions[i] << std::endl;
       if (options::printDags()) {
         std::ofstream outFile;
-        std::string outFileName = options::fileName() + "_bv_2_" +  std::to_string(fileId++ ) + ".txt";
+        std::stringstream ss;
+        ss << options::fileName() << "_bv_2_" <<  (fileId++ ) << ".txt";
+        
+        std::string outFileName = ss.str();
         outFile.open(outFileName);
         if (!outFile.is_open()) {
           Chat() << "File cannot be opened" << std::endl;
