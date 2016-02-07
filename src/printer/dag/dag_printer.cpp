@@ -111,7 +111,7 @@ int DagPrinter::printDag(std::ostream& out, TNode n,
     if(n.getAttribute(expr::VarNameAttr(), s)) {
       out << nextId << " S " << s;
     } else {
-      out << nextId << " var_" << n.getId();
+      out << nextId << " S var_" << n.getId();
     }
     if(types) {
       // print the whole type, but not *its* type
@@ -125,7 +125,7 @@ int DagPrinter::printDag(std::ostream& out, TNode n,
   if (onlyBool == 1) {
     if (theory::Theory::theoryOf(theory::THEORY_OF_TYPE_BASED, n) != theory::THEORY_BOOL) {
       // Make it a src node
-      out << nextId << " var_" << n.getId();
+      out << nextId << " S var_" << n.getId();
       if(types) {
         // print the whole type, but not *its* type
         out << " ";
