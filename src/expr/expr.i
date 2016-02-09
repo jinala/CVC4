@@ -152,6 +152,9 @@ namespace CVC4 {
 %template(getConstRegExp) CVC4::Expr::getConst<CVC4::RegExp>;
 %template(getConstEmptySet) CVC4::Expr::getConst<CVC4::EmptySet>;
 %template(getConstBoolean) CVC4::Expr::getConst<bool>;
+%template(getConstSpecialBool) CVC4::Expr::getConst<CVC4::SpecialBool>;
+%template(getConstBitVectorSpecialFixedWidth) CVC4::Expr::getConst<CVC4::BitVectorSpecialFixedWidth>;
+%template(getConstBitVectorSpecialPredicate) CVC4::Expr::getConst<CVC4::BitVectorSpecialPredicate>;
 
 #ifdef SWIGJAVA
 

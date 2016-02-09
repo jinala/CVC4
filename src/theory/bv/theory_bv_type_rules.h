@@ -94,6 +94,27 @@ public:
   }
 };/* class BitVectorFixedWidthTypeRule */
 
+class BitVectorSpecialPredicateTypeRule {
+public:
+  inline static TypeNode computeType(NodeManager* nodeManager, TNode n, bool check)
+      throw (TypeCheckingExceptionPrivate, AssertionException) {
+    TNode::iterator it = n.begin();
+    TypeNode t = (*it).getType(check);
+    if( check ) {
+      if (!t.isBitVector()) {
+        throw TypeCheckingExceptionPrivate(n, "expecting bit-vector terms");
+      }
+      TNode::iterator it_end = n.end();
+      for (++ it; it != it_end; ++ it) {
+        if ((*it).getType(check) != t) {
+          throw TypeCheckingExceptionPrivate(n, "expecting bit-vector terms of the same width");
+        }
+      }
+    }
+    return nodeManager->booleanType();
+  }
+}; /* class BitVectorSpecialPredicateTypeRule */
+  
 class BitVectorPredicateTypeRule {
 public:
   inline static TypeNode computeType(NodeManager* nodeManager, TNode n, bool check)
@@ -294,6 +315,14 @@ public:
     return i;
   }
 };/* class CardinalityComputer */
+        
+class BitVectorSpecialFixedWidthOpTypeRule {
+public:
+  inline static TypeNode computeType(NodeManager* nodeManager, TNode n, bool check) {
+    return nodeManager->integerType();
+  }
+};/* class UninterpretedConstantTypeRule */
+
 
 }/* CVC4::theory::bv namespace */
 }/* CVC4::theory namespace */

@@ -28,13 +28,6 @@
 namespace CVC4 {
 namespace theory {
 namespace bv {
-
-namespace attr {
-  struct IdTag {};
-}/* CVC4::theory::bv::attr namespace */
-  
-typedef expr::Attribute<attr::IdTag, uint64_t> IdAttr;
-
   
 typedef __gnu_cxx::hash_set<Node, NodeHashFunction> NodeSet;
 typedef __gnu_cxx::hash_set<TNode, TNodeHashFunction> TNodeSet;
@@ -342,20 +335,20 @@ inline Node mkAnd(const std::vector<Node>& conjunctions) {
 }/* mkAnd() */
   
 inline Node mkSpecialFixedWidth(const std::vector<Node>& inputs, int idTag) {
-  Node node = NodeManager::currentNM()->mkNode(kind::BITVECTOR_SPECIAL_FIXED_WIDTH, inputs);
-  node.setAttribute(IdAttr(), idTag);
+  Node idOp = NodeManager::currentNM()->mkConst<BitVectorSpecialFixedWidth>(BitVectorSpecialFixedWidth(idTag));
+  Node node = NodeManager::currentNM()->mkNode(idOp, inputs);
   return node;
 }
   
 inline Node mkSpecialPredicate(const std::vector<Node>& inputs, int idTag) {
-  Node node = NodeManager::currentNM()->mkNode(kind::BITVECTOR_SPECIAL_PREDICATE, inputs);
-  node.setAttribute(IdAttr(), idTag);
+  Node idOp = NodeManager::currentNM()->mkConst<BitVectorSpecialPredicate>(BitVectorSpecialPredicate(idTag));
+  Node node = NodeManager::currentNM()->mkNode(idOp, inputs);
   return node;
 }
 
 inline Node mkSpecialBool(const std::vector<Node>& inputs, int idTag) {
-  Node node = NodeManager::currentNM()->mkNode(kind::SPECIAL_BOOL, inputs);
-  node.setAttribute(IdAttr(), idTag);
+  Node idOp = NodeManager::currentNM()->mkConst<SpecialBool>(SpecialBool(idTag));
+  Node node = NodeManager::currentNM()->mkNode(idOp, inputs);
   return node;
 }
   

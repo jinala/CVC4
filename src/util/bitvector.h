@@ -444,7 +444,55 @@ struct CVC4_PUBLIC BitVectorBitOfHashFunction {
   }
 };/* struct BitVectorBitOfHashFunction */
 
+/**
+ * The structure representing the encoding id
+ */
+struct CVC4_PUBLIC BitVectorSpecialFixedWidth {
+  /** The encoding id */
+  unsigned encId;
+  BitVectorSpecialFixedWidth(unsigned i)
+  : encId(i) {}
+  
+  bool operator == (const BitVectorSpecialFixedWidth& other) const {
+    return encId == other.encId;
+  }
+  operator unsigned () const { return encId; }
+};/* struct BitVectorSpecialFixedWidth */
 
+/**
+ * Hash function for the BitVectorSpecialFixedWidth objects.
+ */
+struct CVC4_PUBLIC BitVectorSpecialFixedWidthHashFunction {
+  size_t operator()(const BitVectorSpecialFixedWidth& b) const {
+    return b.encId;
+  }
+};/* struct BitVectorSpecialFixedWidth */
+  
+  
+/**
+ * The structure representing the encoding id
+ */
+struct CVC4_PUBLIC BitVectorSpecialPredicate {
+  /** The encoding id */
+  unsigned encId;
+  BitVectorSpecialPredicate(unsigned i)
+  : encId(i) {}
+  
+  bool operator == (const BitVectorSpecialPredicate& other) const {
+    return encId == other.encId;
+  }
+  operator unsigned () const { return encId; }
+};/* struct BitVectorSpecialPredicate */
+
+/**
+ * Hash function for the BvEncIdP objects.
+ */
+struct CVC4_PUBLIC BitVectorSpecialPredicateHashFunction {
+  size_t operator()(const BitVectorSpecialPredicate& b) const {
+    return b.encId;
+  }
+};/* struct BitVectorSpecialPredicate */
+  
 
 struct CVC4_PUBLIC BitVectorSize {
   unsigned size;
@@ -515,6 +563,16 @@ inline std::ostream& operator <<(std::ostream& os, const BitVectorExtract& bv) {
 inline std::ostream& operator <<(std::ostream& os, const BitVectorBitOf& bv) CVC4_PUBLIC;
 inline std::ostream& operator <<(std::ostream& os, const BitVectorBitOf& bv) {
   return os << "[" << bv.bitIndex << "]";
+}
+  
+inline std::ostream& operator <<(std::ostream& os, const BitVectorSpecialFixedWidth& bv) CVC4_PUBLIC;
+inline std::ostream& operator <<(std::ostream& os, const BitVectorSpecialFixedWidth& bv) {
+  return os << "[" << bv.encId << "]";
+}
+  
+inline std::ostream& operator <<(std::ostream& os, const BitVectorSpecialPredicate& bv) CVC4_PUBLIC;
+inline std::ostream& operator <<(std::ostream& os, const BitVectorSpecialPredicate& bv) {
+  return os << "[" << bv.encId << "]";
 }
 
 inline std::ostream& operator <<(std::ostream& os, const IntToBitVector& bv) CVC4_PUBLIC;

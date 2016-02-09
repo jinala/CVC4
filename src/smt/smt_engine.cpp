@@ -3948,7 +3948,7 @@ void SmtEnginePrivate::processAssertions() {
       }
       Node n = d_assertions[i];
       if (options::doOptimization()) {
-        n = Rewriter::rewrite(n, true);
+        n = Rewriter::rewrite(n, true, false);
       }
       d_smt.d_propEngine->assertFormula(n);
     }

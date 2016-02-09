@@ -129,12 +129,10 @@ void TLazyBitblaster::bbAtom(TNode node) {
       for (unsigned i = 0; i < expansion.getNumChildren(); ++i) {
         Node normalized_i = Rewriter::rewrite(expansion[i]);
         Rewriter::clearCaches(); // TODO: it may be ideal to have separate caches and not clear them everytime we switch
-        Node reduced_i;
+        Node reduced_i = normalized_i;
         if (options::doOptimization()) {
-          reduced_i = Rewriter::rewrite(normalized_i, true);
-        } else {
-          reduced_i = normalized_i;
-        }
+          reduced_i = Rewriter::rewrite(normalized_i, true, true);
+        } 
         Node atom_i = reduced_i.getKind() != kind::CONST_BOOLEAN ?
           Rewriter::rewrite(d_atomBBStrategies[reduced_i.getKind()](reduced_i, this)) :
           reduced_i;
@@ -152,11 +150,9 @@ void TLazyBitblaster::bbAtom(TNode node) {
   // the bitblasted definition of the atom
   Node normalized = Rewriter::rewrite(node);
   Rewriter::clearCaches();
-  Node reduced;
+  Node reduced = normalized;
   if (options::doOptimization()) {
-    reduced = Rewriter::rewrite(normalized, true);
-  } else {
-    reduced = normalized;
+    reduced = Rewriter::rewrite(normalized, true, true);
   }
 
   Node atom_bb = reduced.getKind() != kind::CONST_BOOLEAN ?

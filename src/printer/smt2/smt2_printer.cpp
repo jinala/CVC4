@@ -864,6 +864,10 @@ static void printBvParameterizedOp(std::ostream& out, TNode n) throw() {
     out << "int2bv "
         << n.getOperator().getConst<IntToBitVector>().size;
     break;
+  case kind::SPECIAL_BOOL:
+    out << "SPECIAL_BOOL "
+      << n.getOperator().getConst<SpecialBool>().encId;
+    break;
   default:
     out << n.getKind();
   }

@@ -79,5 +79,8 @@
 %template(mkConst) CVC4::ExprManager::mkConst<CVC4::String>;
 %template(mkConst) CVC4::ExprManager::mkConst<CVC4::RegExp>;
 %template(mkConst) CVC4::ExprManager::mkConst<bool>;
+%template(mkConst) CVC4::ExprManager::mkConst<CVC4::SpecialBool>;
+%template(mkConst) CVC4::ExprManager::mkConst<CVC4::BitVectorSpecialFixedWidth>;
+%template(mkConst) CVC4::ExprManager::mkConst<CVC4::BitVectorSpecialPredicate>;
 
 %include "expr/expr_manager.h"

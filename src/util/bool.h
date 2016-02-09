@@ -26,6 +26,36 @@ struct BoolHashFunction {
     return b;
   }
 };/* struct BoolHashFunction */
+  
+  
+/**
+ * The structure representing the encoding id
+ */
+struct CVC4_PUBLIC SpecialBool {
+  /** The encoding id */
+  unsigned encId;
+  SpecialBool(unsigned i)
+  : encId(i) {}
+  
+  bool operator == (const SpecialBool& other) const {
+    return encId == other.encId;
+  }
+};/* struct SpecialBool */
+
+/**
+ * Hash function for the SpecialBool objects.
+ */
+struct CVC4_PUBLIC SpecialBoolHashFunction {
+  size_t operator()(const SpecialBool& b) const {
+    return b.encId;
+  }
+};/* struct SpecialBool */
+
+inline std::ostream& operator <<(std::ostream& os, const SpecialBool& bv) CVC4_PUBLIC;
+inline std::ostream& operator <<(std::ostream& os, const SpecialBool& bv) {
+  return os << "[" << bv.encId << "]";
+}
+
 
 }/* CVC4 namespace */
 

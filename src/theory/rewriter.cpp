@@ -90,11 +90,11 @@ struct RewriteStackElement {
   }
 };
 
-Node Rewriter::rewrite(TNode node, bool special) throw (UnsafeInterruptException){
-  return rewriteTo(theoryOf(node), node, special);
+Node Rewriter::rewrite(TNode node, bool special, bool bv) throw (UnsafeInterruptException){
+  return rewriteTo(theoryOf(node), node, special, bv);
 }
 
-Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node, bool special) {
+Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node, bool special, bool bv) {
 
 #ifdef CVC4_ASSERTIONS
   bool isEquality = node.getKind() == kind::EQUAL;
@@ -145,7 +145,7 @@ Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node, bool special) {
         for(;;) {
           // Perform the pre-rewrite
           RewriteResponse response = special?
-                Rewriter::callSpecialPreRewrite((TheoryId) rewriteStackTop.theoryId, rewriteStackTop.node) :
+                Rewriter::callSpecialPreRewrite((TheoryId) rewriteStackTop.theoryId, rewriteStackTop.node, bv) :
                 Rewriter::callPreRewrite((TheoryId) rewriteStackTop.theoryId, rewriteStackTop.node);
           // Put the rewritten node to the top of the stack
           rewriteStackTop.node = response.node;
@@ -208,7 +208,7 @@ Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node, bool special) {
       for(;;) {
         // Do the post-rewrite
         RewriteResponse response = special ?
-              Rewriter::callSpecialPostRewrite((TheoryId) rewriteStackTop.theoryId, rewriteStackTop.node):
+              Rewriter::callSpecialPostRewrite((TheoryId) rewriteStackTop.theoryId, rewriteStackTop.node, bv):
               Rewriter::callPostRewrite((TheoryId) rewriteStackTop.theoryId, rewriteStackTop.node);  
         // We continue with the response we got
         TheoryId newTheoryId = theoryOf(response.node);
@@ -227,7 +227,7 @@ Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node, bool special) {
           break;
         } else if (response.status == REWRITE_DONE) {
 #ifdef CVC4_ASSERTIONS
-          RewriteResponse r2 = special ? Rewriter::callSpecialPostRewrite(newTheoryId, response.node) : Rewriter::callPostRewrite(newTheoryId, response.node);
+          RewriteResponse r2 = special ? Rewriter::callSpecialPostRewrite(newTheoryId, response.node, bv) : Rewriter::callPostRewrite(newTheoryId, response.node);
 	  Assert(r2.node == response.node);
 #endif
 	  rewriteStackTop.node = response.node;
@@ -235,7 +235,7 @@ Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node, bool special) {
         }
         // Check for trivial rewrite loops of size 1 or 2
         Assert(response.node != rewriteStackTop.node);
-        Assert((special ? Rewriter::callSpecialPostRewrite((TheoryId) rewriteStackTop.theoryId, response.node) :Rewriter::callPostRewrite((TheoryId) rewriteStackTop.theoryId, response.node)).node != rewriteStackTop.node);
+        Assert((special ? Rewriter::callSpecialPostRewrite((TheoryId) rewriteStackTop.theoryId, response.node, bv) :Rewriter::callPostRewrite((TheoryId) rewriteStackTop.theoryId, response.node)).node != rewriteStackTop.node);
 	rewriteStackTop.node = response.node;
       }
       // We're done with the post rewrite, so we add to the cache
@@ -263,18 +263,32 @@ Node Rewriter::rewriteTo(theory::TheoryId theoryId, Node node, bool special) {
 }/* Rewriter::rewriteTo() */
   
   
-RewriteResponse Rewriter::callSpecialPreRewrite(theory::TheoryId theoryId, TNode node) {
+RewriteResponse Rewriter::callSpecialPreRewrite(theory::TheoryId theoryId, TNode node, bool bv) {
   switch(theoryId) {
-    case THEORY_BV: return ::CVC4::theory::bv::TheoryBVSpecialRewriter::preRewrite(node);
-    case THEORY_BOOL: return ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::preRewrite(node);
+    case THEORY_BV:
+    {
+      if (bv)
+        return ::CVC4::theory::bv::TheoryBVSpecialRewriter::preRewrite(node);
+      else
+        return RewriteResponse(REWRITE_DONE, node);
+    }
+    case THEORY_BOOL:
+    {
+      RewriteResponse n =  ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::preRewrite(node);
+      return n;
+    }
     default:
       return RewriteResponse(REWRITE_DONE, node);
   }
 }
 
-RewriteResponse Rewriter::callSpecialPostRewrite(theory::TheoryId theoryId, TNode node) {
+RewriteResponse Rewriter::callSpecialPostRewrite(theory::TheoryId theoryId, TNode node, bool bv) {
   switch(theoryId) {
-    case THEORY_BV: return ::CVC4::theory::bv::TheoryBVSpecialRewriter::postRewrite(node);
+    case THEORY_BV:
+      if (bv)
+        return ::CVC4::theory::bv::TheoryBVSpecialRewriter::postRewrite(node);
+      else
+        return RewriteResponse(REWRITE_DONE, node);
     case THEORY_BOOL: return ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::postRewrite(node);
     default:
       return RewriteResponse(REWRITE_DONE, node);

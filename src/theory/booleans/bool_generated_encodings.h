@@ -11,7 +11,7 @@ namespace theory {
 namespace booleans {
 
 Node defaultSpecial(TNode node, CVC4::prop::CnfStream* cnf) {
-  int enc_id = node.getAttribute(theory::bv::IdAttr());
+  unsigned enc_id = node.getOperator().getConst<CVC4::SpecialBool>().encId;
   NodeManager* nm = NodeManager::currentNM();
   if (enc_id == 4) { 
     Node in_0 = node[0];

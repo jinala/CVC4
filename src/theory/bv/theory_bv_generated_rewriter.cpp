@@ -88,7 +88,7 @@ static RewriteResponse RewriteEQUAL(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
-    return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 0));
+    //return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 0));
   }
   return RewriteResponse(REWRITE_DONE, node);
 }

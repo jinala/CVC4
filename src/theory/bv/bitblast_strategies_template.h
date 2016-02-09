@@ -831,7 +831,7 @@ void DefaultSpecialFixedWidthBB(TNode node, std::vector<T>& res, TBitblaster<T>*
   std::vector<std::vector<T> > inputs;
   inputs.push_back(mval);
   inputs.push_back(fval);
-  int enc_id = node.getAttribute(IdAttr());
+  unsigned enc_id = node.getOperator().getConst<CVC4::BitVectorSpecialFixedWidth>().encId;
   optimalEncodingFixedWidth(enc_id, inputs, res, bb->getCnfStream());
 }
   
@@ -841,7 +841,7 @@ T DefaultSpecialPredicateBB(TNode node, TBitblaster<T>* bb) {
   bb->bbTerm(node[0], mval);
   bb->bbTerm(node[1], fval);
   Assert(mval.size() == fval.size());
-  int enc_id = node.getAttribute(IdAttr());
+  unsigned enc_id = node.getOperator().getConst<CVC4::BitVectorSpecialPredicate>().encId;
   std::vector<std::vector<T> > inputs;
   inputs.push_back(mval);
   inputs.push_back(fval);
