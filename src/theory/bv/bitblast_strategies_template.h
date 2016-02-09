@@ -824,27 +824,25 @@ void DefaultRotateLeftBB (TNode node, std::vector<T>& bits, TBitblaster<T>* bb) 
 
 template <class T>
 void DefaultSpecialFixedWidthBB(TNode node, std::vector<T>& res, TBitblaster<T>* bb) {
-  std::vector<T> mval, fval;
-  bb->bbTerm(node[0], mval);
-  bb->bbTerm(node[1], fval);
-  Assert(mval.size() == fval.size());
   std::vector<std::vector<T> > inputs;
-  inputs.push_back(mval);
-  inputs.push_back(fval);
+  for (int i = 0; i < node.getNumChildren(); i++) {
+    std::vector<T> vals;
+    bb->bbTerm(node[i], vals);
+    inputs.push_back(vals);
+  }
   unsigned enc_id = node.getOperator().getConst<CVC4::BitVectorSpecialFixedWidth>().encId;
   optimalEncodingFixedWidth(enc_id, inputs, res, bb->getCnfStream());
 }
   
 template <class T>
 T DefaultSpecialPredicateBB(TNode node, TBitblaster<T>* bb) {
-  std::vector<T> mval, fval;
-  bb->bbTerm(node[0], mval);
-  bb->bbTerm(node[1], fval);
-  Assert(mval.size() == fval.size());
-  unsigned enc_id = node.getOperator().getConst<CVC4::BitVectorSpecialPredicate>().encId;
   std::vector<std::vector<T> > inputs;
-  inputs.push_back(mval);
-  inputs.push_back(fval);
+  for (int i = 0; i < node.getNumChildren(); i++) {
+    std::vector<T> vals;
+    bb->bbTerm(node[i], vals);
+    inputs.push_back(vals);
+  }
+  unsigned enc_id = node.getOperator().getConst<CVC4::BitVectorSpecialPredicate>().encId;
   return optimalEncodingPredicate(enc_id, inputs, bb->getCnfStream());
 }
 
