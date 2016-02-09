@@ -1,5 +1,4 @@
 #pragma once
-#include "theory/bv/theory_bv_utils.h"
 #include "cvc4_private.h"
 #include "expr/node.h"
 #include "prop/cnf_stream.h"

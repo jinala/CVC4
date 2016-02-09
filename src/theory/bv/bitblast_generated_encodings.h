@@ -326,6 +326,12 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     std::vector<Node> in1 = inputs[1];
 
     Node out = nm->mkSkolem("out", nm->booleanType());
+    std::vector<Node> tmp;
+    for (int i = 0; i < in0.size(); i++) {
+      std::stringstream ss;
+      ss << "tmp_0_" << i;
+      tmp.push_back(nm->mkSkolem(ss.str(), nm->booleanType()));
+    }
     Node true_n = nm->mkConst<bool>(true);
     Node false_n = nm->mkConst<bool>(false);
 
@@ -347,9 +353,7 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     }
     else
     {
-          std::stringstream ss;
-          ss << "temp_2_" << k;
-          tt_2 = nm->mkSkolem(ss.str(), nm->booleanType());
+          tt_2 =  tmp[k - 1];
           neg_tt_2 = nm->mkNode(kind::NOT, tt_2);
     }
         Node tt_3;
@@ -361,9 +365,7 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     }
     else
     {
-          std::stringstream ss;
-          ss << "temp_3_" << k;
-          tt_3 = nm->mkSkolem(ss.str(), nm->booleanType());
+          tt_3 =  tmp[k];
           neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
     }
 
@@ -383,6 +385,12 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     std::vector<Node> in1 = inputs[1];
 
     Node out = nm->mkSkolem("out", nm->booleanType());
+    std::vector<Node> tmp;
+    for (int i = 0; i < in0.size(); i++) {
+      std::stringstream ss;
+      ss << "tmp_0_" << i;
+      tmp.push_back(nm->mkSkolem(ss.str(), nm->booleanType()));
+    }
     Node true_n = nm->mkConst<bool>(true);
     Node false_n = nm->mkConst<bool>(false);
 
@@ -404,9 +412,7 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     }
     else
     {
-          std::stringstream ss;
-          ss << "temp_2_" << k;
-          tt_2 = nm->mkSkolem(ss.str(), nm->booleanType());
+          tt_2 =  tmp[k - 1];
           neg_tt_2 = nm->mkNode(kind::NOT, tt_2);
     }
         Node tt_3;
@@ -418,9 +424,7 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     }
     else
     {
-          std::stringstream ss;
-          ss << "temp_3_" << k;
-          tt_3 = nm->mkSkolem(ss.str(), nm->booleanType());
+          tt_3 =  tmp[k];
           neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
     }
 
