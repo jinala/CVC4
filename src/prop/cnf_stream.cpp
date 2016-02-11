@@ -113,7 +113,7 @@ void CnfStream::assertClause(TNode node, SatLiteral a, SatLiteral b, SatLiteral 
 }
   
 void CnfStream::assertClause(TNode node, SatLiteral a, SatLiteral b, SatLiteral c, SatLiteral d, ProofRule proof_id) {
-  SatClause clause(3);
+  SatClause clause(4);
   clause[0] = a;
   clause[1] = b;
   clause[2] = c;
