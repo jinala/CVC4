@@ -24,7 +24,6 @@
 #include "util/resource_manager.h"
 
 #include "theory/bv/theory_bv_special_rewriter.h"
-#include "theory/booleans/theory_bool_special_rewriter.h"
 
 
 using namespace std;
@@ -47,7 +46,6 @@ class RewriterInitializer {
   RewriterInitializer() {
     Rewriter::init();
     ::CVC4::theory::bv::TheoryBVSpecialRewriter::initializeRewrites();
-    ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::initializeRewrites();
   }
   ~RewriterInitializer() { Rewriter::shutdown(); }
 };/* class RewriterInitializer */
@@ -272,11 +270,6 @@ RewriteResponse Rewriter::callSpecialPreRewrite(theory::TheoryId theoryId, TNode
       else
         return RewriteResponse(REWRITE_DONE, node);
     }
-    case THEORY_BOOL:
-    {
-      RewriteResponse n =  ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::preRewrite(node);
-      return n;
-    }
     default:
       return RewriteResponse(REWRITE_DONE, node);
   }
@@ -289,7 +282,6 @@ RewriteResponse Rewriter::callSpecialPostRewrite(theory::TheoryId theoryId, TNod
         return ::CVC4::theory::bv::TheoryBVSpecialRewriter::postRewrite(node);
       else
         return RewriteResponse(REWRITE_DONE, node);
-    case THEORY_BOOL: return ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::postRewrite(node);
     default:
       return RewriteResponse(REWRITE_DONE, node);
   }

@@ -23,35 +23,3 @@ using namespace CVC4::theory;
 using namespace CVC4::theory::booleans;
 
 
-RewriteFunction TheoryBoolSpecialRewriter::d_rewriteTable[kind::LAST_KIND];
-
-RewriteResponse TheoryBoolSpecialRewriter::preRewrite(TNode node) {
-  RewriteResponse res = d_rewriteTable[node.getKind()](node, true);
-  if(res.node != node) {
-    Debug("booleans-rewrite") << "TheoryBool::preRewrite    " << node << std::endl;
-    Debug("booleans-rewrite") << "TheoryBool::preRewrite to " << res.node << std::endl;
-  }
-  return res; 
-}
-
-RewriteResponse TheoryBoolSpecialRewriter::postRewrite(TNode node) {
-  RewriteResponse res = d_rewriteTable[node.getKind()](node, false);
-  if(res.node!= node) {
-    Debug("booleans-rewrite") << "TheoryBool::postRewrite    " << node << std::endl;
-    Debug("booleans-rewrite") << "TheoryBool::postRewrite to " << res.node << std::endl;
-  }
-  return res; 
-}
-
-
-
-RewriteResponse TheoryBoolSpecialRewriter::IdentityRewrite(TNode node, bool prerewrite) {
-  return RewriteResponse(REWRITE_DONE, node); 
-}
-
-RewriteResponse TheoryBoolSpecialRewriter::UndefinedRewrite(TNode node, bool prerewrite) {
-  Debug("booleans-rewrite") << "TheoryBool::UndefinedRewrite for" << node;
-  Unimplemented(); 
-} 
-
-

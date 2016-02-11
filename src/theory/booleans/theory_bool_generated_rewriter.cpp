@@ -6,22 +6,9 @@ using namespace CVC4;
 using namespace CVC4::theory;
 using namespace CVC4::theory::booleans;
 using namespace CVC4::theory::bv;
-
 static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
-  if (node.getKind() == kind::AND && node.getNumChildren() == 2 && true && true) {
-    std::vector<Node> children;
-    children.push_back(node[0]);
-    children.push_back(node[1]);
-    return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 9));
-  }
-  else if (node.getKind() == kind::AND && node.getNumChildren() == 3 && true && true && true) {
-    std::vector<Node> children;
-    children.push_back(node[0]);
-    children.push_back(node[1]);
-    children.push_back(node[2]);
-    return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 15));
-  }
-  else if (node.getKind() == kind::AND && node.getNumChildren() == 3 && node[0].getKind() == kind::NOT && node[0].getNumChildren() == 1 && true && true && true) {
+  
+  if (node.getKind() == kind::AND && node.getNumChildren() == 3 && node[0].getKind() == kind::NOT && node[0].getNumChildren() == 1 && true && true && true) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[1]);
@@ -40,6 +27,18 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[0][1]);
     children.push_back(node[1]);
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 32));
+  } else if (node.getKind() == kind::AND && node.getNumChildren() == 2 && true && true) {
+    std::vector<Node> children;
+    children.push_back(node[0]);
+    children.push_back(node[1]);
+    return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 9));
+  }
+  else if (node.getKind() == kind::AND && node.getNumChildren() == 3 && true && true && true) {
+    std::vector<Node> children;
+    children.push_back(node[0]);
+    children.push_back(node[1]);
+    children.push_back(node[2]);
+    return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 15));
   }
   return RewriteResponse(REWRITE_DONE, node);
 }
@@ -133,13 +132,13 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
   }
   return RewriteResponse(REWRITE_DONE, node);
 }
-void TheoryBoolSpecialRewriter::initializeRewrites() {
-  for (unsigned i = 0; i < kind::LAST_KIND; i++) {
-    d_rewriteTable[i] = IdentityRewrite;
+RewriteResponse TheoryBoolSpecialRewriter::rewrite(TNode n) {
+  switch (n.getKind()) {
+    case kind::AND : return RewriteAND(n);
+    case kind::NOT : return RewriteNOT(n);
+    case kind::IFF : return RewriteIFF(n);
+    case kind::ITE : return RewriteITE(n);
+    case kind::OR : return RewriteOR(n);
+    default: return RewriteResponse(REWRITE_DONE, n);
   }
-  d_rewriteTable[kind::AND] = RewriteAND;
-  d_rewriteTable[kind::NOT] = RewriteNOT;
-  d_rewriteTable[kind::IFF] = RewriteIFF;
-  d_rewriteTable[kind::ITE] = RewriteITE;
-  d_rewriteTable[kind::OR] = RewriteOR;
 }

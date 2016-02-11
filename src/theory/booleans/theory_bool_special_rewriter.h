@@ -33,7 +33,6 @@ typedef RewriteResponse (*RewriteFunction) (TNode, bool);
 
 class TheoryBoolSpecialRewriter {
 
-  static RewriteFunction d_rewriteTable[kind::LAST_KIND];
 
   static RewriteResponse IdentityRewrite(TNode node, bool prerewrite = false);
   static RewriteResponse UndefinedRewrite(TNode node, bool prerewrite = false);
@@ -41,11 +40,9 @@ class TheoryBoolSpecialRewriter {
   
 public:
 
-  static RewriteResponse postRewrite(TNode node);
 
-  static RewriteResponse preRewrite(TNode node);
   
-  static void initializeRewrites();
+  static RewriteResponse rewrite(TNode node);
   
 };/* class TheoryBoolSpecialRewriter */
 

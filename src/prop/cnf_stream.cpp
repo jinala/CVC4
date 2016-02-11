@@ -21,6 +21,7 @@
 #include "base/output.h"
 #include "expr/expr.h"
 #include "expr/node.h"
+#include "options/main_options.h"
 #include "options/bv_options.h"
 #include "proof/proof_manager.h"
 #include "proof/sat_proof.h"
@@ -33,6 +34,8 @@
 #include "theory/theory.h"
 #include "theory/theory_engine.h"
 #include "theory/booleans/bool_generated_encodings.h"
+#include "theory/booleans/theory_bool_special_rewriter.h"
+
 
 using namespace std;
 using namespace CVC4::kind;
@@ -106,6 +109,15 @@ void CnfStream::assertClause(TNode node, SatLiteral a, SatLiteral b, SatLiteral 
   clause[0] = a;
   clause[1] = b;
   clause[2] = c;
+  assertClause(node, clause, proof_id);
+}
+  
+void CnfStream::assertClause(TNode node, SatLiteral a, SatLiteral b, SatLiteral c, SatLiteral d, ProofRule proof_id) {
+  SatClause clause(3);
+  clause[0] = a;
+  clause[1] = b;
+  clause[2] = c;
+  clause[3] = d;
   assertClause(node, clause, proof_id);
 }
 
@@ -419,11 +431,11 @@ SatLiteral TseitinCnfStream::handleNot(TNode notNode) {
   return notLit;
 }
   
-SatLiteral TseitinCnfStream::handleSpecial(TNode spNode) {
+SatLiteral TseitinCnfStream::handleSpecial(TNode spNode, TNode orig) {
   Assert(!hasLiteral(spNode), "Atom already mapped!");
-  Node out = theory::booleans::defaultSpecial(spNode, this);
-  SatLiteral lit = toCNF(out);
-  return lit;
+  SatLiteral out = newLiteral(orig);
+  theory::booleans::defaultSpecial(spNode, out, this);
+  return out;
 }
 
 SatLiteral TseitinCnfStream::handleIte(TNode iteNode) {
@@ -463,7 +475,7 @@ SatLiteral TseitinCnfStream::handleIte(TNode iteNode) {
 }
 
 
-SatLiteral TseitinCnfStream::toCNF(TNode node, bool negated) {
+SatLiteral TseitinCnfStream::toCNF(TNode node, bool negated, bool optim) {
   Debug("cnf") << "toCNF(" << node << ", negated = " << (negated ? "true" : "false") << ")" << endl;
 
   SatLiteral nodeLit;
@@ -474,8 +486,13 @@ SatLiteral TseitinCnfStream::toCNF(TNode node, bool negated) {
     Debug("cnf") << "toCNF(): already translated" << endl;
     nodeLit = getLiteral(node);
   } else {
+    Node nnode = node;
+    if (options::doOptimization() && optim) {
+      theory::RewriteResponse res = theory::booleans::TheoryBoolSpecialRewriter::rewrite(node);
+      nnode = res.node;
+    }
     // Handle each Boolean operator case
-    switch(node.getKind()) {
+    switch(nnode.getKind()) {
     case NOT:
       nodeLit = handleNot(node);
       break;
@@ -498,8 +515,8 @@ SatLiteral TseitinCnfStream::toCNF(TNode node, bool negated) {
       nodeLit = handleAnd(node);
       break;
     case SPECIAL_BOOL:
-      nodeLit = handleSpecial(node);
-        break;
+      nodeLit = handleSpecial(nnode, node);
+      break;
     case EQUAL:
       if(node[0].getType().isBoolean()) {
         // normally this is an IFF, but EQUAL is possible with pseudobooleans

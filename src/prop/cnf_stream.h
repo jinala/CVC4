@@ -131,7 +131,7 @@ protected:
    * as removable.
    */
   bool d_removable;
-
+public:
   /**
    * Asserts the given clause to the sat solver.
    * @param node the node giving rise to this clause
@@ -162,7 +162,9 @@ protected:
    * @param c the thirs literal in the clause
    */
   void assertClause(TNode node, SatLiteral a, SatLiteral b, SatLiteral c, ProofRule proof_id);
-
+  
+  void assertClause(TNode node, SatLiteral a, SatLiteral b, SatLiteral c, SatLiteral d, ProofRule proof_id);
+protected:
   /**
    * Acquires a new variable from the SAT solver to represent the node
    * and inserts the necessary data it into the mapping tables.
@@ -321,7 +323,7 @@ private:
   SatLiteral handleIte(TNode node);
   SatLiteral handleAnd(TNode node);
   SatLiteral handleOr(TNode node);
-  SatLiteral handleSpecial(TNode spNode);
+  SatLiteral handleSpecial(TNode spNode, TNode orig);
 
   void convertAndAssertAnd(TNode node, bool negated, ProofRule proof_id);
   void convertAndAssertOr(TNode node, bool negated, ProofRule proof_id);
@@ -336,8 +338,9 @@ private:
    * @param negated whether the literal is negated
    * @return the literal representing the root of the formula
    */
-  SatLiteral toCNF(TNode node, bool negated = false);
-
+public:
+  SatLiteral toCNF(TNode node, bool negated = false, bool optim = true);
+private:
   void ensureLiteral(TNode n);
 
 };/* class TseitinCnfStream */
