@@ -33,18 +33,18 @@ static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false)
   return RewriteResponse(REWRITE_DONE, node);
 }
 static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false) {
-  if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 3 && true && true && true) {
+  if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_NOT && node[0].getNumChildren() == 1 && true && true) {
+    std::vector<Node> children;
+    children.push_back(node[0][0]);
+    children.push_back(node[1]);
+    return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 24));
+  }
+  else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 3 && true && true && true) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
     children.push_back(node[2]);
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 22));
-  }
-  else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_NOT && node[0].getNumChildren() == 1 && true && true) {
-    std::vector<Node> children;
-    children.push_back(node[0][0]);
-    children.push_back(node[1]);
-    return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 24));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
@@ -55,19 +55,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
   return RewriteResponse(REWRITE_DONE, node);
 }
 static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false) {
-  if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && true && true) {
-    std::vector<Node> children;
-    children.push_back(node[0]);
-    children.push_back(node[1]);
-    return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 1));
-  }
-  else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_NOT && node[0].getNumChildren() == 1 && true && true) {
-    std::vector<Node> children;
-    children.push_back(node[0][0]);
-    children.push_back(node[1]);
-    return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 3));
-  }
-  else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2 && true && true && true) {
+  if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2 && true && true && true) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
@@ -81,6 +69,18 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[2]);
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 30));
   }
+  else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_NOT && node[0].getNumChildren() == 1 && true && true) {
+    std::vector<Node> children;
+    children.push_back(node[0][0]);
+    children.push_back(node[1]);
+    return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 3));
+  }
+  else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && true && true) {
+    std::vector<Node> children;
+    children.push_back(node[0]);
+    children.push_back(node[1]);
+    return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 1));
+  }
   return RewriteResponse(REWRITE_DONE, node);
 }
 static RewriteResponse RewriteEQUAL(TNode node, bool prerewrite = false) {
@@ -88,7 +88,7 @@ static RewriteResponse RewriteEQUAL(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
-    //return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 0));
+    return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 0));
   }
   return RewriteResponse(REWRITE_DONE, node);
 }

@@ -328,9 +328,9 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     Node out = nm->mkSkolem("out", nm->booleanType());
     std::vector<Node> tmp;
     for (int i = 0; i < in0.size(); i++) {
-      std::stringstream ss;
-      ss << "tmp_0_" << i;
-      tmp.push_back(nm->mkSkolem(ss.str(), nm->booleanType()));
+      std::stringstream ss0;
+      ss0 << "tmp_0_" << i;
+      tmp.push_back(nm->mkSkolem(ss0.str(), nm->booleanType()));
     }
     Node true_n = nm->mkConst<bool>(true);
     Node false_n = nm->mkConst<bool>(false);
@@ -369,11 +369,11 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
           neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
     }
 
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, tt_2, neg_tt_2), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, tt_2, neg_tt_3), false, false, RULE_INVALID, TNode::null());
         cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_1, neg_tt_2), false, false, RULE_INVALID, TNode::null());
         cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, tt_1, neg_tt_2), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_1, tt_2, neg_tt_2), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_2, tt_2), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_1, tt_2, neg_tt_3), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
 
       }
     }
@@ -387,9 +387,9 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     Node out = nm->mkSkolem("out", nm->booleanType());
     std::vector<Node> tmp;
     for (int i = 0; i < in0.size(); i++) {
-      std::stringstream ss;
-      ss << "tmp_0_" << i;
-      tmp.push_back(nm->mkSkolem(ss.str(), nm->booleanType()));
+      std::stringstream ss0;
+      ss0 << "tmp_0_" << i;
+      tmp.push_back(nm->mkSkolem(ss0.str(), nm->booleanType()));
     }
     Node true_n = nm->mkConst<bool>(true);
     Node false_n = nm->mkConst<bool>(false);
@@ -429,11 +429,11 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     }
 
         cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_1, tt_2), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_2, neg_tt_2), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_2, neg_tt_3), false, false, RULE_INVALID, TNode::null());
         cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, tt_1, neg_tt_2), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_2, tt_2), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_1, neg_tt_2, tt_2), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, tt_2, neg_tt_2), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_1, neg_tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, tt_2, neg_tt_3), false, false, RULE_INVALID, TNode::null());
 
       }
     }
