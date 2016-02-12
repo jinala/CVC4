@@ -132,6 +132,7 @@ void TLazyBitblaster::bbAtom(TNode node) {
         Node reduced_i = normalized_i;
         if (options::doOptimization()) {
           reduced_i = Rewriter::rewrite(normalized_i, true, true);
+          Rewriter::clearCaches();
         } 
         Node atom_i = reduced_i.getKind() != kind::CONST_BOOLEAN ?
           Rewriter::rewrite(d_atomBBStrategies[reduced_i.getKind()](reduced_i, this)) :
@@ -153,6 +154,7 @@ void TLazyBitblaster::bbAtom(TNode node) {
   Node reduced = normalized;
   if (options::doOptimization()) {
     reduced = Rewriter::rewrite(normalized, true, true);
+    Rewriter::clearCaches();
   }
 
   Node atom_bb = reduced.getKind() != kind::CONST_BOOLEAN ?
