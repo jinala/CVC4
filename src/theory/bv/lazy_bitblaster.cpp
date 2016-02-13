@@ -98,17 +98,19 @@ void TLazyBitblaster::bbAtom(TNode node) {
   // make sure it is marked as an atom
   addAtom(node);
   if (options::printDags()) {
-    std::ofstream outFile;
-    std::stringstream ss;
-    ss << options::fileName() << "_bv" << (fileId++) << ".txt";
-    std::string outFileName = ss.str();
-    outFile.open(outFileName.c_str());
-    if (!outFile.is_open()) {
-      Chat() << "File cannot be opened" << std::endl;
-      assert(false);
+    if (node.getMetaKind() != kind::metakind::CONSTANT && node.getMetaKind() != kind::metakind::VARIABLE) {
+      std::ofstream outFile;
+      std::stringstream ss;
+      ss << options::fileName() << "_bv" << (fileId++) << ".txt";
+      std::string outFileName = ss.str();
+      outFile.open(outFileName.c_str());
+      if (!outFile.is_open()) {
+        Chat() << "File cannot be opened" << std::endl;
+        assert(false);
+      }
+      Printer::getPrinter(::CVC4::language::output::LANG_DAG)->toStream(outFile, node, 0, true, 1);
+      outFile.close();
     }
-    Printer::getPrinter(::CVC4::language::output::LANG_DAG)->toStream(outFile, node, 0, true, 1);
-    outFile.close();
   }
   Debug("bitvector-bitblast") << "Bitblasting node " << node <<"\n";
   ++d_statistics.d_numAtoms;

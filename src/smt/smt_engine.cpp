@@ -3933,6 +3933,8 @@ void SmtEnginePrivate::processAssertions() {
     for (unsigned i = 0; i < d_assertions.size(); ++ i) {
       Chat() << "+ " << d_assertions[i] << std::endl;
       if (options::printDags()) {
+        if (d_assertions[i].getMetaKind() != kind::metakind::CONSTANT && d_assertions[i].getMetaKind() != kind::metakind::VARIABLE) {
+
         std::ofstream outFile;
         std::stringstream ss;
         ss << options::fileName() << "_bv_2_" <<  (fileId++ ) << ".txt";
@@ -3945,6 +3947,7 @@ void SmtEnginePrivate::processAssertions() {
         }
         Printer::getPrinter(::CVC4::language::output::LANG_DAG)->toStream(outFile, d_assertions[i], 1, true, 1);
         outFile.close();
+        }
       }
       Node n = d_assertions[i];
       //if (options::doOptimization()) {
