@@ -17,6 +17,8 @@
 #include "decision/decision_attributes.h"
 #include "options/decision_options.h"
 #include "options/bv_options.h"
+#include "options/main_options.h"
+#include "options/base_options.h"
 #include "smt/smt_statistics_registry.h"
 #include "theory/bv/abstraction.h"
 #include "theory/bv/bitblaster_template.h"
@@ -24,6 +26,9 @@
 #include "theory/bv/bv_subtheory_bitblast.h"
 #include "theory/bv/theory_bv.h"
 #include "theory/bv/theory_bv_utils.h"
+#include "options/language.h" // for LANG_AST
+#include "printer/printer.h"
+
 
 using namespace std;
 using namespace CVC4::context;
@@ -32,6 +37,9 @@ using namespace CVC4::theory::bv::utils;
 namespace CVC4 {
 namespace theory {
 namespace bv {
+  
+int fileId = 0;
+
 
 BitblastSolver::BitblastSolver(context::Context* c, TheoryBV* bv)
   : SubtheorySolver(c, bv),
@@ -107,6 +115,22 @@ void BitblastSolver::bitblastQueue() {
     Debug("bitblast-queue") << "Bitblasting atom " << atom <<"\n";
     {
       TimerStat::CodeTimer codeTimer(d_bitblaster->d_statistics.d_bitblastTimer);
+      if (options::printDags()) {
+        if (atom.getMetaKind() != kind::metakind::CONSTANT && atom.getMetaKind() != kind::metakind::VARIABLE) {
+          std::ofstream outFile;
+          std::stringstream ss;
+          ss << options::fileName() << "_bv" << (fileId++) << ".txt";
+          std::string outFileName = ss.str();
+          outFile.open(outFileName.c_str());
+          if (!outFile.is_open()) {
+            Chat() << "File cannot be opened" << std::endl;
+            assert(false);
+          }
+          Printer::getPrinter(::CVC4::language::output::LANG_DAG)->toStream(outFile, atom, 0, true, 1);
+          outFile.close();
+        }
+      }
+
       d_bitblaster->bbAtom(atom);
     }
   }
