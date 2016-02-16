@@ -22,6 +22,7 @@
 
 #include <ostream>
 #include "expr/node.h"
+#include "prop/cnf_stream.h"
 
 #ifdef CVC4_USE_ABC
 #include "base/main/main.h"
@@ -184,6 +185,15 @@ void inline makeZero(std::vector<T>& bits, unsigned width) {
   }
 }
 
+template <class T>
+std::pair<T,T> inline fullAdder(const T a, const T b, const T cin) {
+  T cout = mkOr(mkAnd(a, b),
+                mkAnd(mkXor(a, b),
+                      cin));;
+  T sum = mkXor(mkXor(a, b), cin);
+  return std::make_pair(sum, cout);
+}
+
 
 /** 
  * Constructs a simple ripple carry adder
@@ -199,11 +209,12 @@ template <class T>
 T inline rippleCarryAdder(const std::vector<T>&a, const std::vector<T>& b, std::vector<T>& res, T carry) {
   Assert(a.size() == b.size() && res.size() == 0);
   
+  T sum;
+  std::pair<T, T> fa_res;
   for (unsigned i = 0 ; i < a.size(); ++i) {
-    T sum = mkXor(mkXor(a[i], b[i]), carry);
-    carry = mkOr( mkAnd(a[i], b[i]),
-                  mkAnd( mkXor(a[i], b[i]),
-                         carry));
+    fa_res = fullAdder(a[i], b[i], carry);
+    sum = fa_res.first;
+    carry = fa_res.second;
     res.push_back(sum); 
   }
 
@@ -218,14 +229,13 @@ inline void shiftAddMultiplier(const std::vector<T>&a, const std::vector<T>&b, s
   }
   
   for(unsigned k = 1; k < res.size(); ++k) {
-  T carry_in = mkFalse<T>();
-  T carry_out;
+    T carry_in = mkFalse<T>();
+    std::pair<T,T> fa_res;
     for(unsigned j = 0; j < res.size() -k; ++j) {
       T aj = mkAnd(a[j], b[k]);
-      carry_out = mkOr(mkAnd(res[j+k], aj),
-                       mkAnd( mkXor(res[j+k], aj), carry_in));
-      res[j+k] = mkXor(mkXor(res[j+k], aj), carry_in);
-      carry_in = carry_out; 
+      fa_res = fullAdder(res[j+k], aj, carry_in);
+      res[j+k] = fa_res.first;
+      carry_in = fa_res.second;
     }
   }
 }
@@ -273,6 +283,111 @@ T inline sLessThanBB(const std::vector<T>&a, const std::vector<T>& b, bool orEqu
                mkAnd(a[n],
                      mkNot(b[n])));
   return res;
+}
+  
+template <class T>
+std::pair<T,T> optimalFullAdder(const T a, const T b, const T cin,
+                                       CVC4::prop::CnfStream* cnf) {
+  Unreachable();
+}
+
+std::pair<Node, Node> inline optimalFullAdder(const Node a, const Node b,
+                                                         const Node cin,
+                                                         CVC4::prop::CnfStream* cnf) {
+  
+  NodeManager* nm = NodeManager::currentNM();
+  Node s = nm->mkSkolem("sum", nm->booleanType());
+  Node cout = nm->mkSkolem("carry", nm->booleanType());
+  
+  
+  Node na = nm->mkNode(kind::NOT, a);
+  Node nb = nm->mkNode(kind::NOT, b);
+  Node ncin = nm->mkNode(kind::NOT, cin);
+  Node ncout = nm->mkNode(kind::NOT, cout);
+  Node ns = nm->mkNode(kind::NOT, s);
+  
+  cnf->convertAndAssert(nm->mkNode(kind::OR, na, nb, cout),
+                        false, false, RULE_INVALID, TNode::null());
+  cnf->convertAndAssert(nm->mkNode(kind::OR, na, ncin, cout),
+                        false, false, RULE_INVALID, TNode::null());
+  cnf->convertAndAssert(nm->mkNode(kind::OR, nb, ncin, cout),
+                        false, false, RULE_INVALID, TNode::null());
+  cnf->convertAndAssert(nm->mkNode(kind::OR, na, s, cout),
+                        false, false, RULE_INVALID, TNode::null());
+  cnf->convertAndAssert(nm->mkNode(kind::OR, nb, s, cout),
+                        false, false, RULE_INVALID, TNode::null());
+  cnf->convertAndAssert(nm->mkNode(kind::OR, ncin, s, cout),
+                        false, false, RULE_INVALID, TNode::null());
+  cnf->convertAndAssert(nm->mkNode(kind::OR, na, nb, ncin, s),
+                        false, false, RULE_INVALID, TNode::null());
+  
+  cnf->convertAndAssert(nm->mkNode(kind::OR, a, b, ncout),
+                        false, false, RULE_INVALID, TNode::null());
+  cnf->convertAndAssert(nm->mkNode(kind::OR, a, cin, ncout),
+                        false, false, RULE_INVALID, TNode::null());
+  cnf->convertAndAssert(nm->mkNode(kind::OR, b, cin, ncout),
+                        false, false, RULE_INVALID, TNode::null());
+  cnf->convertAndAssert(nm->mkNode(kind::OR, a, ns, ncout),
+                        false, false, RULE_INVALID, TNode::null());
+  cnf->convertAndAssert(nm->mkNode(kind::OR, b, ns, ncout),
+                        false, false, RULE_INVALID, TNode::null());
+  cnf->convertAndAssert(nm->mkNode(kind::OR, cin, ns, ncout),
+                        false, false, RULE_INVALID, TNode::null());
+  cnf->convertAndAssert(nm->mkNode(kind::OR, a,b, cin,ns),
+                        false, false, RULE_INVALID, TNode::null());
+  
+  return std::make_pair(s, cout);
+}
+
+  
+template <class T>
+T optimalRippleCarryAdder(const std::vector<T>&a, const std::vector<T>& b, std::vector<T>& res, T carry, prop::CnfStream* cnf) {
+  Unreachable();
+  return carry;
+}
+
+Node inline optimalRippleCarryAdder(const std::vector<Node>&av,
+                                    const std::vector<Node>& bv,
+                                    std::vector<Node>& res, Node cin, prop::CnfStream* cnf) {
+  Assert (av.size() == bv.size() &&res.size() == 0);
+  Node carry = cin;
+  std::pair<Node, Node> fa_res;
+  for (unsigned i = 0 ; i < av.size(); ++i) {
+    Node a = av[i];
+    Node b = bv[i];
+    fa_res = optimalFullAdder(a, b, carry, cnf);
+    
+    carry = fa_res.second;
+    res.push_back(fa_res.first);
+  }
+  
+  return carry;
+}
+
+template <class T>
+void shiftOptimalAddMultiplier(const std::vector<T>&a, const std::vector<T>& b,
+                               std::vector<T>& res, CVC4::prop::CnfStream* cnf) {
+  Unreachable();
+}
+
+template<>
+inline void shiftOptimalAddMultiplier(const std::vector<Node>&a, const std::vector<Node>&b,
+                                      std::vector<Node>& res, CVC4::prop::CnfStream* cnf) {
+  
+  for (unsigned i = 0; i < a.size(); ++i) {
+    res.push_back(mkAnd(b[0], a[i]));
+  }
+  
+  for(unsigned k = 1; k < res.size(); ++k) {
+    Node carry_in = mkFalse<Node>();
+    std::pair<Node, Node> fa_res;
+    for(unsigned j = 0; j < res.size() -k; ++j) {
+      Node aj = mkAnd(b[k], a[j]);
+      fa_res = optimalFullAdder(res[j+k], aj, carry_in, cnf);
+      res[j+k] = fa_res.first;
+      carry_in = fa_res.second;
+    }
+  }
 }
 
 
