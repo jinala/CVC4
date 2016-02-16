@@ -100,6 +100,8 @@
 #include "util/hash.h"
 #include "util/proof.h"
 #include "util/resource_manager.h"
+#include "theory/booleans/theory_bool_special_rewriter.h"
+#include "theory/bv/theory_bv_special_rewriter.h"
 
 using namespace std;
 using namespace CVC4;
@@ -3363,7 +3365,8 @@ Result SmtEngine::check() {
   Trace("limit") << "SmtEngine::check(): cumulative millis " << resourceManager->getTimeUsage()
                  << ", resources " << resourceManager->getResourceUsage() << endl;
 
-
+  ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::print();
+  ::CVC4::theory::bv::TheoryBVSpecialRewriter::print();
   return Result(result, d_filename);
 }
 
@@ -3925,6 +3928,7 @@ void SmtEnginePrivate::processAssertions() {
     }
   }
 
+  ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::initialize();
   // Push the formula to SAT
   {
     Chat() << "converting to CNF..." << endl;

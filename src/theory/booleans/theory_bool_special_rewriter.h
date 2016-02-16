@@ -32,15 +32,13 @@ struct AllRewriteRules;
 typedef RewriteResponse (*RewriteFunction) (TNode, bool);
 
 class TheoryBoolSpecialRewriter {
-
-
   static RewriteResponse IdentityRewrite(TNode node, bool prerewrite = false);
   static RewriteResponse UndefinedRewrite(TNode node, bool prerewrite = false);
   
   
 public:
-
-
+  static void initialize();
+  static void print();
   
   static RewriteResponse rewrite(TNode node);
   

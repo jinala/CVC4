@@ -45,6 +45,7 @@ public:
   static RewriteResponse preRewrite(TNode node);
   
   static void initializeRewrites();
+  static void print();
   
 };/* class TheoryBVSpecialRewriter */
 

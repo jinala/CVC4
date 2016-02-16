@@ -7,12 +7,14 @@ using namespace CVC4;
 using namespace CVC4::theory;
 using namespace CVC4::theory::bv;
 
+int bvcounter[100];
 static RewriteResponse RewriteBITVECTOR_OR(TNode node, bool prerewrite = false) {
   if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 2 && true && node[1].getKind() == kind::BITVECTOR_AND && node[1].getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    bvcounter[25]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 25));
   }
   else if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_AND && node[0].getNumChildren() == 2 && true && true && true) {
@@ -20,6 +22,7 @@ static RewriteResponse RewriteBITVECTOR_OR(TNode node, bool prerewrite = false) 
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
     children.push_back(node[1]);
+    bvcounter[25]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 25));
   }
   else if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_AND && node[0].getNumChildren() == 2 && true && true && true) {
@@ -27,6 +30,7 @@ static RewriteResponse RewriteBITVECTOR_OR(TNode node, bool prerewrite = false) 
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    bvcounter[25]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 25));
   }
   else if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 2 && true && node[1].getKind() == kind::BITVECTOR_AND && node[1].getNumChildren() == 2 && true && true) {
@@ -34,18 +38,21 @@ static RewriteResponse RewriteBITVECTOR_OR(TNode node, bool prerewrite = false) 
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
     children.push_back(node[0]);
+    bvcounter[25]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 25));
   }
   else if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 2 && true && node[1].getKind() == kind::BITVECTOR_NOT && node[1].getNumChildren() == 1 && true) {
     std::vector<Node> children;
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    bvcounter[27]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 27));
   }
   else if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_NOT && node[0].getNumChildren() == 1 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    bvcounter[27]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 27));
   }
   else if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 3 && true && true && true) {
@@ -53,6 +60,7 @@ static RewriteResponse RewriteBITVECTOR_OR(TNode node, bool prerewrite = false) 
     children.push_back(node[2]);
     children.push_back(node[1]);
     children.push_back(node[0]);
+    bvcounter[46]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 46));
   }
   else if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 3 && true && true && true) {
@@ -60,6 +68,7 @@ static RewriteResponse RewriteBITVECTOR_OR(TNode node, bool prerewrite = false) 
     children.push_back(node[1]);
     children.push_back(node[0]);
     children.push_back(node[2]);
+    bvcounter[46]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 46));
   }
   else if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 3 && true && true && true) {
@@ -67,6 +76,7 @@ static RewriteResponse RewriteBITVECTOR_OR(TNode node, bool prerewrite = false) 
     children.push_back(node[1]);
     children.push_back(node[2]);
     children.push_back(node[0]);
+    bvcounter[46]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 46));
   }
   else if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 3 && true && true && true) {
@@ -74,6 +84,7 @@ static RewriteResponse RewriteBITVECTOR_OR(TNode node, bool prerewrite = false) 
     children.push_back(node[2]);
     children.push_back(node[0]);
     children.push_back(node[1]);
+    bvcounter[46]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 46));
   }
   else if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 3 && true && true && true) {
@@ -81,6 +92,7 @@ static RewriteResponse RewriteBITVECTOR_OR(TNode node, bool prerewrite = false) 
     children.push_back(node[0]);
     children.push_back(node[2]);
     children.push_back(node[1]);
+    bvcounter[46]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 46));
   }
   else if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 3 && true && true && true) {
@@ -88,20 +100,24 @@ static RewriteResponse RewriteBITVECTOR_OR(TNode node, bool prerewrite = false) 
     children.push_back(node[0]);
     children.push_back(node[1]);
     children.push_back(node[2]);
+    bvcounter[46]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 46));
   }
   else if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[1]);
     children.push_back(node[0]);
+    bvcounter[0]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 0));
   }
   else if (node.getKind() == kind::BITVECTOR_OR && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
+    bvcounter[0]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 0));
   }
+  bvcounter[99]++;
   return RewriteResponse(REWRITE_DONE, node);
 }
 static RewriteResponse RewriteBITVECTOR_NEG(TNode node, bool prerewrite = false) {
@@ -109,14 +125,17 @@ static RewriteResponse RewriteBITVECTOR_NEG(TNode node, bool prerewrite = false)
     std::vector<Node> children;
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
+    bvcounter[18]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 18));
   }
   else if (node.getKind() == kind::BITVECTOR_NEG && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
+    bvcounter[18]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 18));
   }
+  bvcounter[99]++;
   return RewriteResponse(REWRITE_DONE, node);
 }
 static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false) {
@@ -125,6 +144,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
     children.push_back(node[0]);
+    bvcounter[28]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 28));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && true && node[1].getKind() == kind::BITVECTOR_OR && node[1].getNumChildren() == 2 && true && true) {
@@ -132,6 +152,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    bvcounter[28]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 28));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2 && true && true && true) {
@@ -139,6 +160,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
     children.push_back(node[1]);
+    bvcounter[28]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 28));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2 && true && true && true) {
@@ -146,6 +168,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    bvcounter[28]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 28));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 3 && node[0].getKind() == kind::BITVECTOR_NOT && node[0].getNumChildren() == 1 && true && true && true) {
@@ -153,6 +176,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[0][0]);
     children.push_back(node[2]);
     children.push_back(node[1]);
+    bvcounter[38]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 38));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 3 && true && node[1].getKind() == kind::BITVECTOR_NOT && node[1].getNumChildren() == 1 && true && true) {
@@ -160,6 +184,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[1][0]);
     children.push_back(node[0]);
     children.push_back(node[2]);
+    bvcounter[38]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 38));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 3 && true && true && node[2].getKind() == kind::BITVECTOR_NOT && node[2].getNumChildren() == 1 && true) {
@@ -167,6 +192,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[2][0]);
     children.push_back(node[1]);
     children.push_back(node[0]);
+    bvcounter[38]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 38));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 3 && node[0].getKind() == kind::BITVECTOR_NOT && node[0].getNumChildren() == 1 && true && true && true) {
@@ -174,6 +200,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[0][0]);
     children.push_back(node[1]);
     children.push_back(node[2]);
+    bvcounter[38]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 38));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 3 && true && node[1].getKind() == kind::BITVECTOR_NOT && node[1].getNumChildren() == 1 && true && true) {
@@ -181,6 +208,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[1][0]);
     children.push_back(node[2]);
     children.push_back(node[0]);
+    bvcounter[38]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 38));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 3 && true && true && node[2].getKind() == kind::BITVECTOR_NOT && node[2].getNumChildren() == 1 && true) {
@@ -188,6 +216,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[2][0]);
     children.push_back(node[0]);
     children.push_back(node[1]);
+    bvcounter[38]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 38));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && true && node[1].getKind() == kind::BITVECTOR_XOR && node[1].getNumChildren() == 2 && true && true) {
@@ -195,6 +224,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    bvcounter[50]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 50));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_XOR && node[0].getNumChildren() == 2 && true && true && true) {
@@ -202,6 +232,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
     children.push_back(node[1]);
+    bvcounter[50]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 50));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && true && node[1].getKind() == kind::BITVECTOR_XOR && node[1].getNumChildren() == 2 && true && true) {
@@ -209,6 +240,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
     children.push_back(node[0]);
+    bvcounter[50]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 50));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_XOR && node[0].getNumChildren() == 2 && true && true && true) {
@@ -216,18 +248,21 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    bvcounter[50]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 50));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_NOT && node[0].getNumChildren() == 1 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    bvcounter[23]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 23));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && true && node[1].getKind() == kind::BITVECTOR_NOT && node[1].getNumChildren() == 1 && true) {
     std::vector<Node> children;
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    bvcounter[23]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 23));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 3 && true && true && true) {
@@ -235,6 +270,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[1]);
     children.push_back(node[0]);
     children.push_back(node[2]);
+    bvcounter[32]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 32));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 3 && true && true && true) {
@@ -242,6 +278,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[2]);
     children.push_back(node[1]);
     children.push_back(node[0]);
+    bvcounter[32]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 32));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 3 && true && true && true) {
@@ -249,6 +286,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[2]);
     children.push_back(node[0]);
     children.push_back(node[1]);
+    bvcounter[32]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 32));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 3 && true && true && true) {
@@ -256,6 +294,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[0]);
     children.push_back(node[2]);
     children.push_back(node[1]);
+    bvcounter[32]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 32));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 3 && true && true && true) {
@@ -263,6 +302,7 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[0]);
     children.push_back(node[1]);
     children.push_back(node[2]);
+    bvcounter[32]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 32));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 3 && true && true && true) {
@@ -270,20 +310,24 @@ static RewriteResponse RewriteBITVECTOR_AND(TNode node, bool prerewrite = false)
     children.push_back(node[1]);
     children.push_back(node[2]);
     children.push_back(node[0]);
+    bvcounter[32]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 32));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
+    bvcounter[14]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 14));
   }
   else if (node.getKind() == kind::BITVECTOR_AND && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[1]);
     children.push_back(node[0]);
+    bvcounter[14]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 14));
   }
+  bvcounter[99]++;
   return RewriteResponse(REWRITE_DONE, node);
 }
 static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false) {
@@ -292,6 +336,7 @@ static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false)
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
     children.push_back(node[0][2]);
+    bvcounter[34]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 34));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 3 && true && true && true) {
@@ -299,6 +344,7 @@ static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false)
     children.push_back(node[0][0]);
     children.push_back(node[0][2]);
     children.push_back(node[0][1]);
+    bvcounter[34]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 34));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 3 && true && true && true) {
@@ -306,6 +352,7 @@ static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false)
     children.push_back(node[0][2]);
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
+    bvcounter[34]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 34));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 3 && true && true && true) {
@@ -313,6 +360,7 @@ static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false)
     children.push_back(node[0][2]);
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
+    bvcounter[34]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 34));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 3 && true && true && true) {
@@ -320,6 +368,7 @@ static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false)
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
     children.push_back(node[0][2]);
+    bvcounter[34]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 34));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 3 && true && true && true) {
@@ -327,6 +376,7 @@ static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false)
     children.push_back(node[0][1]);
     children.push_back(node[0][2]);
     children.push_back(node[0][0]);
+    bvcounter[34]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 34));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_AND && node[0].getNumChildren() == 3 && true && true && true) {
@@ -334,6 +384,7 @@ static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false)
     children.push_back(node[0][1]);
     children.push_back(node[0][2]);
     children.push_back(node[0][0]);
+    bvcounter[51]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 51));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_AND && node[0].getNumChildren() == 3 && true && true && true) {
@@ -341,6 +392,7 @@ static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false)
     children.push_back(node[0][0]);
     children.push_back(node[0][2]);
     children.push_back(node[0][1]);
+    bvcounter[51]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 51));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_AND && node[0].getNumChildren() == 3 && true && true && true) {
@@ -348,6 +400,7 @@ static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false)
     children.push_back(node[0][2]);
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
+    bvcounter[51]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 51));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_AND && node[0].getNumChildren() == 3 && true && true && true) {
@@ -355,6 +408,7 @@ static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false)
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
     children.push_back(node[0][2]);
+    bvcounter[51]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 51));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_AND && node[0].getNumChildren() == 3 && true && true && true) {
@@ -362,6 +416,7 @@ static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false)
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
     children.push_back(node[0][2]);
+    bvcounter[51]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 51));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_AND && node[0].getNumChildren() == 3 && true && true && true) {
@@ -369,32 +424,38 @@ static RewriteResponse RewriteBITVECTOR_NOT(TNode node, bool prerewrite = false)
     children.push_back(node[0][2]);
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
+    bvcounter[51]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 51));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_AND && node[0].getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
+    bvcounter[29]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 29));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_AND && node[0].getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
+    bvcounter[29]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 29));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
+    bvcounter[44]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 44));
   }
   else if (node.getKind() == kind::BITVECTOR_NOT && node.getNumChildren() == 1 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
+    bvcounter[44]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 44));
   }
+  bvcounter[99]++;
   return RewriteResponse(REWRITE_DONE, node);
 }
 static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false) {
@@ -403,6 +464,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
     children.push_back(node[0]);
+    bvcounter[48]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 48));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2 && true && true && true) {
@@ -410,6 +472,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
     children.push_back(node[1]);
+    bvcounter[48]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 48));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 2 && true && node[1].getKind() == kind::BITVECTOR_OR && node[1].getNumChildren() == 2 && true && true) {
@@ -417,6 +480,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    bvcounter[48]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 48));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2 && true && true && true) {
@@ -424,6 +488,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    bvcounter[48]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 48));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 2 && true && node[1].getKind() == kind::BITVECTOR_AND && node[1].getNumChildren() == 2 && true && true) {
@@ -431,6 +496,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    bvcounter[49]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 49));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_AND && node[0].getNumChildren() == 2 && true && true && true) {
@@ -438,6 +504,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    bvcounter[49]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 49));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_AND && node[0].getNumChildren() == 2 && true && true && true) {
@@ -445,6 +512,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
     children.push_back(node[1]);
+    bvcounter[49]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 49));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 2 && true && node[1].getKind() == kind::BITVECTOR_AND && node[1].getNumChildren() == 2 && true && true) {
@@ -452,6 +520,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
     children.push_back(node[0]);
+    bvcounter[49]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 49));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 3 && true && true && true) {
@@ -459,6 +528,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[0]);
     children.push_back(node[2]);
     children.push_back(node[1]);
+    bvcounter[41]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 41));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 3 && true && true && true) {
@@ -466,6 +536,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[2]);
     children.push_back(node[0]);
     children.push_back(node[1]);
+    bvcounter[41]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 41));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 3 && true && true && true) {
@@ -473,6 +544,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[1]);
     children.push_back(node[2]);
     children.push_back(node[0]);
+    bvcounter[41]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 41));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 3 && true && true && true) {
@@ -480,6 +552,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[0]);
     children.push_back(node[1]);
     children.push_back(node[2]);
+    bvcounter[41]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 41));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 3 && true && true && true) {
@@ -487,6 +560,7 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[1]);
     children.push_back(node[0]);
     children.push_back(node[2]);
+    bvcounter[41]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 41));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 3 && true && true && true) {
@@ -494,20 +568,24 @@ static RewriteResponse RewriteBITVECTOR_XOR(TNode node, bool prerewrite = false)
     children.push_back(node[2]);
     children.push_back(node[1]);
     children.push_back(node[0]);
+    bvcounter[41]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 41));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
+    bvcounter[16]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 16));
   }
   else if (node.getKind() == kind::BITVECTOR_XOR && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[1]);
     children.push_back(node[0]);
+    bvcounter[16]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 16));
   }
+  bvcounter[99]++;
   return RewriteResponse(REWRITE_DONE, node);
 }
 static RewriteResponse RewriteBITVECTOR_PLUS(TNode node, bool prerewrite = false) {
@@ -515,26 +593,31 @@ static RewriteResponse RewriteBITVECTOR_PLUS(TNode node, bool prerewrite = false
     std::vector<Node> children;
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    bvcounter[19]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 19));
   }
   else if (node.getKind() == kind::BITVECTOR_PLUS && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_NEG && node[0].getNumChildren() == 1 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    bvcounter[19]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 19));
   }
   else if (node.getKind() == kind::BITVECTOR_PLUS && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
+    bvcounter[2]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 2));
   }
   else if (node.getKind() == kind::BITVECTOR_PLUS && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[1]);
     children.push_back(node[0]);
+    bvcounter[2]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialFixedWidth(children, 2));
   }
+  bvcounter[99]++;
   return RewriteResponse(REWRITE_DONE, node);
 }
 static RewriteResponse RewriteBITVECTOR_SLT(TNode node, bool prerewrite = false) {
@@ -542,38 +625,38 @@ static RewriteResponse RewriteBITVECTOR_SLT(TNode node, bool prerewrite = false)
     std::vector<Node> children;
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
+    bvcounter[47]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 47));
   }
   else if (node.getKind() == kind::BITVECTOR_SLT && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_PLUS && node[0].getNumChildren() == 2 && true && true && node[1].getKind() == kind::BITVECTOR_PLUS && node[1].getNumChildren() == 2 && node[0][1] == node[1][0] && node[0][0] == node[1][1]) {
     std::vector<Node> children;
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
+    bvcounter[47]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 47));
   }
   else if (node.getKind() == kind::BITVECTOR_SLT && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_PLUS && node[0].getNumChildren() == 2 && true && true && node[1].getKind() == kind::BITVECTOR_PLUS && node[1].getNumChildren() == 2 && node[0][0] == node[1][0] && node[0][1] == node[1][1]) {
     std::vector<Node> children;
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
+    bvcounter[47]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 47));
   }
   else if (node.getKind() == kind::BITVECTOR_SLT && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_PLUS && node[0].getNumChildren() == 2 && true && true && node[1].getKind() == kind::BITVECTOR_PLUS && node[1].getNumChildren() == 2 && node[0][0] == node[1][0] && node[0][1] == node[1][1]) {
     std::vector<Node> children;
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
+    bvcounter[47]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 47));
-  }
-  else if (node.getKind() == kind::BITVECTOR_SLT && node.getNumChildren() == 2 && true && node[1].getKind() == kind::BITVECTOR_NEG && node[1].getNumChildren() == 1 && true) {
-    std::vector<Node> children;
-    children.push_back(node[0]);
-    children.push_back(node[1][0]);
-    return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 56));
   }
   else if (node.getKind() == kind::BITVECTOR_SLT && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
-    //return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 17));
+    bvcounter[17]++;
+    return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 17));
   }
+  bvcounter[99]++;
   return RewriteResponse(REWRITE_DONE, node);
 }
 static RewriteResponse RewriteEQUAL(TNode node, bool prerewrite = false) {
@@ -581,26 +664,31 @@ static RewriteResponse RewriteEQUAL(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    bvcounter[54]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 54));
   }
   else if (node.getKind() == kind::EQUAL && node.getNumChildren() == 2 && true && node[1].getKind() == kind::BITVECTOR_NOT && node[1].getNumChildren() == 1 && true) {
     std::vector<Node> children;
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    bvcounter[54]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 54));
   }
   else if (node.getKind() == kind::EQUAL && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
+    bvcounter[1]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 1));
   }
   else if (node.getKind() == kind::EQUAL && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[1]);
     children.push_back(node[0]);
+    bvcounter[1]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 1));
   }
+  bvcounter[99]++;
   return RewriteResponse(REWRITE_DONE, node);
 }
 static RewriteResponse RewriteBITVECTOR_ULT(TNode node, bool prerewrite = false) {
@@ -608,73 +696,88 @@ static RewriteResponse RewriteBITVECTOR_ULT(TNode node, bool prerewrite = false)
     std::vector<Node> children;
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
+    bvcounter[35]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 35));
   }
   else if (node.getKind() == kind::BITVECTOR_ULT && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_PLUS && node[0].getNumChildren() == 2 && true && true && node[1].getKind() == kind::BITVECTOR_PLUS && node[1].getNumChildren() == 2 && node[0][0] == node[1][0] && node[0][1] == node[1][1]) {
     std::vector<Node> children;
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
+    bvcounter[35]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 35));
   }
   else if (node.getKind() == kind::BITVECTOR_ULT && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_PLUS && node[0].getNumChildren() == 2 && true && true && node[1].getKind() == kind::BITVECTOR_PLUS && node[1].getNumChildren() == 2 && node[0][1] == node[1][0] && node[0][0] == node[1][1]) {
     std::vector<Node> children;
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
+    bvcounter[35]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 35));
   }
   else if (node.getKind() == kind::BITVECTOR_ULT && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_PLUS && node[0].getNumChildren() == 2 && true && true && node[1].getKind() == kind::BITVECTOR_PLUS && node[1].getNumChildren() == 2 && node[0][0] == node[1][0] && node[0][1] == node[1][1]) {
     std::vector<Node> children;
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
+    bvcounter[35]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 35));
   }
   else if (node.getKind() == kind::BITVECTOR_ULT && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2 && true && true && node[1].getKind() == kind::BITVECTOR_OR && node[1].getNumChildren() == 2 && node[0][0] == node[1][0] && node[0][1] == node[1][1]) {
     std::vector<Node> children;
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
+    bvcounter[43]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 43));
   }
   else if (node.getKind() == kind::BITVECTOR_ULT && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2 && true && true && node[1].getKind() == kind::BITVECTOR_OR && node[1].getNumChildren() == 2 && node[0][0] == node[1][0] && node[0][1] == node[1][1]) {
     std::vector<Node> children;
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
+    bvcounter[43]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 43));
   }
   else if (node.getKind() == kind::BITVECTOR_ULT && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2 && true && true && node[1].getKind() == kind::BITVECTOR_OR && node[1].getNumChildren() == 2 && node[0][1] == node[1][0] && node[0][0] == node[1][1]) {
     std::vector<Node> children;
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
+    bvcounter[43]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 43));
   }
   else if (node.getKind() == kind::BITVECTOR_ULT && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2 && true && true && node[1].getKind() == kind::BITVECTOR_OR && node[1].getNumChildren() == 2 && node[0][1] == node[1][0] && node[0][0] == node[1][1]) {
     std::vector<Node> children;
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
+    bvcounter[43]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 43));
   }
   else if (node.getKind() == kind::BITVECTOR_ULT && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_PLUS && node[0].getNumChildren() == 2 && true && true && node[0][0] == node[1]) {
     std::vector<Node> children;
     children.push_back(node[1]);
     children.push_back(node[0][1]);
+    bvcounter[40]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 40));
   }
   else if (node.getKind() == kind::BITVECTOR_ULT && node.getNumChildren() == 2 && node[0].getKind() == kind::BITVECTOR_PLUS && node[0].getNumChildren() == 2 && true && true && node[0][1] == node[1]) {
     std::vector<Node> children;
     children.push_back(node[1]);
     children.push_back(node[0][0]);
+    bvcounter[40]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 40));
   }
   else if (node.getKind() == kind::BITVECTOR_ULT && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
+    bvcounter[5]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialPredicate(children, 5));
   }
+  bvcounter[99]++;
   return RewriteResponse(REWRITE_DONE, node);
 }
 void TheoryBVSpecialRewriter::initializeRewrites() {
   for (unsigned i = 0; i < kind::LAST_KIND; i++) {
     d_rewriteTable[i] = IdentityRewrite;
+  }
+  for (int i = 0; i < 100; i++) {
+    bvcounter[i] = 0;
   }
   d_rewriteTable[kind::BITVECTOR_OR] = RewriteBITVECTOR_OR;
   d_rewriteTable[kind::BITVECTOR_NEG] = RewriteBITVECTOR_NEG;
@@ -685,4 +788,13 @@ void TheoryBVSpecialRewriter::initializeRewrites() {
   d_rewriteTable[kind::BITVECTOR_SLT] = RewriteBITVECTOR_SLT;
   d_rewriteTable[kind::EQUAL] = RewriteEQUAL;
   d_rewriteTable[kind::BITVECTOR_ULT] = RewriteBITVECTOR_ULT;
+}
+
+void TheoryBVSpecialRewriter::print() {
+  Chat() << "BV rewrite statistics" << std::endl;
+  for (int i = 0; i < 100; i++) {
+    if (bvcounter[i] > 0)
+      Chat() << i << " " << bvcounter[i] << std::endl;
+  }
+
 }
