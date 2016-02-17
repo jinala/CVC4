@@ -89,6 +89,7 @@ void EagerBitblaster::bbAtom(TNode node) {
   Node reduced = normalized;
   if (options::doOptimization()) {
     reduced = Rewriter::rewrite(normalized, true, true);
+    Rewriter::clearCaches();
   } 
   Node atom_bb = reduced.getKind() != kind::CONST_BOOLEAN ?
       Rewriter::rewrite(d_atomBBStrategies[reduced.getKind()](reduced, this)) :
