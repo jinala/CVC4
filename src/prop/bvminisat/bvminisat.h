@@ -114,6 +114,10 @@ public:
   SatValue assertAssumption(SatLiteral lit, bool propagate);
 
   void popAssumption();
+  
+  void printStats() {
+    Chat() << "Clauses: " << d_minisat->nClauses() << " Vars: " << d_minisat->nVars() << std::endl;
+  }
 
 private:
   /* Disable the default constructor. */

@@ -74,6 +74,10 @@ public:
   bool flipDecision();
 
   bool isDecision(SatVariable decn) const;
+  
+  void printStats() {
+    Chat() << "Clauses: " << d_minisat->nClauses() << " Vars: " << d_minisat->nVars() << std::endl;
+  }
 
 private:
 

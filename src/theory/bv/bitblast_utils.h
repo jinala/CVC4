@@ -23,6 +23,8 @@
 #include <ostream>
 #include "expr/node.h"
 #include "prop/cnf_stream.h"
+#include "prop/minisat/minisat.h"
+#include "options/main_options.h"
 
 #ifdef CVC4_USE_ABC
 #include "base/main/main.h"
@@ -294,17 +296,72 @@ std::pair<T,T> optimalFullAdder(const T a, const T b, const T cin,
 std::pair<Node, Node> inline optimalFullAdder(const Node a, const Node b,
                                                          const Node cin,
                                                          CVC4::prop::CnfStream* cnf) {
+  if (true) {
+    
+    if (cnf->hasFA(a, b, cin)) {
+      return cnf->getCachedFA(a, b, cin);
+    }
+    
+    // check for constants
+    if (false) {
+    unsigned num_false = 0;
+    std::vector<Node> non_const;
+    if (a == mkFalse<Node>()) {
+      ++num_false;
+    } else {
+      non_const.push_back(a);
+    }
+    
+    if (b == mkFalse<Node>()) {
+      ++num_false;
+    } else {
+      non_const.push_back(b);
+    }
+    
+    if (cin  == mkFalse<Node>()) {
+      ++num_false;
+    } else {
+      non_const.push_back(cin);
+    }
+    
+    if (num_false == 3) {
+      return std::make_pair(mkFalse<Node>(), mkFalse<Node>());
+    }
+    if (num_false == 2) {
+      Assert (non_const.size() == 1);
+      return std::make_pair(non_const[0], mkFalse<Node>());
+    }
+    if (num_false == 1) {
+      Assert (non_const.size() == 2);
+      Node sum = mkXor(non_const[0], non_const[1]);
+      Node cout = mkAnd(non_const[0], non_const[1]);
+      return std::make_pair(sum, cout);
+    }
+    }
+  }
+
   
   NodeManager* nm = NodeManager::currentNM();
   Node s = nm->mkSkolem("sum", nm->booleanType());
   Node cout = nm->mkSkolem("carry", nm->booleanType());
   
+  cnf->cacheFA(a, b, cin, s, cout);
   
-  Node na = nm->mkNode(kind::NOT, a);
-  Node nb = nm->mkNode(kind::NOT, b);
-  Node ncin = nm->mkNode(kind::NOT, cin);
-  Node ncout = nm->mkNode(kind::NOT, cout);
-  Node ns = nm->mkNode(kind::NOT, s);
+  if (false) {
+    Node cout_expr = mkOr(mkAnd(a, b),
+                          mkAnd(mkXor(a, b),
+                                cin));
+    Node sum_expr = mkXor(mkXor(a, b), cin);
+    
+    cnf->mergeInMap(cout_expr, cout);
+    cnf->mergeInMap(sum_expr, s);
+  }
+  
+  Node na = a.negate();
+  Node nb = b.negate();
+  Node ncin = cin.negate();
+  Node ncout = cout.negate();
+  Node ns = s.negate();
   
   cnf->convertAndAssert(nm->mkNode(kind::OR, na, nb, cout),
                         false, false, RULE_INVALID, TNode::null());
@@ -373,7 +430,10 @@ void shiftOptimalAddMultiplier(const std::vector<T>&a, const std::vector<T>& b,
 template<>
 inline void shiftOptimalAddMultiplier(const std::vector<Node>&a, const std::vector<Node>&b,
                                       std::vector<Node>& res, CVC4::prop::CnfStream* cnf) {
-  
+  if (options::printStats()) {
+    Chat() << "Before shiftOptimalAddMultiplier ";
+    cnf->getSatSolver()->printStats();
+  }
   for (unsigned i = 0; i < a.size(); ++i) {
     res.push_back(mkAnd(b[0], a[i]));
   }
@@ -388,6 +448,11 @@ inline void shiftOptimalAddMultiplier(const std::vector<Node>&a, const std::vect
       carry_in = fa_res.second;
     }
   }
+  if (options::printStats()) {
+    Chat() << "After shiftOptimalAddMultiplier ";
+    cnf->getSatSolver()->printStats();
+  }
+  
 }
 
 

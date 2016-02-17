@@ -39,6 +39,11 @@ namespace CVC4 {
 namespace prop {
 
 class PropEngine;
+  
+  
+  typedef std::pair < Node, std::pair< Node, Node> > Triple;
+  typedef std::pair < Node,  Node> FAResult;
+  typedef std::map<Triple, FAResult> FASet;
 
 /**
  * Comments for the behavior of the whole class... [??? -Chris]
@@ -68,6 +73,7 @@ protected:
   /** Map from literals to nodes */
   LiteralToNodeMap d_literalToNodeMap;
 
+  FASet d_fullAdderCache; 
   /**
    * True if the lit-to-Node map should be kept for all lits, not just
    * theory lits.  This is true if e.g. replay logging is on, which
@@ -207,6 +213,13 @@ public:
   virtual ~CnfStream() {
   }
 
+  void cacheFA(TNode a, TNode b, TNode carry, TNode sum, TNode carry_out);
+  bool hasFA(TNode a, TNode b, TNode carry);
+  FAResult getCachedFA(TNode a, TNode b, TNode carry);
+  
+  SatSolver* getSatSolver() {
+    return d_satSolver;
+  }
   /**
    * Converts and asserts a formula.
    * @param node node to convert and assert
@@ -236,6 +249,8 @@ public:
    * convertAndAssert().
    */
   virtual void ensureLiteral(TNode n) = 0;
+  
+  virtual void mergeInMap(TNode node, TNode rep) = 0;
 
   /**
    * Returns the literal that represents the given node in the SAT CNF
@@ -343,6 +358,7 @@ public:
 private:
   void ensureLiteral(TNode n);
 
+  void mergeInMap(TNode node, TNode rep);
 };/* class TseitinCnfStream */
 
 

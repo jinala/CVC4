@@ -3365,8 +3365,10 @@ Result SmtEngine::check() {
   Trace("limit") << "SmtEngine::check(): cumulative millis " << resourceManager->getTimeUsage()
                  << ", resources " << resourceManager->getResourceUsage() << endl;
 
-  ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::print();
-  ::CVC4::theory::bv::TheoryBVSpecialRewriter::print();
+  if (options::printStats()) {
+    ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::print();
+    ::CVC4::theory::bv::TheoryBVSpecialRewriter::print();
+  }
   return Result(result, d_filename);
 }
 

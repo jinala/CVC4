@@ -67,5 +67,7 @@ expert-option doOptimization --do-optimization bool :default false
   use optimized encodings
 expert-option optimizeFullAdder --optimize-full-adder bool :default false
   use optimized encoding for full adder
+expert-option printStats --print-stats bool :default false
+  print statistics
 
 endmodule

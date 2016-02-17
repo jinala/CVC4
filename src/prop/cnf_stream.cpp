@@ -61,6 +61,7 @@ CnfStream::CnfStream(SatSolver* satSolver, Registrar* registrar,
       d_registrar(registrar),
       d_assertionTable(context),
       d_globals(globals),
+      d_fullAdderCache(),
       d_removable(false) {
 }
 
@@ -69,6 +70,23 @@ TseitinCnfStream::TseitinCnfStream(SatSolver* satSolver, Registrar* registrar,
                                    SmtGlobals* globals, bool fullLitToNodeMap)
     : CnfStream(satSolver, registrar, context, globals, fullLitToNodeMap)
 {}
+  
+bool CnfStream::hasFA(TNode a, TNode b, TNode carry) {
+  Triple fa = std::make_pair(a, std::make_pair(b, carry));
+  return d_fullAdderCache.find(fa) != d_fullAdderCache.end();
+}
+
+FAResult CnfStream::getCachedFA(TNode a, TNode b, TNode carry) {
+  Triple fa = std::make_pair(a, std::make_pair(b, carry));
+  return d_fullAdderCache.find(fa)->second;
+}
+
+void CnfStream::cacheFA(TNode a, TNode b, TNode carry, TNode sum, TNode carry_out) {
+  Triple fa = std::make_pair(a, std::make_pair(b, carry));
+  FAResult res = std::make_pair(sum, carry_out);
+  d_fullAdderCache[fa] = res;
+}
+
 
 void CnfStream::assertClause(TNode node, SatClause& c, ProofRule proof_id) {
   Debug("cnf") << "Inserting into stream " << c << " node = " << node << ", proof id = " << proof_id << endl;
@@ -126,6 +144,18 @@ bool CnfStream::hasLiteral(TNode n) const {
   return find != d_nodeToLiteralMap.end();
 }
 
+void TseitinCnfStream::mergeInMap(TNode node, TNode rep) {
+  Assert (!hasLiteral(rep) && rep.isVar());
+  
+  if (hasLiteral(node)) {
+    SatLiteral lit = getLiteral(node);
+    d_nodeToLiteralMap.insert(rep, lit);
+  } else {
+    SatLiteral lit = convertAtom(rep);
+    d_nodeToLiteralMap.insert(node, lit);
+  }
+}
+  
 void TseitinCnfStream::ensureLiteral(TNode n) {
   // These are not removable and have no proof ID
   d_removable = false;

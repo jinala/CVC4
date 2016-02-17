@@ -76,7 +76,9 @@ public:
 
   /** Get the current assertion level */
   virtual unsigned getAssertionLevel() const = 0;
-
+  
+  virtual void printStats() = 0;
+  
 };/* class SatSolver */
 
 

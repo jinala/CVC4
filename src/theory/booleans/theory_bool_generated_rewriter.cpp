@@ -1,6 +1,8 @@
 #include "theory/booleans/theory_bool_special_rewriter.h"
 #include "theory/theory.h"
 #include "theory/bv/theory_bv_utils.h"
+#include "options/main_options.h"
+
 
 using namespace CVC4;
 using namespace CVC4::theory;
@@ -14,6 +16,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[0][1]);
     children.push_back(node[2]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[39]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 39));
   }
@@ -22,6 +25,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
     children.push_back(node[2]);
+    if (options::printStats())
     counter[39]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 39));
   }
@@ -30,6 +34,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[2][1]);
     children.push_back(node[2][0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[39]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 39));
   }
@@ -38,6 +43,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[1]);
     children.push_back(node[2]);
+    if (options::printStats())
     counter[39]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 39));
   }
@@ -46,6 +52,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
     children.push_back(node[2]);
+    if (options::printStats())
     counter[39]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 39));
   }
@@ -54,6 +61,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[2][0]);
     children.push_back(node[2][1]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[39]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 39));
   }
@@ -62,6 +70,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[2]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[39]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 39));
   }
@@ -70,6 +79,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[1][1]);
     children.push_back(node[2]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[39]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 39));
   }
@@ -78,6 +88,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[2][0]);
     children.push_back(node[2][1]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[39]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 39));
   }
@@ -86,6 +97,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[2][1]);
     children.push_back(node[2][0]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[39]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 39));
   }
@@ -94,6 +106,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[1][0]);
     children.push_back(node[2]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[39]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 39));
   }
@@ -102,6 +115,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[0][1]);
     children.push_back(node[1]);
     children.push_back(node[2]);
+    if (options::printStats())
     counter[39]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 39));
   }
@@ -110,6 +124,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[24]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 24));
   }
@@ -118,6 +133,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[24]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 24));
   }
@@ -126,6 +142,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[24]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 24));
   }
@@ -134,6 +151,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[24]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 24));
   }
@@ -142,6 +160,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[2]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[36]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 36));
   }
@@ -150,6 +169,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[2][0]);
     children.push_back(node[0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[36]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 36));
   }
@@ -158,6 +178,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[2][0]);
     children.push_back(node[1]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[36]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 36));
   }
@@ -166,6 +187,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[1][0]);
     children.push_back(node[0]);
     children.push_back(node[2]);
+    if (options::printStats())
     counter[36]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 36));
   }
@@ -174,6 +196,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[1][0]);
     children.push_back(node[2]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[36]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 36));
   }
@@ -182,6 +205,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[1]);
     children.push_back(node[2]);
+    if (options::printStats())
     counter[36]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 36));
   }
@@ -189,6 +213,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[10]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 10));
   }
@@ -196,6 +221,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[10]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 10));
   }
@@ -204,6 +230,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[2]);
     children.push_back(node[1]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[20]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 20));
   }
@@ -212,6 +239,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[2]);
     children.push_back(node[0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[20]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 20));
   }
@@ -220,6 +248,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[1]);
     children.push_back(node[0]);
     children.push_back(node[2]);
+    if (options::printStats())
     counter[20]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 20));
   }
@@ -228,6 +257,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[1]);
     children.push_back(node[2]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[20]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 20));
   }
@@ -236,6 +266,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[0]);
     children.push_back(node[1]);
     children.push_back(node[2]);
+    if (options::printStats())
     counter[20]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 20));
   }
@@ -244,6 +275,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     children.push_back(node[0]);
     children.push_back(node[2]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[20]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 20));
   }
@@ -251,6 +283,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[1]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[8]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 8));
   }
@@ -258,6 +291,7 @@ static RewriteResponse RewriteAND(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[8]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 8));
   }
@@ -270,6 +304,7 @@ static RewriteResponse RewriteIMPLIES(TNode node, bool prerewrite = false) {
     children.push_back(node[0]);
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
+    if (options::printStats())
     counter[33]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 33));
   }
@@ -278,6 +313,7 @@ static RewriteResponse RewriteIMPLIES(TNode node, bool prerewrite = false) {
     children.push_back(node[0]);
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
+    if (options::printStats())
     counter[33]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 33));
   }
@@ -285,6 +321,7 @@ static RewriteResponse RewriteIMPLIES(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[9]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 9));
   }
@@ -292,6 +329,7 @@ static RewriteResponse RewriteIMPLIES(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[4]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 4));
   }
@@ -304,6 +342,7 @@ static RewriteResponse RewriteITE(TNode node, bool prerewrite = false) {
     children.push_back(node[0]);
     children.push_back(node[1]);
     children.push_back(node[2]);
+    if (options::printStats())
     counter[3]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 3));
   }
@@ -316,6 +355,7 @@ static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false) {
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[13]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 13));
   }
@@ -324,6 +364,7 @@ static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[13]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 13));
   }
@@ -332,6 +373,7 @@ static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false) {
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[13]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 13));
   }
@@ -340,6 +382,7 @@ static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false) {
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[13]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 13));
   }
@@ -348,6 +391,7 @@ static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[31]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 31));
   }
@@ -356,6 +400,7 @@ static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false) {
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[31]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 31));
   }
@@ -364,6 +409,7 @@ static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false) {
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[31]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 31));
   }
@@ -372,6 +418,7 @@ static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false) {
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[31]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 31));
   }
@@ -379,6 +426,7 @@ static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[11]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 11));
   }
@@ -386,6 +434,7 @@ static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[11]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 11));
   }
@@ -393,6 +442,7 @@ static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[1]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[7]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 7));
   }
@@ -400,6 +450,7 @@ static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[7]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 7));
   }
@@ -411,6 +462,7 @@ static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false) {
     children.push_back(node[0][1]);
     children.push_back(node[0][2]);
     children.push_back(node[0][0]);
+    if (options::printStats())
     counter[42]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 42));
   }
@@ -419,6 +471,7 @@ static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
     children.push_back(node[0][2]);
+    if (options::printStats())
     counter[42]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 42));
   }
@@ -427,6 +480,7 @@ static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false) {
     children.push_back(node[0][2]);
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
+    if (options::printStats())
     counter[42]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 42));
   }
@@ -435,6 +489,7 @@ static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[0][2]);
     children.push_back(node[0][1]);
+    if (options::printStats())
     counter[42]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 42));
   }
@@ -443,6 +498,7 @@ static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false) {
     children.push_back(node[0][2]);
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
+    if (options::printStats())
     counter[42]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 42));
   }
@@ -451,6 +507,7 @@ static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false) {
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
     children.push_back(node[0][2]);
+    if (options::printStats())
     counter[42]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 42));
   }
@@ -458,6 +515,7 @@ static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
+    if (options::printStats())
     counter[15]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 15));
   }
@@ -465,6 +523,7 @@ static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
+    if (options::printStats())
     counter[15]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 15));
   }
@@ -472,6 +531,7 @@ static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
+    if (options::printStats())
     counter[26]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 26));
   }
@@ -479,6 +539,7 @@ static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
+    if (options::printStats())
     counter[26]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 26));
   }
@@ -486,6 +547,7 @@ static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
+    if (options::printStats())
     counter[45]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 45));
   }
@@ -493,6 +555,7 @@ static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
+    if (options::printStats())
     counter[45]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 45));
   }
@@ -500,6 +563,7 @@ static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
+    if (options::printStats())
     counter[52]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 52));
   }
@@ -512,6 +576,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[2][1]);
     children.push_back(node[2][0]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[53]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 53));
   }
@@ -520,6 +585,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
     children.push_back(node[2]);
+    if (options::printStats())
     counter[53]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 53));
   }
@@ -528,6 +594,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[2][0]);
     children.push_back(node[2][1]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[53]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 53));
   }
@@ -536,6 +603,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[0][1]);
     children.push_back(node[2]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[53]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 53));
   }
@@ -544,6 +612,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[2][0]);
     children.push_back(node[2][1]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[53]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 53));
   }
@@ -552,6 +621,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[1][0]);
     children.push_back(node[2]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[53]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 53));
   }
@@ -560,6 +630,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
     children.push_back(node[2]);
+    if (options::printStats())
     counter[53]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 53));
   }
@@ -568,6 +639,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[1][1]);
     children.push_back(node[2]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[53]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 53));
   }
@@ -576,6 +648,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[1]);
     children.push_back(node[2]);
+    if (options::printStats())
     counter[53]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 53));
   }
@@ -584,6 +657,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[2]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[53]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 53));
   }
@@ -592,6 +666,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[2][1]);
     children.push_back(node[2][0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[53]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 53));
   }
@@ -600,6 +675,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[0][1]);
     children.push_back(node[1]);
     children.push_back(node[2]);
+    if (options::printStats())
     counter[53]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 53));
   }
@@ -608,6 +684,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[1][1]);
     children.push_back(node[1][0]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[22]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 22));
   }
@@ -616,6 +693,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[0][1]);
     children.push_back(node[0][0]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[22]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 22));
   }
@@ -624,6 +702,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[0][1]);
     children.push_back(node[1]);
+    if (options::printStats())
     counter[22]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 22));
   }
@@ -632,6 +711,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[1][0]);
     children.push_back(node[1][1]);
     children.push_back(node[0]);
+    if (options::printStats())
     counter[22]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 22));
   }
@@ -640,7 +720,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[1][0]);
     children.push_back(node[2]);
     children.push_back(node[0]);
-    counter[30]++;
+    if (options::printStats()) counter[30]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 30));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 3 && true && true && node[2].getKind() == kind::NOT && node[2].getNumChildren() == 1 && true) {
@@ -648,7 +728,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[2][0]);
     children.push_back(node[0]);
     children.push_back(node[1]);
-    counter[30]++;
+    if (options::printStats()) counter[30]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 30));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 3 && true && node[1].getKind() == kind::NOT && node[1].getNumChildren() == 1 && true && true) {
@@ -656,7 +736,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[1][0]);
     children.push_back(node[0]);
     children.push_back(node[2]);
-    counter[30]++;
+    if (options::printStats()) counter[30]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 30));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 3 && true && true && node[2].getKind() == kind::NOT && node[2].getNumChildren() == 1 && true) {
@@ -664,7 +744,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[2][0]);
     children.push_back(node[1]);
     children.push_back(node[0]);
-    counter[30]++;
+    if (options::printStats()) counter[30]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 30));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 3 && node[0].getKind() == kind::NOT && node[0].getNumChildren() == 1 && true && true && true) {
@@ -672,7 +752,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[1]);
     children.push_back(node[2]);
-    counter[30]++;
+    if (options::printStats()) counter[30]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 30));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 3 && node[0].getKind() == kind::NOT && node[0].getNumChildren() == 1 && true && true && true) {
@@ -680,21 +760,21 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[0][0]);
     children.push_back(node[2]);
     children.push_back(node[1]);
-    counter[30]++;
+    if (options::printStats()) counter[30]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 30));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 2 && true && node[1].getKind() == kind::NOT && node[1].getNumChildren() == 1 && true) {
     std::vector<Node> children;
     children.push_back(node[1][0]);
     children.push_back(node[0]);
-    counter[12]++;
+    if (options::printStats()) counter[12]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 12));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 2 && node[0].getKind() == kind::NOT && node[0].getNumChildren() == 1 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0][0]);
     children.push_back(node[1]);
-    counter[12]++;
+    if (options::printStats()) counter[12]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 12));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 3 && true && true && true) {
@@ -702,7 +782,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[0]);
     children.push_back(node[2]);
     children.push_back(node[1]);
-    counter[21]++;
+    if (options::printStats()) counter[21]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 21));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 3 && true && true && true) {
@@ -710,7 +790,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[1]);
     children.push_back(node[0]);
     children.push_back(node[2]);
-    counter[21]++;
+    if (options::printStats()) counter[21]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 21));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 3 && true && true && true) {
@@ -718,7 +798,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[2]);
     children.push_back(node[0]);
     children.push_back(node[1]);
-    counter[21]++;
+    if (options::printStats()) counter[21]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 21));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 3 && true && true && true) {
@@ -726,7 +806,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[0]);
     children.push_back(node[1]);
     children.push_back(node[2]);
-    counter[21]++;
+    if (options::printStats()) counter[21]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 21));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 3 && true && true && true) {
@@ -734,7 +814,7 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[1]);
     children.push_back(node[2]);
     children.push_back(node[0]);
-    counter[21]++;
+    if (options::printStats()) counter[21]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 21));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 3 && true && true && true) {
@@ -742,24 +822,24 @@ static RewriteResponse RewriteOR(TNode node, bool prerewrite = false) {
     children.push_back(node[2]);
     children.push_back(node[1]);
     children.push_back(node[0]);
-    counter[21]++;
+    if (options::printStats()) counter[21]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 21));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[1]);
     children.push_back(node[0]);
-    counter[6]++;
+    if (options::printStats()) counter[6]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 6));
   }
   else if (node.getKind() == kind::OR && node.getNumChildren() == 2 && true && true) {
     std::vector<Node> children;
     children.push_back(node[0]);
     children.push_back(node[1]);
-    counter[6]++;
+    if (options::printStats()) counter[6]++;
     return RewriteResponse(REWRITE_DONE, utils::mkSpecialBool(children, 6));
   }
-  counter[99]++;
+  if (options::printStats()) counter[99]++;
   return RewriteResponse(REWRITE_DONE, node);
 }
 RewriteResponse TheoryBoolSpecialRewriter::rewrite(TNode node) {
@@ -771,7 +851,7 @@ RewriteResponse TheoryBoolSpecialRewriter::rewrite(TNode node) {
     case kind::NOT : return RewriteNOT(node);
     case kind::OR : return RewriteOR(node);
     default:
-      counter[99]++;
+      if (options::printStats()) counter[99]++;
       return RewriteResponse(REWRITE_DONE, node);
   }
 }
