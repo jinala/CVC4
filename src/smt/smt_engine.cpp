@@ -3361,6 +3361,9 @@ Result SmtEngine::check() {
     ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::print();
     ::CVC4::theory::bv::TheoryBVSpecialRewriter::print();
   }
+  if (options::printDags() && options::bitblastMode() == theory::bv::BITBLAST_MODE_EAGER) {
+    exit(0);
+  }
   Chat() << "solving..." << endl;
   Trace("smt") << "SmtEngine::check(): running check" << endl;
   Result result = d_propEngine->checkSat();
