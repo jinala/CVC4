@@ -100,6 +100,9 @@ void EagerBitblaster::bbAtom(TNode node) {
   AlwaysAssert (options::bitblastMode() == theory::bv::BITBLAST_MODE_EAGER);
   storeBBAtom(node, atom_definition);
   d_cnfStream->convertAndAssert(atom_definition, false, false, RULE_INVALID, TNode::null());
+  if (options::printStats()) {
+    d_cnfStream->getSatSolver()->printStats();
+  }
 }
 
 void EagerBitblaster::storeBBAtom(TNode atom, Node atom_bb) {

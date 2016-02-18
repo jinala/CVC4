@@ -3357,6 +3357,10 @@ Result SmtEngine::check() {
 
   TimerStat::CodeTimer solveTimer(d_stats->d_solveTime);
 
+  if (options::printStats()) {
+    ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::print();
+    ::CVC4::theory::bv::TheoryBVSpecialRewriter::print();
+  }
   Chat() << "solving..." << endl;
   Trace("smt") << "SmtEngine::check(): running check" << endl;
   Result result = d_propEngine->checkSat();
@@ -3365,10 +3369,6 @@ Result SmtEngine::check() {
   Trace("limit") << "SmtEngine::check(): cumulative millis " << resourceManager->getTimeUsage()
                  << ", resources " << resourceManager->getResourceUsage() << endl;
 
-  if (options::printStats()) {
-    ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::print();
-    ::CVC4::theory::bv::TheoryBVSpecialRewriter::print();
-  }
   return Result(result, d_filename);
 }
 

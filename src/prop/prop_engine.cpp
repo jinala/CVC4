@@ -181,6 +181,9 @@ Result PropEngine::checkSat() {
   // Reset the interrupted flag
   d_interrupted = false;
 
+  if (options::printStats()) {
+    d_satSolver->printStats();
+  }
   // Check the problem
   SatValue result = d_satSolver->solve();
 
