@@ -346,6 +346,8 @@ void inline optimalEncodingFixedWidth(int enc_id, const std::vector<std::vector<
       ss << "out_" << i;
       out.push_back(nm->mkSkolem(ss.str(), nm->booleanType())); 
     }
+    std::vector<Node> inpV;
+    std::vector<Node> outV;
     // Begin iterator
     for (size_t k = 0; k < in0.size(); k++) {
     Node in_k_0 = in0[k];
@@ -354,10 +356,25 @@ void inline optimalEncodingFixedWidth(int enc_id, const std::vector<std::vector<
     Node neg_in_k_1 = nm->mkNode(kind::NOT, in_k_1);
     Node in_k_2 = in2[k];
     Node neg_in_k_2 = nm->mkNode(kind::NOT, in_k_2);
+    inpV.clear();
+    inpV.push_back(in_k_0);
+    inpV.push_back(in_k_1);
+    inpV.push_back(in_k_2);
+      
+    if (cnf->hasEncoding(25, inpV)) {
+      outV = cnf->getCachedEncoding(25, inpV);
+      out[k] = outV[0];
+      continue;
+    }
+
 
     Node out_k = out[k];
     Node neg_out_k = nm->mkNode(kind::NOT, out_k);
 
+    outV.clear();
+    outV.push_back(out_k);
+      
+    cnf->cacheEncoding(25, inpV, outV);
 
         cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_0, in_k_2, neg_out_k), false, false, RULE_INVALID, TNode::null());
         cnf->convertAndAssert(nm->mkNode(kind::OR, neg_in_k_0, neg_in_k_1, out_k), false, false, RULE_INVALID, TNode::null());
@@ -828,9 +845,6 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     inputs.push_back(tt_0);
     inputs.push_back(tt_1);
     inputs.push_back(tt_2);
-    Chat() << tt_0 << std::endl;
-    Chat() << tt_1 << std::endl;
-    Chat() << tt_2 << std::endl;
    
     if (cnf->hasEncoding(1, inputs)) {
       outputs = cnf->getCachedEncoding(1, inputs);
@@ -841,6 +855,54 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
       }
       continue;
     }
+   
+   if (true) {
+     Node nn;
+     bool simplified = false;
+     // constant simplification
+     if (tt_2 == mkFalse<Node>()) {
+       nn = tt_2;
+       simplified = true;
+     }
+     
+     if (tt_2 == mkTrue<Node>()) {
+       
+       if (tt_0 == tt_1) {
+         nn = mkTrue<Node>();
+         simplified = true;
+       } else if (tt_0 == mkTrue<Node>()) {
+         nn = tt_1;
+         simplified = true;
+       } else if (tt_1 == mkTrue<Node>()) {
+         nn = tt_0;
+         simplified = true;
+       } else if (tt_0 == mkFalse<Node>()) {
+         nn = tt_1.negate();
+         simplified = true;
+       } else if (tt_1 == mkFalse<Node>()) {
+         nn = tt_0.negate();
+         simplified = true;
+       } else {
+         nn = nm->mkNode(kind::IFF, tt_0, tt_1);
+         simplified = true;
+       }
+     }
+     
+     if (simplified) {
+       if (k == N-1) {
+         out = nn;
+       } else {
+         tmp[k] == nn;
+       }
+       continue;
+     } else {
+       //Chat() << "Cannot be simplified" << std::endl;
+       //Chat() << tt_0 << std::endl;
+       //Chat() << tt_1 << std::endl;
+       //Chat() << tt_2 << std::endl;
+     }
+       
+   }
    
     if(k == (N - 1))/*sketch_..v_bool.sk:24*/
     {

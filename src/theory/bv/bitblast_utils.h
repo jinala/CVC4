@@ -300,9 +300,56 @@ std::vector<Node> inline optimalFullAdder(const Node a, const Node b,
   inputs.push_back(a);
   inputs.push_back(b);
   inputs.push_back(cin);
+  
+  std::vector<Node> outputs;
+  
   if (true) {
-    if (cnf->hasEncoding(99, inputs)) { // This id could be same as plus encoding
-      return cnf->getCachedEncoding(99, inputs);
+    
+    if (cnf->hasEncoding(99,inputs)) {
+      return cnf->getCachedEncoding(99,inputs);
+    }
+    
+    // check for constants
+    if (true) {
+    unsigned num_false = 0;
+    std::vector<Node> non_const;
+    if (a == mkFalse<Node>()) {
+      ++num_false;
+    } else {
+      non_const.push_back(a);
+    }
+    
+    if (b == mkFalse<Node>()) {
+      ++num_false;
+    } else {
+      non_const.push_back(b);
+    }
+    
+    if (cin  == mkFalse<Node>()) {
+      ++num_false;
+    } else {
+      non_const.push_back(cin);
+    }
+    
+    if (num_false == 3) {
+      outputs.push_back(mkFalse<Node>());
+      outputs.push_back(mkFalse<Node>());
+      return outputs;
+    }
+    if (num_false == 2) {
+      Assert (non_const.size() == 1);
+      outputs.push_back(non_const[0]);
+      outputs.push_back(mkFalse<Node>());
+      return outputs;
+    }
+    if (num_false == 1) {
+      Assert (non_const.size() == 2);
+      Node sum = mkXor(non_const[0], non_const[1]);
+      Node cout = mkAnd(non_const[0], non_const[1]);
+      outputs.push_back(sum);
+      outputs.push_back(cout);
+      return outputs;
+    }
     }
   }
 
@@ -310,12 +357,11 @@ std::vector<Node> inline optimalFullAdder(const Node a, const Node b,
   NodeManager* nm = NodeManager::currentNM();
   Node s = nm->mkSkolem("sum", nm->booleanType());
   Node cout = nm->mkSkolem("carry", nm->booleanType());
-  std::vector<Node> outputs;
   outputs.push_back(s);
   outputs.push_back(cout);
-  cnf->cacheEncoding(99, inputs, outputs);
+  cnf->cacheEncoding(99,inputs, outputs);
   
-  if (false) {
+  if (true) {
     Node cout_expr = mkOr(mkAnd(a, b),
                           mkAnd(mkXor(a, b),
                                 cin));
