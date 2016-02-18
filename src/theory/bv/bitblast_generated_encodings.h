@@ -827,9 +827,9 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     Node neg_tt_3;
   for(int k = 0; k < N; k = k + 1)/*Canonical*/
  {
-      tt_0 = in0[N-k-1];
+      tt_0 = in0[k];
       neg_tt_0 = nm->mkNode(kind::NOT, tt_0);
-      tt_1 = in1[N-k-1];
+      tt_1 = in1[k];
       neg_tt_1 = nm->mkNode(kind::NOT, tt_1);
     if(k == 0)/*sketch_..v_bool.sk:19*/
     {
@@ -863,24 +863,22 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
      if (tt_2 == mkFalse<Node>()) {
        nn = tt_2;
        simplified = true;
-     }
-     
-     if (tt_2 == mkTrue<Node>()) {
+     } else if (tt_0 == tt_1) {
+       nn = tt_2;
+       simplified = true;
+     } else if (tt_2 == mkTrue<Node>()) {
        
-       if (tt_0 == tt_1) {
-         nn = mkTrue<Node>();
-         simplified = true;
-       } else if (tt_0 == mkTrue<Node>()) {
+       if (tt_0 == mkTrue<Node>()) {
          nn = tt_1;
          simplified = true;
        } else if (tt_1 == mkTrue<Node>()) {
          nn = tt_0;
          simplified = true;
        } else if (tt_0 == mkFalse<Node>()) {
-         nn = tt_1.negate();
+         nn = neg_tt_1;
          simplified = true;
        } else if (tt_1 == mkFalse<Node>()) {
-         nn = tt_0.negate();
+         nn = neg_tt_0;
          simplified = true;
        } else {
          nn = nm->mkNode(kind::IFF, tt_0, tt_1);
@@ -892,7 +890,7 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
        if (k == N-1) {
          out = nn;
        } else {
-         tmp[k] == nn;
+         tmp[k] = nn;
        }
        continue;
      } else {
