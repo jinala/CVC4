@@ -41,9 +41,9 @@ namespace prop {
 class PropEngine;
   
   
-  typedef std::pair < Node, std::pair< Node, Node> > Triple;
-  typedef std::pair < Node,  Node> FAResult;
-  typedef std::map<Triple, FAResult> FASet;
+  typedef std::vector<Node> InputType;
+  typedef std::vector<Node> OutputType;
+  typedef std::map<std::pair<int, InputType>, OutputType> CacheType;
 
 /**
  * Comments for the behavior of the whole class... [??? -Chris]
@@ -73,7 +73,7 @@ protected:
   /** Map from literals to nodes */
   LiteralToNodeMap d_literalToNodeMap;
 
-  FASet d_fullAdderCache; 
+  CacheType d_EncodingCache;
   /**
    * True if the lit-to-Node map should be kept for all lits, not just
    * theory lits.  This is true if e.g. replay logging is on, which
@@ -213,9 +213,9 @@ public:
   virtual ~CnfStream() {
   }
 
-  void cacheFA(TNode a, TNode b, TNode carry, TNode sum, TNode carry_out);
-  bool hasFA(TNode a, TNode b, TNode carry);
-  FAResult getCachedFA(TNode a, TNode b, TNode carry);
+  void cacheEncoding(int enc_id, const std::vector<Node>& input, const std::vector<Node>& output);
+  bool hasEncoding(int enc_id, const std::vector<Node>& input);
+  std::vector<Node> getCachedEncoding(int enc_id, const std::vector<Node>& input);
   
   SatSolver* getSatSolver() {
     return d_satSolver;

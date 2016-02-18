@@ -793,6 +793,8 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     }
     Node true_n = nm->mkConst<bool>(true);
     Node false_n = nm->mkConst<bool>(false);
+    std::vector<Node> inputs;
+    std::vector<Node> outputs;
 
     // Begin iterator
     int N = in0.size();
@@ -808,9 +810,9 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
     Node neg_tt_3;
   for(int k = 0; k < N; k = k + 1)/*Canonical*/
  {
-      tt_0 = in0[k];
+      tt_0 = in0[N-k-1];
       neg_tt_0 = nm->mkNode(kind::NOT, tt_0);
-      tt_1 = in1[k];
+      tt_1 = in1[N-k-1];
       neg_tt_1 = nm->mkNode(kind::NOT, tt_1);
     if(k == 0)/*sketch_..v_bool.sk:19*/
     {
@@ -822,6 +824,24 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
       tt_2 = tmp[k - 1];
       neg_tt_2 = nm->mkNode(kind::NOT, tt_2);
     }
+    inputs.clear();
+    inputs.push_back(tt_0);
+    inputs.push_back(tt_1);
+    inputs.push_back(tt_2);
+    Chat() << tt_0 << std::endl;
+    Chat() << tt_1 << std::endl;
+    Chat() << tt_2 << std::endl;
+   
+    if (cnf->hasEncoding(1, inputs)) {
+      outputs = cnf->getCachedEncoding(1, inputs);
+      if (k == N-1) {
+        out = outputs[0];
+      } else {
+        tmp[k] = outputs[0];
+      }
+      continue;
+    }
+   
     if(k == (N - 1))/*sketch_..v_bool.sk:24*/
     {
       tt_3 = out;
@@ -832,6 +852,10 @@ Node inline optimalEncodingPredicate(int enc_id, const std::vector<std::vector<N
       tt_3 = tmp[k];
       neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
     }
+    outputs.clear();
+    outputs.push_back(tt_3);
+   
+    cnf->cacheEncoding(1, inputs, outputs);
 
         cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, neg_tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
         cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_1, neg_tt_3), false, false, RULE_INVALID, TNode::null());

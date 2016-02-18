@@ -288,55 +288,21 @@ T inline sLessThanBB(const std::vector<T>&a, const std::vector<T>& b, bool orEqu
 }
   
 template <class T>
-std::pair<T,T> optimalFullAdder(const T a, const T b, const T cin,
+std::vector<T> optimalFullAdder(const T a, const T b, const T cin,
                                        CVC4::prop::CnfStream* cnf) {
   Unreachable();
 }
 
-std::pair<Node, Node> inline optimalFullAdder(const Node a, const Node b,
+std::vector<Node> inline optimalFullAdder(const Node a, const Node b,
                                                          const Node cin,
                                                          CVC4::prop::CnfStream* cnf) {
+  std::vector<Node> inputs;
+  inputs.push_back(a);
+  inputs.push_back(b);
+  inputs.push_back(cin);
   if (true) {
-    
-    if (cnf->hasFA(a, b, cin)) {
-      return cnf->getCachedFA(a, b, cin);
-    }
-    
-    // check for constants
-    if (false) {
-    unsigned num_false = 0;
-    std::vector<Node> non_const;
-    if (a == mkFalse<Node>()) {
-      ++num_false;
-    } else {
-      non_const.push_back(a);
-    }
-    
-    if (b == mkFalse<Node>()) {
-      ++num_false;
-    } else {
-      non_const.push_back(b);
-    }
-    
-    if (cin  == mkFalse<Node>()) {
-      ++num_false;
-    } else {
-      non_const.push_back(cin);
-    }
-    
-    if (num_false == 3) {
-      return std::make_pair(mkFalse<Node>(), mkFalse<Node>());
-    }
-    if (num_false == 2) {
-      Assert (non_const.size() == 1);
-      return std::make_pair(non_const[0], mkFalse<Node>());
-    }
-    if (num_false == 1) {
-      Assert (non_const.size() == 2);
-      Node sum = mkXor(non_const[0], non_const[1]);
-      Node cout = mkAnd(non_const[0], non_const[1]);
-      return std::make_pair(sum, cout);
-    }
+    if (cnf->hasEncoding(99, inputs)) { // This id could be same as plus encoding
+      return cnf->getCachedEncoding(99, inputs);
     }
   }
 
@@ -344,8 +310,10 @@ std::pair<Node, Node> inline optimalFullAdder(const Node a, const Node b,
   NodeManager* nm = NodeManager::currentNM();
   Node s = nm->mkSkolem("sum", nm->booleanType());
   Node cout = nm->mkSkolem("carry", nm->booleanType());
-  
-  cnf->cacheFA(a, b, cin, s, cout);
+  std::vector<Node> outputs;
+  outputs.push_back(s);
+  outputs.push_back(cout);
+  cnf->cacheEncoding(99, inputs, outputs);
   
   if (false) {
     Node cout_expr = mkOr(mkAnd(a, b),
@@ -393,7 +361,7 @@ std::pair<Node, Node> inline optimalFullAdder(const Node a, const Node b,
   cnf->convertAndAssert(nm->mkNode(kind::OR, a,b, cin,ns),
                         false, false, RULE_INVALID, TNode::null());
   
-  return std::make_pair(s, cout);
+  return outputs;
 }
 
   
@@ -408,14 +376,14 @@ Node inline optimalRippleCarryAdder(const std::vector<Node>&av,
                                     std::vector<Node>& res, Node cin, prop::CnfStream* cnf) {
   Assert (av.size() == bv.size() &&res.size() == 0);
   Node carry = cin;
-  std::pair<Node, Node> fa_res;
+  std::vector<Node> fa_res;
   for (unsigned i = 0 ; i < av.size(); ++i) {
     Node a = av[i];
     Node b = bv[i];
     fa_res = optimalFullAdder(a, b, carry, cnf);
     
-    carry = fa_res.second;
-    res.push_back(fa_res.first);
+    carry = fa_res[1];
+    res.push_back(fa_res[0]);
   }
   
   return carry;
@@ -440,12 +408,12 @@ inline void shiftOptimalAddMultiplier(const std::vector<Node>&a, const std::vect
   
   for(unsigned k = 1; k < res.size(); ++k) {
     Node carry_in = mkFalse<Node>();
-    std::pair<Node, Node> fa_res;
+    std::vector<Node> fa_res;
     for(unsigned j = 0; j < res.size() -k; ++j) {
       Node aj = mkAnd(b[k], a[j]);
       fa_res = optimalFullAdder(res[j+k], aj, carry_in, cnf);
-      res[j+k] = fa_res.first;
-      carry_in = fa_res.second;
+      res[j+k] = fa_res[0];
+      carry_in = fa_res[1];
     }
   }
   if (options::printStats()) {

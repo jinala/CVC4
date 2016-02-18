@@ -61,7 +61,7 @@ CnfStream::CnfStream(SatSolver* satSolver, Registrar* registrar,
       d_registrar(registrar),
       d_assertionTable(context),
       d_globals(globals),
-      d_fullAdderCache(),
+      d_EncodingCache(),
       d_removable(false) {
 }
 
@@ -71,20 +71,16 @@ TseitinCnfStream::TseitinCnfStream(SatSolver* satSolver, Registrar* registrar,
     : CnfStream(satSolver, registrar, context, globals, fullLitToNodeMap)
 {}
   
-bool CnfStream::hasFA(TNode a, TNode b, TNode carry) {
-  Triple fa = std::make_pair(a, std::make_pair(b, carry));
-  return d_fullAdderCache.find(fa) != d_fullAdderCache.end();
+bool CnfStream::hasEncoding(int enc_id, const std::vector<Node>& input) {
+  return d_EncodingCache.find(std::make_pair(enc_id, input)) != d_EncodingCache.end();
 }
 
-FAResult CnfStream::getCachedFA(TNode a, TNode b, TNode carry) {
-  Triple fa = std::make_pair(a, std::make_pair(b, carry));
-  return d_fullAdderCache.find(fa)->second;
+std::vector<Node> CnfStream::getCachedEncoding(int enc_id, const std::vector<Node>& input) {
+  return d_EncodingCache.find(std::make_pair(enc_id, input))->second;
 }
 
-void CnfStream::cacheFA(TNode a, TNode b, TNode carry, TNode sum, TNode carry_out) {
-  Triple fa = std::make_pair(a, std::make_pair(b, carry));
-  FAResult res = std::make_pair(sum, carry_out);
-  d_fullAdderCache[fa] = res;
+void CnfStream::cacheEncoding(int enc_id, const std::vector<Node>& input, const std::vector<Node>& output) {
+  d_EncodingCache[std::make_pair(enc_id, input)] = output;
 }
 
 
