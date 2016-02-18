@@ -3951,7 +3951,11 @@ void SmtEnginePrivate::processAssertions() {
           Chat() << "File cannot be opened" << std::endl;
           assert(false);
         }
-        Printer::getPrinter(::CVC4::language::output::LANG_DAG)->toStream(outFile, d_assertions[i], 1, true, 1);
+        int onlyBool = 1;
+        if (options::bitblastMode() == theory::bv::BITBLAST_MODE_EAGER) {
+          onlyBool = 0;
+        }
+        Printer::getPrinter(::CVC4::language::output::LANG_DAG)->toStream(outFile, d_assertions[i], onlyBool, true, 1);
         outFile.close();
         }
       }
