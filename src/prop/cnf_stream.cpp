@@ -459,8 +459,7 @@ SatLiteral TseitinCnfStream::handleNot(TNode notNode) {
   
 SatLiteral TseitinCnfStream::handleSpecial(TNode spNode, TNode orig) {
   Assert(!hasLiteral(spNode), "Atom already mapped!");
-  SatLiteral out = newLiteral(orig);
-  theory::booleans::defaultSpecial(spNode, out, this);
+  SatLiteral out = theory::booleans::defaultSpecial(spNode, orig, this);
   return out;
 }
 

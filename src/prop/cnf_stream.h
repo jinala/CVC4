@@ -170,7 +170,7 @@ public:
   void assertClause(TNode node, SatLiteral a, SatLiteral b, SatLiteral c, ProofRule proof_id);
   
   void assertClause(TNode node, SatLiteral a, SatLiteral b, SatLiteral c, SatLiteral d, ProofRule proof_id);
-protected:
+public:
   /**
    * Acquires a new variable from the SAT solver to represent the node
    * and inserts the necessary data it into the mapping tables.
