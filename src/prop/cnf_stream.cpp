@@ -134,6 +134,16 @@ void CnfStream::assertClause(TNode node, SatLiteral a, SatLiteral b, SatLiteral 
   clause[3] = d;
   assertClause(node, clause, proof_id);
 }
+  
+void CnfStream::assertClause(TNode node, SatLiteral a, SatLiteral b, SatLiteral c, SatLiteral d, SatLiteral e, ProofRule proof_id) {
+  SatClause clause(5);
+  clause[0] = a;
+  clause[1] = b;
+  clause[2] = c;
+  clause[3] = d;
+  clause[4] = e;
+  assertClause(node, clause, proof_id);
+}
 
 bool CnfStream::hasLiteral(TNode n) const {
   NodeToLiteralMap::const_iterator find = d_nodeToLiteralMap.find(n);

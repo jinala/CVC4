@@ -184,7 +184,8 @@ libcvc4_la_SOURCES = \
 	theory/bv/bv_inequality_graph.h \
 	theory/bv/bv_inequality_graph.cpp \
 	theory/bv/bitblast_strategies_template.h \
-  theory/bv/bitblast_generated_encodings.h \
+  	theory/bv/bitblast_generated_encodings.h \
+	theory/bv/bitblast_generated_encodings.cpp \
 	theory/bv/bitblaster_template.h \
 	theory/bv/lazy_bitblaster.cpp \
 	theory/bv/eager_bitblaster.cpp \
@@ -410,9 +411,10 @@ libcvc4_la_SOURCES = \
 	theory/booleans/theory_bool_type_rules.h \
 	theory/booleans/theory_bool_rewriter.h \
 	theory/booleans/theory_bool_rewriter.cpp \
-  theory/booleans/theory_bool_special_rewriter.h \
-  theory/booleans/theory_bool_generated_rewriter.cpp \
-  theory/booleans/bool_generated_encodings.h \
+  	theory/booleans/theory_bool_special_rewriter.h \
+  	theory/booleans/theory_bool_generated_rewriter.cpp \
+  	theory/booleans/bool_generated_encodings.h \
+	theory/booleans/bool_generated_encodings.cpp \
 	theory/booleans/circuit_propagator.h \
 	theory/booleans/circuit_propagator.cpp \
 	theory/fp/theory_fp.h \
