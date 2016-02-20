@@ -3,272 +3,269 @@
 using namespace CVC4;
 using namespace CVC4::theory;
 using namespace CVC4::theory::bv;
+void encoding_0(const std::vector<std::vector<Node> >& inputs, std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
+  std::vector<Node> inpV;
+  std::vector<Node> outV;
+  std::vector<Node> in0 = inputs[0];
+  std::vector<Node> in1 = inputs[1];
 
-void CVC4::theory::bv::optimalEncodingFixedWidth(int enc_id, const std::vector<std::vector<Node> > & inputs,  std::vector<Node>& out, prop::CnfStream* cnf) {
-  NodeManager* nm = NodeManager::currentNM();
-  if (enc_id == 0) { 
-    std::vector<Node> inpV;
-    std::vector<Node> outV;
-    std::vector<Node> in0 = inputs[0];
-    std::vector<Node> in1 = inputs[1];
-
-    for (size_t i = 0; i < in0.size(); i++) {
-      out.push_back(nm->mkSkolem("out", nm->booleanType())); 
-    }
-    std::vector<Node> tmp;
-    for (size_t i = 0; i < in0.size(); i++) {
-      tmp.push_back(nm->mkSkolem("out", nm->booleanType()));
-    }
-    Node true_n = nm->mkConst<bool>(true);
-    Node false_n = nm->mkConst<bool>(false);
-
-    // Begin iterator
-    int N = in0.size();
-    Node tt_0;
-    Node neg_tt_0;
-    Node tt_1;
-    Node neg_tt_1;
-    Node tt_2;
-    Node neg_tt_2;
-    Node tt_3;
-    Node neg_tt_3;
-    Node tt_4;
-    Node neg_tt_4;
-
-for (int k = 0; k < N; k++) {
-    {
-      tt_0 = in1[k];
-      neg_tt_0 = nm->mkNode(kind::NOT, tt_0);
-    }
-    {
-      tt_1 = nm->mkNode(kind::NOT, in0[k]);
-      neg_tt_1 = nm->mkNode(kind::NOT, tt_1);
-    }
-    if(k == 0)/*addn.sk:16*/
-    {
-      tt_3 = false_n;
-      neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
-    }
-    else
-    {
-      tt_3 = tmp[k - 1];
-      neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
-    }
-      inpV.clear();
-      inpV.push_back(tt_0);
-      inpV.push_back(tt_1);
-      inpV.push_back(tt_3);
-      if (cnf->hasEncoding(0, inpV)) {
-        outV = cnf->getCachedEncoding(0, inpV);
-        out[k] = outV[0];
-        tmp[k] = outV[1];
-        continue;
-      }
-    {
-      tt_2 = out[k];
-      neg_tt_2 = nm->mkNode(kind::NOT, tt_2);
-    }
-    {
-      tt_4 = tmp[k];
-      neg_tt_4 = nm->mkNode(kind::NOT, tt_4);
-    }
-      outV.clear();
-      outV.push_back(tt_2);
-      outV.push_back(tt_4);
-      cnf->cacheEncoding(0, inpV, outV);
-
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, neg_tt_2, neg_tt_3), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_2, tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_1, tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_1, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, tt_2, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_1, neg_tt_2, tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_1, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, tt_2, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_2, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_2, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
-
-      }
-
+  for (size_t i = 0; i < in0.size(); i++) {
+    out.push_back(nm->mkSkolem("out", nm->booleanType())); 
   }
-  else if (enc_id == 5) {
-    std::vector<Node> inpV;
-    std::vector<Node> outV;
-    std::vector<Node> in0 = inputs[0];
-    std::vector<Node> in1 = inputs[1];
-
-    for (size_t i = 0; i < in0.size(); i++) {
-      out.push_back(nm->mkSkolem("out", nm->booleanType())); 
-    }
-    std::vector<Node> tmp;
-    for (size_t i = 0; i < in0.size(); i++) {
-      tmp.push_back(nm->mkSkolem("out", nm->booleanType()));
-    }
-    Node true_n = nm->mkConst<bool>(true);
-    Node false_n = nm->mkConst<bool>(false);
-
-    // Begin iterator
-    int N = in0.size();
-    Node tt_0;
-    Node neg_tt_0;
-    Node tt_1;
-    Node neg_tt_1;
-    Node tt_2;
-    Node neg_tt_2;
-    Node tt_3;
-    Node neg_tt_3;
-    Node tt_4;
-    Node neg_tt_4;
-
-for (int k = 0; k < N; k++) {
-    {
-      tt_0 = in0[k];
-      neg_tt_0 = nm->mkNode(kind::NOT, tt_0);
-    }
-    {
-      tt_1 = in1[k];
-      neg_tt_1 = nm->mkNode(kind::NOT, tt_1);
-    }
-    if(k == 0)/*addn.sk:16*/
-    {
-      tt_3 = true_n;
-      neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
-    }
-    else
-    {
-      tt_3 = tmp[k - 1];
-      neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
-    }
-      inpV.clear();
-      inpV.push_back(tt_0);
-      inpV.push_back(tt_1);
-      inpV.push_back(tt_3);
-      if (cnf->hasEncoding(5, inpV)) {
-        outV = cnf->getCachedEncoding(5, inpV);
-        out[k] = outV[0];
-        tmp[k] = outV[1];
-        continue;
-      }
-    {
-      tt_2 = out[k];
-      neg_tt_2 = nm->mkNode(kind::NOT, tt_2);
-    }
-    {
-      tt_4 = tmp[k];
-      neg_tt_4 = nm->mkNode(kind::NOT, tt_4);
-    }
-      outV.clear();
-      outV.push_back(tt_2);
-      outV.push_back(tt_4);
-      cnf->cacheEncoding(5, inpV, outV);
-
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, neg_tt_2, neg_tt_3), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_2, tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_1, tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_1, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, tt_2, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_1, neg_tt_2, tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_1, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, tt_2, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_2, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_2, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
-
-      }
-
+  std::vector<Node> tmp;
+  for (size_t i = 0; i < in0.size(); i++) {
+    tmp.push_back(nm->mkSkolem("out", nm->booleanType()));
   }
-  else if (enc_id == 8) {
-    std::vector<Node> inpV;
-    std::vector<Node> outV;
-    std::vector<Node> in0 = inputs[0];
-    std::vector<Node> in1 = inputs[1];
+  Node true_n = nm->mkConst<bool>(true);
+  Node false_n = nm->mkConst<bool>(false);
 
-    for (size_t i = 0; i < in0.size(); i++) {
-      out.push_back(nm->mkSkolem("out", nm->booleanType())); 
-    }
-    std::vector<Node> tmp;
-    for (size_t i = 0; i < in0.size(); i++) {
-      tmp.push_back(nm->mkSkolem("out", nm->booleanType()));
-    }
-    Node true_n = nm->mkConst<bool>(true);
-    Node false_n = nm->mkConst<bool>(false);
-
-    // Begin iterator
-    int N = in0.size();
-    Node tt_0;
-    Node neg_tt_0;
-    Node tt_1;
-    Node neg_tt_1;
-    Node tt_2;
-    Node neg_tt_2;
-    Node tt_3;
-    Node neg_tt_3;
-    Node tt_4;
-    Node neg_tt_4;
+  // Begin iterator
+  int N = in0.size();
+  Node tt_0;
+  Node neg_tt_0;
+  Node tt_1;
+  Node neg_tt_1;
+  Node tt_2;
+  Node neg_tt_2;
+  Node tt_3;
+  Node neg_tt_3;
+  Node tt_4;
+  Node neg_tt_4;
 
 for (int k = 0; k < N; k++) {
-    {
-      tt_0 = in0[k];
-      neg_tt_0 = nm->mkNode(kind::NOT, tt_0);
+  {
+    tt_0 = in1[k];
+    neg_tt_0 = nm->mkNode(kind::NOT, tt_0);
+  }
+  {
+    tt_1 = nm->mkNode(kind::NOT, in0[k]);
+    neg_tt_1 = nm->mkNode(kind::NOT, tt_1);
+  }
+    if(k == 0)/*addn.sk:16*/
+  {
+    tt_3 = false_n;
+    neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
+  }
+    else
+  {
+    tt_3 = tmp[k - 1];
+    neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
+  }
+    inpV.clear();
+    inpV.push_back(tt_0);
+    inpV.push_back(tt_1);
+    inpV.push_back(tt_3);
+    if (cnf->hasEncoding(0, inpV)) {
+      outV = cnf->getCachedEncoding(0, inpV);
+      out[k] = outV[0];
+      tmp[k] = outV[1];
+      continue;
     }
-    {
-      tt_1 = in1[k];
-      neg_tt_1 = nm->mkNode(kind::NOT, tt_1);
+  {
+    tt_2 = out[k];
+    neg_tt_2 = nm->mkNode(kind::NOT, tt_2);
+  }
+  {
+    tt_4 = tmp[k];
+    neg_tt_4 = nm->mkNode(kind::NOT, tt_4);
+  }
+    outV.clear();
+    outV.push_back(tt_2);
+    outV.push_back(tt_4);
+    cnf->cacheEncoding(0, inpV, outV);
+
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, neg_tt_2, neg_tt_3), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_2, tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_1, tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_1, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, tt_2, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_1, neg_tt_2, tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_1, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, tt_2, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_2, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_2, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
+
     }
+
+}
+void encoding_5(const std::vector<std::vector<Node> >& inputs, std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
+  std::vector<Node> inpV;
+  std::vector<Node> outV;
+  std::vector<Node> in0 = inputs[0];
+  std::vector<Node> in1 = inputs[1];
+
+  for (size_t i = 0; i < in0.size(); i++) {
+    out.push_back(nm->mkSkolem("out", nm->booleanType())); 
+  }
+  std::vector<Node> tmp;
+  for (size_t i = 0; i < in0.size(); i++) {
+    tmp.push_back(nm->mkSkolem("out", nm->booleanType()));
+  }
+  Node true_n = nm->mkConst<bool>(true);
+  Node false_n = nm->mkConst<bool>(false);
+
+  // Begin iterator
+  int N = in0.size();
+  Node tt_0;
+  Node neg_tt_0;
+  Node tt_1;
+  Node neg_tt_1;
+  Node tt_2;
+  Node neg_tt_2;
+  Node tt_3;
+  Node neg_tt_3;
+  Node tt_4;
+  Node neg_tt_4;
+
+for (int k = 0; k < N; k++) {
+  {
+    tt_0 = in0[k];
+    neg_tt_0 = nm->mkNode(kind::NOT, tt_0);
+  }
+  {
+    tt_1 = in1[k];
+    neg_tt_1 = nm->mkNode(kind::NOT, tt_1);
+  }
+    if(k == 0)/*addn.sk:16*/
+  {
+    tt_3 = true_n;
+    neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
+  }
+    else
+  {
+    tt_3 = tmp[k - 1];
+    neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
+  }
+    inpV.clear();
+    inpV.push_back(tt_0);
+    inpV.push_back(tt_1);
+    inpV.push_back(tt_3);
+    if (cnf->hasEncoding(5, inpV)) {
+      outV = cnf->getCachedEncoding(5, inpV);
+      out[k] = outV[0];
+      tmp[k] = outV[1];
+      continue;
+    }
+  {
+    tt_2 = out[k];
+    neg_tt_2 = nm->mkNode(kind::NOT, tt_2);
+  }
+  {
+    tt_4 = tmp[k];
+    neg_tt_4 = nm->mkNode(kind::NOT, tt_4);
+  }
+    outV.clear();
+    outV.push_back(tt_2);
+    outV.push_back(tt_4);
+    cnf->cacheEncoding(5, inpV, outV);
+
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, neg_tt_2, neg_tt_3), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_2, tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_1, tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_1, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, tt_2, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_1, neg_tt_2, tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_1, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, tt_2, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_2, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_2, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
+
+    }
+
+}
+void encoding_8(const std::vector<std::vector<Node> >& inputs, std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
+  std::vector<Node> inpV;
+  std::vector<Node> outV;
+  std::vector<Node> in0 = inputs[0];
+  std::vector<Node> in1 = inputs[1];
+
+  for (size_t i = 0; i < in0.size(); i++) {
+    out.push_back(nm->mkSkolem("out", nm->booleanType())); 
+  }
+  std::vector<Node> tmp;
+  for (size_t i = 0; i < in0.size(); i++) {
+    tmp.push_back(nm->mkSkolem("out", nm->booleanType()));
+  }
+  Node true_n = nm->mkConst<bool>(true);
+  Node false_n = nm->mkConst<bool>(false);
+
+  // Begin iterator
+  int N = in0.size();
+  Node tt_0;
+  Node neg_tt_0;
+  Node tt_1;
+  Node neg_tt_1;
+  Node tt_2;
+  Node neg_tt_2;
+  Node tt_3;
+  Node neg_tt_3;
+  Node tt_4;
+  Node neg_tt_4;
+
+for (int k = 0; k < N; k++) {
+  {
+    tt_0 = in0[k];
+    neg_tt_0 = nm->mkNode(kind::NOT, tt_0);
+  }
+  {
+    tt_1 = in1[k];
+    neg_tt_1 = nm->mkNode(kind::NOT, tt_1);
+  }
     if(k == 0)/*sketch_.._bv_bv.sk:16*/
-    {
-      tt_3 = true_n;
-      neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
-    }
-    else
-    {
-      tt_3 = tmp[k - 1];
-      neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
-    }
-      inpV.clear();
-      inpV.push_back(tt_0);
-      inpV.push_back(tt_1);
-      inpV.push_back(tt_3);
-      if (cnf->hasEncoding(8, inpV)) {
-        outV = cnf->getCachedEncoding(8, inpV);
-        out[k] = outV[0];
-        tmp[k] = outV[1];
-        continue;
-      }
-    {
-      tt_2 = out[k];
-      neg_tt_2 = nm->mkNode(kind::NOT, tt_2);
-    }
-    {
-      tt_4 = tmp[k];
-      neg_tt_4 = nm->mkNode(kind::NOT, tt_4);
-    }
-      outV.clear();
-      outV.push_back(tt_2);
-      outV.push_back(tt_4);
-      cnf->cacheEncoding(8, inpV, outV);
-
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, tt_2, tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, neg_tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_2, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_2, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
-
-      }
-
+  {
+    tt_3 = true_n;
+    neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
   }
-  else if (enc_id == 281) {
+    else
+  {
+    tt_3 = tmp[k - 1];
+    neg_tt_3 = nm->mkNode(kind::NOT, tt_3);
+  }
+    inpV.clear();
+    inpV.push_back(tt_0);
+    inpV.push_back(tt_1);
+    inpV.push_back(tt_3);
+    if (cnf->hasEncoding(8, inpV)) {
+      outV = cnf->getCachedEncoding(8, inpV);
+      out[k] = outV[0];
+      tmp[k] = outV[1];
+      continue;
+    }
+  {
+    tt_2 = out[k];
+    neg_tt_2 = nm->mkNode(kind::NOT, tt_2);
+  }
+  {
+    tt_4 = tmp[k];
+    neg_tt_4 = nm->mkNode(kind::NOT, tt_4);
+  }
+    outV.clear();
+    outV.push_back(tt_2);
+    outV.push_back(tt_4);
+    cnf->cacheEncoding(8, inpV, outV);
+
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, tt_2, tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_0, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, neg_tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_1, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_2, neg_tt_3, tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, neg_tt_2, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+      cnf->convertAndAssert(nm->mkNode(kind::OR, tt_3, neg_tt_4), false, false, RULE_INVALID, TNode::null());
+
+    }
+
+}
+void encoding_281(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -322,8 +319,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 282) {
+}
+void encoding_282(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -377,8 +374,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 283) {
+}
+void encoding_283(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -426,8 +423,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 284) {
+}
+void encoding_284(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -476,8 +473,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 285) {
+}
+void encoding_285(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -526,8 +523,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 286) {
+}
+void encoding_286(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -586,8 +583,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 287) {
+}
+void encoding_287(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -630,8 +627,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 288) {
+}
+void encoding_288(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -685,8 +682,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 289) {
+}
+void encoding_289(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -734,8 +731,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 290) {
+}
+void encoding_290(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -778,8 +775,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 291) {
+}
+void encoding_291(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -832,8 +829,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 292) {
+}
+void encoding_292(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -887,8 +884,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 293) {
+}
+void encoding_293(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -931,8 +928,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 294) {
+}
+void encoding_294(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -982,8 +979,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 295) {
+}
+void encoding_295(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1036,8 +1033,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 296) {
+}
+void encoding_296(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1085,8 +1082,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 297) {
+}
+void encoding_297(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1139,8 +1136,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 298) {
+}
+void encoding_298(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1194,8 +1191,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 299) {
+}
+void encoding_299(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1248,8 +1245,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 300) {
+}
+void encoding_300(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1311,8 +1308,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 301) {
+}
+void encoding_301(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1368,8 +1365,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 302) {
+}
+void encoding_302(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1427,8 +1424,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 303) {
+}
+void encoding_303(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1481,8 +1478,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 304) {
+}
+void encoding_304(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1540,8 +1537,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 305) {
+}
+void encoding_305(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1595,8 +1592,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 306) {
+}
+void encoding_306(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1644,8 +1641,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 307) {
+}
+void encoding_307(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1693,8 +1690,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 308) {
+}
+void encoding_308(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1742,8 +1739,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 309) {
+}
+void encoding_309(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1791,8 +1788,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 310) {
+}
+void encoding_310(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1846,8 +1843,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 311) {
+}
+void encoding_311(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1906,8 +1903,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 312) {
+}
+void encoding_312(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -1965,8 +1962,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 313) {
+}
+void encoding_313(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2020,8 +2017,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 314) {
+}
+void encoding_314(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2074,8 +2071,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 315) {
+}
+void encoding_315(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2113,8 +2110,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 316) {
+}
+void encoding_316(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2162,8 +2159,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 317) {
+}
+void encoding_317(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2213,8 +2210,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 318) {
+}
+void encoding_318(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2267,8 +2264,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 320) {
+}
+void encoding_320(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2321,8 +2318,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 321) {
+}
+void encoding_321(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2376,8 +2373,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 322) {
+}
+void encoding_322(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2420,8 +2417,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 323) {
+}
+void encoding_323(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2480,8 +2477,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 324) {
+}
+void encoding_324(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2530,8 +2527,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 325) {
+}
+void encoding_325(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2590,8 +2587,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 326) {
+}
+void encoding_326(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2650,8 +2647,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 327) {
+}
+void encoding_327(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2705,8 +2702,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 328) {
+}
+void encoding_328(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2759,8 +2756,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 330) {
+}
+void encoding_330(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2820,8 +2817,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 331) {
+}
+void encoding_331(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2859,8 +2856,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 332) {
+}
+void encoding_332(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2916,8 +2913,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 333) {
+}
+void encoding_333(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -2960,8 +2957,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 334) {
+}
+void encoding_334(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3015,8 +3012,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 335) {
+}
+void encoding_335(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3069,8 +3066,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 336) {
+}
+void encoding_336(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3118,8 +3115,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 337) {
+}
+void encoding_337(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3177,8 +3174,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 338) {
+}
+void encoding_338(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3231,8 +3228,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 339) {
+}
+void encoding_339(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3294,8 +3291,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 340) {
+}
+void encoding_340(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3348,8 +3345,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 341) {
+}
+void encoding_341(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3397,8 +3394,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 342) {
+}
+void encoding_342(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3446,8 +3443,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 343) {
+}
+void encoding_343(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3509,8 +3506,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 344) {
+}
+void encoding_344(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3569,8 +3566,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 345) {
+}
+void encoding_345(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3624,8 +3621,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 346) {
+}
+void encoding_346(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3684,8 +3681,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 347) {
+}
+void encoding_347(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3739,8 +3736,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 348) {
+}
+void encoding_348(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3788,8 +3785,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 349) {
+}
+void encoding_349(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3847,8 +3844,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 350) {
+}
+void encoding_350(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3908,8 +3905,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 351) {
+}
+void encoding_351(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -3952,8 +3949,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 352) {
+}
+void encoding_352(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4006,8 +4003,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 353) {
+}
+void encoding_353(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4066,8 +4063,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 354) {
+}
+void encoding_354(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4115,8 +4112,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 355) {
+}
+void encoding_355(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4141,8 +4138,6 @@ for (int k = 0; k < N; k++) {
       Node in_k_4 = in4[k];
       Node neg_in_k_4 = nm->mkNode(kind::NOT, in_k_4);
 
-      Node temp_0 = nm->mkSkolem("temp", nm->booleanType());
-      Node neg_temp_0 = nm->mkNode(kind::NOT, temp_0);
 
       inpV.clear();
       inpV.push_back(in_k_0);
@@ -4150,7 +4145,6 @@ for (int k = 0; k < N; k++) {
       inpV.push_back(in_k_2);
       inpV.push_back(in_k_3);
       inpV.push_back(in_k_4);
-      inpV.push_back(temp_0);
       if (cnf->hasEncoding(355, inpV)) {
         outV = cnf->getCachedEncoding(355, inpV);
         out[k] = outV[0];
@@ -4166,15 +4160,15 @@ for (int k = 0; k < N; k++) {
         cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_0, neg_in_k_1, neg_in_k_2, out_k), false, false, RULE_INVALID, TNode::null());
         cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_0, neg_in_k_3, neg_in_k_4, out_k), false, false, RULE_INVALID, TNode::null());
         cnf->convertAndAssert(nm->mkNode(kind::OR, neg_in_k_0, neg_out_k), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_1, neg_out_k, temp_0), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_2, neg_out_k, temp_0), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_3, neg_temp_0), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_4, neg_temp_0), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_1, in_k_3, neg_out_k), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_1, in_k_4, neg_out_k), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_2, in_k_3, neg_out_k), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_2, in_k_4, neg_out_k), false, false, RULE_INVALID, TNode::null());
 
     }
 
-  }
-  else if (enc_id == 356) {
+}
+void encoding_356(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4228,8 +4222,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 357) {
+}
+void encoding_357(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4282,8 +4276,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 358) {
+}
+void encoding_358(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4340,8 +4334,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 359) {
+}
+void encoding_359(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4399,8 +4393,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 360) {
+}
+void encoding_360(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4443,8 +4437,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 361) {
+}
+void encoding_361(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4503,8 +4497,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 362) {
+}
+void encoding_362(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4562,8 +4556,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 363) {
+}
+void encoding_363(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4611,8 +4605,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 364) {
+}
+void encoding_364(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4660,8 +4654,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 365) {
+}
+void encoding_365(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4719,8 +4713,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 366) {
+}
+void encoding_366(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4774,8 +4768,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 367) {
+}
+void encoding_367(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4797,15 +4791,12 @@ for (int k = 0; k < N; k++) {
       Node in_k_3 = in3[k];
       Node neg_in_k_3 = nm->mkNode(kind::NOT, in_k_3);
 
-      Node temp_0 = nm->mkSkolem("temp", nm->booleanType());
-      Node neg_temp_0 = nm->mkNode(kind::NOT, temp_0);
 
       inpV.clear();
       inpV.push_back(in_k_0);
       inpV.push_back(in_k_1);
       inpV.push_back(in_k_2);
       inpV.push_back(in_k_3);
-      inpV.push_back(temp_0);
       if (cnf->hasEncoding(367, inpV)) {
         outV = cnf->getCachedEncoding(367, inpV);
         out[k] = outV[0];
@@ -4826,8 +4817,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 368) {
+}
+void encoding_368(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4886,8 +4877,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 369) {
+}
+void encoding_369(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4938,8 +4929,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 370) {
+}
+void encoding_370(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -4992,8 +4983,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 371) {
+}
+void encoding_371(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5041,8 +5032,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 372) {
+}
+void encoding_372(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5104,8 +5095,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 373) {
+}
+void encoding_373(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5167,8 +5158,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 374) {
+}
+void encoding_374(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5211,8 +5202,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 375) {
+}
+void encoding_375(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5265,8 +5256,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 376) {
+}
+void encoding_376(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5291,8 +5282,6 @@ for (int k = 0; k < N; k++) {
       Node in_k_4 = in4[k];
       Node neg_in_k_4 = nm->mkNode(kind::NOT, in_k_4);
 
-      Node temp_0 = nm->mkSkolem("temp", nm->booleanType());
-      Node neg_temp_0 = nm->mkNode(kind::NOT, temp_0);
 
       inpV.clear();
       inpV.push_back(in_k_0);
@@ -5300,7 +5289,6 @@ for (int k = 0; k < N; k++) {
       inpV.push_back(in_k_2);
       inpV.push_back(in_k_3);
       inpV.push_back(in_k_4);
-      inpV.push_back(temp_0);
       if (cnf->hasEncoding(376, inpV)) {
         outV = cnf->getCachedEncoding(376, inpV);
         out[k] = outV[0];
@@ -5313,18 +5301,18 @@ for (int k = 0; k < N; k++) {
       outV.push_back(out_k);
       cnf->cacheEncoding(376, inpV, outV);
 
-        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_0, temp_0), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_0, neg_in_k_2, neg_in_k_4, out_k), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_0, neg_in_k_3, neg_in_k_4, out_k), false, false, RULE_INVALID, TNode::null());
         cnf->convertAndAssert(nm->mkNode(kind::OR, neg_in_k_0, neg_in_k_1, neg_out_k), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_1, temp_0), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_1, neg_in_k_2, neg_in_k_4, out_k), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_1, neg_in_k_3, neg_in_k_4, out_k), false, false, RULE_INVALID, TNode::null());
         cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_2, in_k_3, neg_out_k), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_in_k_2, neg_in_k_4, out_k, neg_temp_0), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_in_k_3, neg_in_k_4, out_k, neg_temp_0), false, false, RULE_INVALID, TNode::null());
         cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_4, neg_out_k), false, false, RULE_INVALID, TNode::null());
 
     }
 
-  }
-  else if (enc_id == 377) {
+}
+void encoding_377(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5378,8 +5366,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 378) {
+}
+void encoding_378(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5432,8 +5420,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 379) {
+}
+void encoding_379(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5487,8 +5475,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 380) {
+}
+void encoding_380(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5531,8 +5519,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 381) {
+}
+void encoding_381(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5580,8 +5568,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 382) {
+}
+void encoding_382(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5624,8 +5612,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 383) {
+}
+void encoding_383(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5673,8 +5661,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 384) {
+}
+void encoding_384(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5727,8 +5715,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 385) {
+}
+void encoding_385(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5771,8 +5759,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 387) {
+}
+void encoding_387(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5830,8 +5818,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 388) {
+}
+void encoding_388(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5879,8 +5867,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 389) {
+}
+void encoding_389(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -5940,8 +5928,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 390) {
+}
+void encoding_390(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6000,8 +5988,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 391) {
+}
+void encoding_391(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6052,8 +6040,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 392) {
+}
+void encoding_392(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6101,8 +6089,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 393) {
+}
+void encoding_393(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6161,8 +6149,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 394) {
+}
+void encoding_394(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6215,8 +6203,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 395) {
+}
+void encoding_395(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6265,8 +6253,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 396) {
+}
+void encoding_396(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6324,8 +6312,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 398) {
+}
+void encoding_398(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6378,8 +6366,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 399) {
+}
+void encoding_399(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6422,8 +6410,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 400) {
+}
+void encoding_400(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6481,8 +6469,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 401) {
+}
+void encoding_401(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6535,8 +6523,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 402) {
+}
+void encoding_402(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6589,8 +6577,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 403) {
+}
+void encoding_403(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6638,8 +6626,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 404) {
+}
+void encoding_404(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6697,8 +6685,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 405) {
+}
+void encoding_405(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6756,8 +6744,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 406) {
+}
+void encoding_406(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6816,8 +6804,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 407) {
+}
+void encoding_407(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6870,8 +6858,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 408) {
+}
+void encoding_408(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6933,8 +6921,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 409) {
+}
+void encoding_409(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -6988,8 +6976,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 410) {
+}
+void encoding_410(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7042,8 +7030,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 411) {
+}
+void encoding_411(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7098,8 +7086,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 412) {
+}
+void encoding_412(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7158,8 +7146,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 413) {
+}
+void encoding_413(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7212,8 +7200,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 414) {
+}
+void encoding_414(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7267,8 +7255,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 415) {
+}
+void encoding_415(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7330,8 +7318,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 416) {
+}
+void encoding_416(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7379,8 +7367,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 417) {
+}
+void encoding_417(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7433,8 +7421,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 418) {
+}
+void encoding_418(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7491,8 +7479,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 419) {
+}
+void encoding_419(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7545,8 +7533,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 420) {
+}
+void encoding_420(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7604,8 +7592,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 421) {
+}
+void encoding_421(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7648,8 +7636,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 422) {
+}
+void encoding_422(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7707,8 +7695,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 423) {
+}
+void encoding_423(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7756,8 +7744,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 424) {
+}
+void encoding_424(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7805,8 +7793,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 425) {
+}
+void encoding_425(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7864,8 +7852,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 426) {
+}
+void encoding_426(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7918,8 +7906,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 427) {
+}
+void encoding_427(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -7967,8 +7955,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 428) {
+}
+void encoding_428(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8016,8 +8004,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 429) {
+}
+void encoding_429(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8075,8 +8063,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 430) {
+}
+void encoding_430(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8124,8 +8112,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 431) {
+}
+void encoding_431(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8173,8 +8161,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 432) {
+}
+void encoding_432(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8222,8 +8210,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 433) {
+}
+void encoding_433(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8282,8 +8270,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 435) {
+}
+void encoding_435(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8331,8 +8319,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 436) {
+}
+void encoding_436(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8375,8 +8363,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 437) {
+}
+void encoding_437(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8434,8 +8422,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 439) {
+}
+void encoding_439(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8485,8 +8473,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 440) {
+}
+void encoding_440(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8543,8 +8531,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 441) {
+}
+void encoding_441(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8598,8 +8586,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 442) {
+}
+void encoding_442(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8652,8 +8640,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 443) {
+}
+void encoding_443(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8715,8 +8703,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 444) {
+}
+void encoding_444(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8764,8 +8752,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 445) {
+}
+void encoding_445(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8813,8 +8801,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 446) {
+}
+void encoding_446(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8872,8 +8860,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 447) {
+}
+void encoding_447(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8926,8 +8914,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 448) {
+}
+void encoding_448(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -8980,8 +8968,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 449) {
+}
+void encoding_449(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9038,8 +9026,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 450) {
+}
+void encoding_450(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9097,8 +9085,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 451) {
+}
+void encoding_451(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9151,8 +9139,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 452) {
+}
+void encoding_452(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9200,8 +9188,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 453) {
+}
+void encoding_453(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9254,8 +9242,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 454) {
+}
+void encoding_454(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9303,8 +9291,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 455) {
+}
+void encoding_455(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9357,8 +9345,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 456) {
+}
+void encoding_456(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9411,8 +9399,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 457) {
+}
+void encoding_457(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9465,8 +9453,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 458) {
+}
+void encoding_458(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9524,8 +9512,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 459) {
+}
+void encoding_459(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9583,8 +9571,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 461) {
+}
+void encoding_461(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9637,8 +9625,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 462) {
+}
+void encoding_462(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9691,8 +9679,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 463) {
+}
+void encoding_463(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9752,8 +9740,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 464) {
+}
+void encoding_464(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9813,8 +9801,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 465) {
+}
+void encoding_465(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9862,8 +9850,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 466) {
+}
+void encoding_466(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9925,8 +9913,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 467) {
+}
+void encoding_467(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -9984,8 +9972,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 468) {
+}
+void encoding_468(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10033,8 +10021,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 469) {
+}
+void encoding_469(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10087,8 +10075,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 470) {
+}
+void encoding_470(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10146,8 +10134,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 471) {
+}
+void encoding_471(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10200,8 +10188,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 472) {
+}
+void encoding_472(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10254,8 +10242,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 473) {
+}
+void encoding_473(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10313,8 +10301,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 474) {
+}
+void encoding_474(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10336,15 +10324,12 @@ for (int k = 0; k < N; k++) {
       Node in_k_3 = in3[k];
       Node neg_in_k_3 = nm->mkNode(kind::NOT, in_k_3);
 
-      Node temp_0 = nm->mkSkolem("temp", nm->booleanType());
-      Node neg_temp_0 = nm->mkNode(kind::NOT, temp_0);
 
       inpV.clear();
       inpV.push_back(in_k_0);
       inpV.push_back(in_k_1);
       inpV.push_back(in_k_2);
       inpV.push_back(in_k_3);
-      inpV.push_back(temp_0);
       if (cnf->hasEncoding(474, inpV)) {
         outV = cnf->getCachedEncoding(474, inpV);
         out[k] = outV[0];
@@ -10365,8 +10350,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 475) {
+}
+void encoding_475(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10419,8 +10404,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 476) {
+}
+void encoding_476(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10478,8 +10463,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 477) {
+}
+void encoding_477(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10532,8 +10517,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 478) {
+}
+void encoding_478(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10587,8 +10572,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 479) {
+}
+void encoding_479(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10641,8 +10626,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 480) {
+}
+void encoding_480(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10695,8 +10680,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 481) {
+}
+void encoding_481(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10744,8 +10729,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 482) {
+}
+void encoding_482(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10798,8 +10783,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 483) {
+}
+void encoding_483(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10847,8 +10832,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 484) {
+}
+void encoding_484(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10896,8 +10881,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 485) {
+}
+void encoding_485(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -10957,8 +10942,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 486) {
+}
+void encoding_486(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11007,8 +10992,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 487) {
+}
+void encoding_487(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11056,8 +11041,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 488) {
+}
+void encoding_488(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11107,8 +11092,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 489) {
+}
+void encoding_489(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11165,8 +11150,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 490) {
+}
+void encoding_490(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11226,8 +11211,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 491) {
+}
+void encoding_491(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11285,8 +11270,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 492) {
+}
+void encoding_492(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11346,8 +11331,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 493) {
+}
+void encoding_493(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11395,8 +11380,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 494) {
+}
+void encoding_494(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11441,8 +11426,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 495) {
+}
+void encoding_495(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11491,8 +11476,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 496) {
+}
+void encoding_496(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11546,8 +11531,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 497) {
+}
+void encoding_497(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11585,8 +11570,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 498) {
+}
+void encoding_498(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11639,8 +11624,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 499) {
+}
+void encoding_499(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11700,8 +11685,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 500) {
+}
+void encoding_500(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11750,8 +11735,69 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 502) {
+}
+void encoding_501(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
+    std::vector<Node> inpV;
+    std::vector<Node> outV;
+    std::vector<Node> in0 = inputs[0];
+    std::vector<Node> in1 = inputs[1];
+    std::vector<Node> in2 = inputs[2];
+    std::vector<Node> in3 = inputs[3];
+    std::vector<Node> in4 = inputs[4];
+    std::vector<Node> in5 = inputs[5];
+
+    for (size_t i = 0; i < in0.size(); i++) {
+      out.push_back(nm->mkSkolem("out", nm->booleanType())); 
+    }
+    // Begin iterator
+    for (size_t k = 0; k < in0.size(); k++) {
+      Node in_k_0 = in0[k];
+      Node neg_in_k_0 = nm->mkNode(kind::NOT, in_k_0);
+      Node in_k_1 = in1[k];
+      Node neg_in_k_1 = nm->mkNode(kind::NOT, in_k_1);
+      Node in_k_2 = in2[k];
+      Node neg_in_k_2 = nm->mkNode(kind::NOT, in_k_2);
+      Node in_k_3 = in3[k];
+      Node neg_in_k_3 = nm->mkNode(kind::NOT, in_k_3);
+      Node in_k_4 = in4[k];
+      Node neg_in_k_4 = nm->mkNode(kind::NOT, in_k_4);
+      Node in_k_5 = in5[k];
+      Node neg_in_k_5 = nm->mkNode(kind::NOT, in_k_5);
+
+
+      inpV.clear();
+      inpV.push_back(in_k_0);
+      inpV.push_back(in_k_1);
+      inpV.push_back(in_k_2);
+      inpV.push_back(in_k_3);
+      inpV.push_back(in_k_4);
+      inpV.push_back(in_k_5);
+      if (cnf->hasEncoding(501, inpV)) {
+        outV = cnf->getCachedEncoding(501, inpV);
+        out[k] = outV[0];
+        continue;
+      }
+      Node out_k = out[k];
+      Node neg_out_k = nm->mkNode(kind::NOT, out_k);
+
+      outV.clear();
+      outV.push_back(out_k);
+      cnf->cacheEncoding(501, inpV, outV);
+
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_0, neg_in_k_2, in_k_3, neg_out_k), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_0, in_k_4, neg_out_k), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_0, in_k_5, neg_out_k), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_in_k_0, neg_in_k_1, out_k), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_1, neg_in_k_2, in_k_3, neg_out_k), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_1, in_k_4, neg_out_k), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_1, in_k_5, neg_out_k), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_2, neg_in_k_4, neg_in_k_5, out_k), false, false, RULE_INVALID, TNode::null());
+        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_in_k_3, neg_in_k_4, neg_in_k_5, out_k), false, false, RULE_INVALID, TNode::null());
+
+    }
+
+}
+void encoding_502(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11805,8 +11851,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 503) {
+}
+void encoding_503(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11854,8 +11900,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 504) {
+}
+void encoding_504(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11908,8 +11954,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 505) {
+}
+void encoding_505(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -11957,8 +12003,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 506) {
+}
+void encoding_506(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12016,8 +12062,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 507) {
+}
+void encoding_507(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12075,8 +12121,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 508) {
+}
+void encoding_508(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12129,8 +12175,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 509) {
+}
+void encoding_509(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12190,8 +12236,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 510) {
+}
+void encoding_510(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12244,8 +12290,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 511) {
+}
+void encoding_511(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12305,8 +12351,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 512) {
+}
+void encoding_512(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12364,8 +12410,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 513) {
+}
+void encoding_513(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12413,8 +12459,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 514) {
+}
+void encoding_514(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12473,8 +12519,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 515) {
+}
+void encoding_515(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12533,8 +12579,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 516) {
+}
+void encoding_516(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12583,8 +12629,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 517) {
+}
+void encoding_517(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12641,8 +12687,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 518) {
+}
+void encoding_518(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12702,8 +12748,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 519) {
+}
+void encoding_519(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12756,8 +12802,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 520) {
+}
+void encoding_520(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12811,8 +12857,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 521) {
+}
+void encoding_521(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12861,8 +12907,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 522) {
+}
+void encoding_522(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12910,8 +12956,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 523) {
+}
+void encoding_523(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -12969,8 +13015,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 524) {
+}
+void encoding_524(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13023,8 +13069,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 525) {
+}
+void encoding_525(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13082,8 +13128,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 526) {
+}
+void encoding_526(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13141,8 +13187,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 527) {
+}
+void encoding_527(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13190,8 +13236,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 528) {
+}
+void encoding_528(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13244,8 +13290,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 529) {
+}
+void encoding_529(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13304,8 +13350,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 531) {
+}
+void encoding_531(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13362,8 +13408,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 532) {
+}
+void encoding_532(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13422,8 +13468,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 533) {
+}
+void encoding_533(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13476,8 +13522,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 534) {
+}
+void encoding_534(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13520,8 +13566,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 535) {
+}
+void encoding_535(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13574,8 +13620,8 @@ for (int k = 0; k < N; k++) {
 
     }
 
-  }
-  else if (enc_id == 537) {
+}
+void encoding_537(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13637,15 +13683,767 @@ for (int k = 0; k < N; k++) {
 
     }
 
+}
+void CVC4::theory::bv::optimalEncodingFixedWidth(int enc_id, const std::vector<std::vector<Node> > & inputs,  std::vector<Node>& out, prop::CnfStream* cnf) {
+  NodeManager* nm = NodeManager::currentNM();
+  if (enc_id == 0) { 
+    encoding_0(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 5) {
+    encoding_5(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 8) {
+    encoding_8(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 281) {
+    encoding_281(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 282) {
+    encoding_282(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 283) {
+    encoding_283(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 284) {
+    encoding_284(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 285) {
+    encoding_285(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 286) {
+    encoding_286(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 287) {
+    encoding_287(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 288) {
+    encoding_288(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 289) {
+    encoding_289(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 290) {
+    encoding_290(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 291) {
+    encoding_291(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 292) {
+    encoding_292(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 293) {
+    encoding_293(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 294) {
+    encoding_294(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 295) {
+    encoding_295(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 296) {
+    encoding_296(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 297) {
+    encoding_297(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 298) {
+    encoding_298(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 299) {
+    encoding_299(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 300) {
+    encoding_300(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 301) {
+    encoding_301(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 302) {
+    encoding_302(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 303) {
+    encoding_303(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 304) {
+    encoding_304(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 305) {
+    encoding_305(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 306) {
+    encoding_306(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 307) {
+    encoding_307(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 308) {
+    encoding_308(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 309) {
+    encoding_309(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 310) {
+    encoding_310(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 311) {
+    encoding_311(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 312) {
+    encoding_312(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 313) {
+    encoding_313(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 314) {
+    encoding_314(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 315) {
+    encoding_315(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 316) {
+    encoding_316(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 317) {
+    encoding_317(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 318) {
+    encoding_318(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 320) {
+    encoding_320(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 321) {
+    encoding_321(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 322) {
+    encoding_322(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 323) {
+    encoding_323(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 324) {
+    encoding_324(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 325) {
+    encoding_325(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 326) {
+    encoding_326(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 327) {
+    encoding_327(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 328) {
+    encoding_328(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 330) {
+    encoding_330(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 331) {
+    encoding_331(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 332) {
+    encoding_332(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 333) {
+    encoding_333(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 334) {
+    encoding_334(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 335) {
+    encoding_335(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 336) {
+    encoding_336(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 337) {
+    encoding_337(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 338) {
+    encoding_338(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 339) {
+    encoding_339(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 340) {
+    encoding_340(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 341) {
+    encoding_341(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 342) {
+    encoding_342(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 343) {
+    encoding_343(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 344) {
+    encoding_344(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 345) {
+    encoding_345(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 346) {
+    encoding_346(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 347) {
+    encoding_347(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 348) {
+    encoding_348(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 349) {
+    encoding_349(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 350) {
+    encoding_350(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 351) {
+    encoding_351(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 352) {
+    encoding_352(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 353) {
+    encoding_353(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 354) {
+    encoding_354(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 355) {
+    encoding_355(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 356) {
+    encoding_356(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 357) {
+    encoding_357(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 358) {
+    encoding_358(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 359) {
+    encoding_359(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 360) {
+    encoding_360(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 361) {
+    encoding_361(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 362) {
+    encoding_362(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 363) {
+    encoding_363(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 364) {
+    encoding_364(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 365) {
+    encoding_365(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 366) {
+    encoding_366(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 367) {
+    encoding_367(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 368) {
+    encoding_368(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 369) {
+    encoding_369(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 370) {
+    encoding_370(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 371) {
+    encoding_371(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 372) {
+    encoding_372(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 373) {
+    encoding_373(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 374) {
+    encoding_374(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 375) {
+    encoding_375(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 376) {
+    encoding_376(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 377) {
+    encoding_377(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 378) {
+    encoding_378(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 379) {
+    encoding_379(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 380) {
+    encoding_380(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 381) {
+    encoding_381(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 382) {
+    encoding_382(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 383) {
+    encoding_383(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 384) {
+    encoding_384(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 385) {
+    encoding_385(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 387) {
+    encoding_387(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 388) {
+    encoding_388(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 389) {
+    encoding_389(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 390) {
+    encoding_390(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 391) {
+    encoding_391(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 392) {
+    encoding_392(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 393) {
+    encoding_393(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 394) {
+    encoding_394(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 395) {
+    encoding_395(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 396) {
+    encoding_396(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 398) {
+    encoding_398(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 399) {
+    encoding_399(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 400) {
+    encoding_400(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 401) {
+    encoding_401(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 402) {
+    encoding_402(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 403) {
+    encoding_403(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 404) {
+    encoding_404(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 405) {
+    encoding_405(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 406) {
+    encoding_406(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 407) {
+    encoding_407(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 408) {
+    encoding_408(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 409) {
+    encoding_409(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 410) {
+    encoding_410(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 411) {
+    encoding_411(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 412) {
+    encoding_412(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 413) {
+    encoding_413(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 414) {
+    encoding_414(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 415) {
+    encoding_415(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 416) {
+    encoding_416(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 417) {
+    encoding_417(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 418) {
+    encoding_418(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 419) {
+    encoding_419(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 420) {
+    encoding_420(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 421) {
+    encoding_421(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 422) {
+    encoding_422(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 423) {
+    encoding_423(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 424) {
+    encoding_424(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 425) {
+    encoding_425(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 426) {
+    encoding_426(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 427) {
+    encoding_427(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 428) {
+    encoding_428(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 429) {
+    encoding_429(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 430) {
+    encoding_430(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 431) {
+    encoding_431(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 432) {
+    encoding_432(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 433) {
+    encoding_433(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 435) {
+    encoding_435(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 436) {
+    encoding_436(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 437) {
+    encoding_437(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 439) {
+    encoding_439(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 440) {
+    encoding_440(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 441) {
+    encoding_441(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 442) {
+    encoding_442(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 443) {
+    encoding_443(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 444) {
+    encoding_444(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 445) {
+    encoding_445(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 446) {
+    encoding_446(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 447) {
+    encoding_447(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 448) {
+    encoding_448(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 449) {
+    encoding_449(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 450) {
+    encoding_450(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 451) {
+    encoding_451(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 452) {
+    encoding_452(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 453) {
+    encoding_453(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 454) {
+    encoding_454(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 455) {
+    encoding_455(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 456) {
+    encoding_456(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 457) {
+    encoding_457(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 458) {
+    encoding_458(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 459) {
+    encoding_459(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 461) {
+    encoding_461(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 462) {
+    encoding_462(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 463) {
+    encoding_463(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 464) {
+    encoding_464(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 465) {
+    encoding_465(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 466) {
+    encoding_466(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 467) {
+    encoding_467(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 468) {
+    encoding_468(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 469) {
+    encoding_469(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 470) {
+    encoding_470(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 471) {
+    encoding_471(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 472) {
+    encoding_472(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 473) {
+    encoding_473(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 474) {
+    encoding_474(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 475) {
+    encoding_475(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 476) {
+    encoding_476(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 477) {
+    encoding_477(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 478) {
+    encoding_478(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 479) {
+    encoding_479(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 480) {
+    encoding_480(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 481) {
+    encoding_481(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 482) {
+    encoding_482(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 483) {
+    encoding_483(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 484) {
+    encoding_484(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 485) {
+    encoding_485(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 486) {
+    encoding_486(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 487) {
+    encoding_487(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 488) {
+    encoding_488(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 489) {
+    encoding_489(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 490) {
+    encoding_490(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 491) {
+    encoding_491(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 492) {
+    encoding_492(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 493) {
+    encoding_493(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 494) {
+    encoding_494(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 495) {
+    encoding_495(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 496) {
+    encoding_496(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 497) {
+    encoding_497(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 498) {
+    encoding_498(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 499) {
+    encoding_499(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 500) {
+    encoding_500(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 501) {
+    encoding_501(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 502) {
+    encoding_502(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 503) {
+    encoding_503(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 504) {
+    encoding_504(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 505) {
+    encoding_505(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 506) {
+    encoding_506(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 507) {
+    encoding_507(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 508) {
+    encoding_508(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 509) {
+    encoding_509(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 510) {
+    encoding_510(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 511) {
+    encoding_511(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 512) {
+    encoding_512(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 513) {
+    encoding_513(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 514) {
+    encoding_514(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 515) {
+    encoding_515(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 516) {
+    encoding_516(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 517) {
+    encoding_517(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 518) {
+    encoding_518(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 519) {
+    encoding_519(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 520) {
+    encoding_520(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 521) {
+    encoding_521(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 522) {
+    encoding_522(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 523) {
+    encoding_523(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 524) {
+    encoding_524(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 525) {
+    encoding_525(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 526) {
+    encoding_526(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 527) {
+    encoding_527(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 528) {
+    encoding_528(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 529) {
+    encoding_529(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 531) {
+    encoding_531(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 532) {
+    encoding_532(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 533) {
+    encoding_533(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 534) {
+    encoding_534(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 535) {
+    encoding_535(inputs, out, cnf, nm);
+  }
+  else if (enc_id == 537) {
+    encoding_537(inputs, out, cnf, nm);
   }
   else {
     Assert(false);
   }
 }/* optimalEncodingFixedWidth */
-
-Node CVC4::theory::bv::optimalEncodingPredicate(int enc_id, const std::vector<std::vector<Node> >& inputs,  prop::CnfStream* cnf) {
-  NodeManager* nm = NodeManager::currentNM();
-  if (enc_id == 4) { 
+Node encoding_4(const std::vector<std::vector<Node> >& inputs,   prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13724,8 +14522,8 @@ for (int k = 0; k < N; k++) {
       }
     return out; 
 
-  }
-  else if (enc_id == 6) {
+}
+Node encoding_6(const std::vector<std::vector<Node> >& inputs,   prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13805,8 +14603,8 @@ for (int k = 0; k < N; k++) {
       }
     return out; 
 
-  }
-  else if (enc_id == 9) {
+}
+Node encoding_9(const std::vector<std::vector<Node> >& inputs,   prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -13896,10 +14694,20 @@ for (int k = 0; k < N; k++) {
       }
     return out; 
 
+}
+Node CVC4::theory::bv::optimalEncodingPredicate(int enc_id, const std::vector<std::vector<Node> >& inputs,  prop::CnfStream* cnf) {
+  NodeManager* nm = NodeManager::currentNM();
+  if (enc_id == 4) { 
+    return encoding_4(inputs, cnf, nm);
+  }
+  else if (enc_id == 6) {
+    return encoding_6(inputs, cnf, nm);
+  }
+  else if (enc_id == 9) {
+    return encoding_9(inputs, cnf, nm);
   }
   else {
     Assert(false);
     return mkTrue<Node>();
   }
 }/* optimalEncodingPredicate */
-
