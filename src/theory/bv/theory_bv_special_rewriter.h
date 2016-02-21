@@ -22,6 +22,7 @@
 
 #include "theory/rewriter.h"
 #include "util/statistics_registry.h"
+#include "options/bv_options.h"
 
 namespace CVC4 {
 namespace theory {
@@ -32,7 +33,6 @@ typedef RewriteResponse (*RewriteFunction) (TNode, bool);
 
 class TheoryBVSpecialRewriter {
 
-  static RewriteFunction d_rewriteTable[kind::LAST_KIND];
 
   static RewriteResponse IdentityRewrite(TNode node, bool prerewrite = false);
   static RewriteResponse UndefinedRewrite(TNode node, bool prerewrite = false);
@@ -55,21 +55,9 @@ public:
   static RewriteResponse preRewrite(TNode node);
   
   static void initializeRewrites() {
-    for (unsigned i = 0; i < kind::LAST_KIND; i++) {
-      d_rewriteTable[i] = IdentityRewrite;
-    }
     for (unsigned i = 0; i < 2000; i++) {
       counter[i] = 0;
     }
-    d_rewriteTable[kind::BITVECTOR_OR] = RewriteBITVECTOR_OR;
-    d_rewriteTable[kind::BITVECTOR_PLUS] = RewriteBITVECTOR_PLUS;
-    d_rewriteTable[kind::BITVECTOR_NOT] = RewriteBITVECTOR_NOT;
-    d_rewriteTable[kind::BITVECTOR_NEG] = RewriteBITVECTOR_NEG;
-    d_rewriteTable[kind::BITVECTOR_AND] = RewriteBITVECTOR_AND;
-    d_rewriteTable[kind::BITVECTOR_XOR] = RewriteBITVECTOR_XOR;
-    d_rewriteTable[kind::BITVECTOR_SLT] = RewriteBITVECTOR_SLT;
-    d_rewriteTable[kind::EQUAL] = RewriteEQUAL;
-    d_rewriteTable[kind::BITVECTOR_ULT] = RewriteBITVECTOR_ULT;
   }
   static void print() {
     Chat() << "BV rewrite statistics" << std::endl;
