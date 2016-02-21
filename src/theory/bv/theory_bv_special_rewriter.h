@@ -36,10 +36,10 @@ class TheoryBVSpecialRewriter {
 
   static RewriteResponse IdentityRewrite(TNode node, bool prerewrite = false);
   static RewriteResponse UndefinedRewrite(TNode node, bool prerewrite = false);
-  
-  static int counter[2000];
+
 
 public:
+  static int counter[2000];
 
   static RewriteResponse RewriteBITVECTOR_OR(TNode node, bool prerewrite = false);
   static RewriteResponse RewriteBITVECTOR_PLUS(TNode node, bool prerewrite = false);

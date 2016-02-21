@@ -34,8 +34,6 @@ typedef RewriteResponse (*RewriteFunction) (TNode, bool);
 class TheoryBoolSpecialRewriter {
   static RewriteResponse IdentityRewrite(TNode node, bool prerewrite = false);
   static RewriteResponse UndefinedRewrite(TNode node, bool prerewrite = false);
-  
-  static int counter[2000];
 
   static RewriteResponse RewriteOR(TNode node, bool prerewrite = false);
   static RewriteResponse RewriteAND(TNode node, bool prerewrite = false);
@@ -43,6 +41,8 @@ class TheoryBoolSpecialRewriter {
   static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false);
   static RewriteResponse RewriteITE(TNode node, bool prerewrite = false);
 public:
+  static int counter[2000];
+  
   static void initialize() {
     for (int i = 0; i < 2000; i++) {
       counter[i] = 0;
