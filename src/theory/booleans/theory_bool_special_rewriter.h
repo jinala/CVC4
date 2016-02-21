@@ -35,12 +35,38 @@ class TheoryBoolSpecialRewriter {
   static RewriteResponse IdentityRewrite(TNode node, bool prerewrite = false);
   static RewriteResponse UndefinedRewrite(TNode node, bool prerewrite = false);
   
-  
+  static int counter[2000];
+
+  static RewriteResponse RewriteOR(TNode node, bool prerewrite = false);
+  static RewriteResponse RewriteAND(TNode node, bool prerewrite = false);
+  static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false);
+  static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false);
+  static RewriteResponse RewriteITE(TNode node, bool prerewrite = false);
 public:
-  static void initialize();
-  static void print();
+  static void initialize() {
+    for (int i = 0; i < 2000; i++) {
+      counter[i] = 0;
+    }
+  }
+  static void print() {
+    Chat() << "Rewrite statistics" << std::endl;
+    for (int i = 0; i < 2000; i++) {
+      if (counter[i] > 0)
+        Chat() << i << " " << counter[i] << std::endl;
+    }
+  }
   
-  static RewriteResponse rewrite(TNode node);
+  static RewriteResponse rewrite(TNode node) {
+    switch(node.getKind()) {
+      case kind::AND : return RewriteAND(node);
+      case kind::NOT : return RewriteNOT(node);
+      case kind::IFF : return RewriteIFF(node);
+      case kind::ITE : return RewriteITE(node);
+      case kind::OR : return RewriteOR(node);
+      default: return RewriteResponse(REWRITE_DONE, node);
+    }
+
+  }
   
 };/* class TheoryBoolSpecialRewriter */
 

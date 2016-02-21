@@ -207,7 +207,15 @@ libcvc4_la_SOURCES = \
 	theory/bv/theory_bv_rewriter.cpp \
   theory/bv/theory_bv_special_rewriter.h \
   theory/bv/theory_bv_special_rewriter.cpp \
-  theory/bv/theory_bv_generated_rewriter.cpp \
+  theory/bv/theory_bv_generated_rewriter_BITVECTOR_OR.cpp \
+  theory/bv/theory_bv_generated_rewriter_BITVECTOR_AND.cpp \
+  theory/bv/theory_bv_generated_rewriter_BITVECTOR_XOR.cpp \
+  theory/bv/theory_bv_generated_rewriter_BITVECTOR_NOT.cpp \
+  theory/bv/theory_bv_generated_rewriter_BITVECTOR_NEG.cpp \
+  theory/bv/theory_bv_generated_rewriter_BITVECTOR_PLUS.cpp \
+  theory/bv/theory_bv_generated_rewriter_BITVECTOR_ULT.cpp \
+  theory/bv/theory_bv_generated_rewriter_BITVECTOR_SLT.cpp \
+  theory/bv/theory_bv_generated_rewriter_EQUAL.cpp \
 	theory/bv/cd_set_collection.h \
 	theory/bv/abstraction.h \
 	theory/bv/abstraction.cpp \
@@ -412,7 +420,11 @@ libcvc4_la_SOURCES = \
 	theory/booleans/theory_bool_rewriter.h \
 	theory/booleans/theory_bool_rewriter.cpp \
   	theory/booleans/theory_bool_special_rewriter.h \
-  	theory/booleans/theory_bool_generated_rewriter.cpp \
+  	theory/booleans/theory_bool_generated_rewriter_AND.cpp \
+    theory/booleans/theory_bool_generated_rewriter_OR.cpp \
+    theory/booleans/theory_bool_generated_rewriter_NOT.cpp \
+    theory/booleans/theory_bool_generated_rewriter_IFF.cpp \
+    theory/booleans/theory_bool_generated_rewriter_ITE.cpp \
   	theory/booleans/bool_generated_encodings.h \
 	theory/booleans/bool_generated_encodings.cpp \
 	theory/booleans/circuit_propagator.h \

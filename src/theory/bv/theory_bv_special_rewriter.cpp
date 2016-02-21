@@ -27,6 +27,7 @@ using namespace CVC4::theory::bv;
 // CVC4_THREADLOCAL(AllRewriteRules*) TheoryBVSpecialRewriter::s_allRules = NULL;
 // CVC4_THREADLOCAL(TimerStat*) TheoryBVSpecialRewriter::d_rewriteTimer = NULL;
 RewriteFunction TheoryBVSpecialRewriter::d_rewriteTable[kind::LAST_KIND];
+int TheoryBVSpecialRewriter::counter[2000];
 
 RewriteResponse TheoryBVSpecialRewriter::preRewrite(TNode node) {
   RewriteResponse res = d_rewriteTable[node.getKind()](node, true);
