@@ -22,7 +22,7 @@
 
 #include "theory/rewriter.h"
 #include "util/statistics_registry.h"
-#include "options/main_options.h"
+#include "options/bv_options.h"
 
 namespace CVC4 {
 namespace theory {
@@ -33,7 +33,6 @@ typedef RewriteResponse (*RewriteFunction) (TNode, bool);
 
 class TheoryBVSpecialRewriter {
 
-  static RewriteFunction d_rewriteTable[kind::LAST_KIND];
 
   static RewriteResponse IdentityRewrite(TNode node, bool prerewrite = false);
   static RewriteResponse UndefinedRewrite(TNode node, bool prerewrite = false);
@@ -56,31 +55,9 @@ public:
   static RewriteResponse preRewrite(TNode node);
   
   static void initializeRewrites() {
-    for (unsigned i = 0; i < kind::LAST_KIND; i++) {
-      d_rewriteTable[i] = IdentityRewrite;
-    }
     for (unsigned i = 0; i < 2000; i++) {
       counter[i] = 0;
     }
-    int disableInt = options::disableOpt();
-    if (! ((disableInt >> 5) & 1))
-      d_rewriteTable[kind::BITVECTOR_OR] = RewriteBITVECTOR_OR;
-    if (! ((disableInt >> 6) & 1))
-      d_rewriteTable[kind::BITVECTOR_PLUS] = RewriteBITVECTOR_PLUS;
-    if (! ((disableInt >> 7) & 1))
-      d_rewriteTable[kind::BITVECTOR_NOT] = RewriteBITVECTOR_NOT;
-    if (! ((disableInt >> 8) & 1))
-      d_rewriteTable[kind::BITVECTOR_NEG] = RewriteBITVECTOR_NEG;
-    if (! ((disableInt >> 9) & 1))
-      d_rewriteTable[kind::BITVECTOR_AND] = RewriteBITVECTOR_AND;
-    if (! ((disableInt >> 10) & 1))
-      d_rewriteTable[kind::BITVECTOR_XOR] = RewriteBITVECTOR_XOR;
-    if (! ((disableInt >> 11) & 1))
-      d_rewriteTable[kind::BITVECTOR_SLT] = RewriteBITVECTOR_SLT;
-    if (! ((disableInt >> 12) & 1))
-      d_rewriteTable[kind::EQUAL] = RewriteEQUAL;
-    if (! ((disableInt >> 13) & 1))
-      d_rewriteTable[kind::BITVECTOR_ULT] = RewriteBITVECTOR_ULT;
   }
   static void print() {
     Chat() << "BV rewrite statistics" << std::endl;

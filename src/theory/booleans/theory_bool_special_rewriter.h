@@ -22,7 +22,7 @@
 
 #include "theory/rewriter.h"
 #include "util/statistics_registry.h"
-#include "options/main_options.h"
+#include "options/bv_options.h"
 
 
 namespace CVC4 {
@@ -58,7 +58,7 @@ public:
   }
   
   static RewriteResponse rewrite(TNode node) {
-    int disableInt = options::disableOpt();
+    int disableInt = options::autotune() ? options::disableOpt() : 0;
     switch(node.getKind()) {
       case kind::AND :
         if (disableInt & 1)
@@ -80,7 +80,9 @@ public:
         if ((disableInt >> 4) & 1)
           return RewriteResponse(REWRITE_DONE, node);
         return RewriteOR(node);
-      default: return RewriteResponse(REWRITE_DONE, node);
+      default:
+        counter[1999]++;
+        return RewriteResponse(REWRITE_DONE, node);
     }
 
   }

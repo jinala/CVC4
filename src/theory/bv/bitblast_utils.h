@@ -305,8 +305,8 @@ std::vector<Node> inline optimalFullAdder(const Node a, const Node b,
   
   if (true) {
     
-    if (cnf->hasEncoding(99,inputs)) {
-      return cnf->getCachedEncoding(99,inputs);
+    if (cnf->hasEncoding(1999,inputs)) {
+      return cnf->getCachedEncoding(1999,inputs);
     }
     
     // check for constants
@@ -359,7 +359,7 @@ std::vector<Node> inline optimalFullAdder(const Node a, const Node b,
   Node cout = nm->mkSkolem("carry", nm->booleanType());
   outputs.push_back(s);
   outputs.push_back(cout);
-  cnf->cacheEncoding(99,inputs, outputs);
+  cnf->cacheEncoding(1999,inputs, outputs);
   
   if (true) {
     Node cout_expr = mkOr(mkAnd(a, b),
