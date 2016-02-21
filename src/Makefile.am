@@ -420,6 +420,7 @@ libcvc4_la_SOURCES = \
 	theory/booleans/theory_bool_rewriter.h \
 	theory/booleans/theory_bool_rewriter.cpp \
   	theory/booleans/theory_bool_special_rewriter.h \
+    theory/booleans/theory_bool_special_rewriter.cpp \
   	theory/booleans/theory_bool_generated_rewriter_AND.cpp \
     theory/booleans/theory_bool_generated_rewriter_OR.cpp \
     theory/booleans/theory_bool_generated_rewriter_NOT.cpp \

@@ -7,7 +7,7 @@ using namespace CVC4;
 using namespace CVC4::theory;
 using namespace CVC4::theory::booleans;
 using namespace CVC4::theory::bv;
-int TheoryBoolSpecialRewriter::counter[2000];
+
 RewriteResponse TheoryBoolSpecialRewriter::RewriteAND(TNode node, bool prerewrite) {
   if (node.getKind() == kind::AND && node.getNumChildren() == 3 && true && node[1].getKind() == kind::OR && node[1].getNumChildren() == 2 && true && node[1][1].getKind() == kind::AND && node[1][1].getNumChildren() == 3 && true && true && node[1][1][2].getKind() == kind::OR && node[1][1][2].getNumChildren() == 2 && node[1][1][1] == node[1][1][2][0] && true && node[2].getKind() == kind::OR && node[2].getNumChildren() == 2 && node[1][1][2][1] == node[2][0] && node[1][1][2][0] == node[2][1]) {
     std::vector<Node> children;
