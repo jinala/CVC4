@@ -32,32 +32,41 @@ RewriteResponse TheoryBVSpecialRewriter::preRewrite(TNode node) {
   int disableInt = options::autotune() ? options::disableOpt() : 0;
   switch(node.getKind()) {
     case kind::BITVECTOR_OR:
-      if (! ((disableInt >> 5) & 1))
-        return RewriteBITVECTOR_OR(node);
+      if (((disableInt >> 5) & 1))
+        return RewriteResponse(REWRITE_DONE, node);
+      return RewriteBITVECTOR_OR(node);
     case kind::BITVECTOR_PLUS:
-      if (! ((disableInt >> 6) & 1))
-        return RewriteBITVECTOR_PLUS(node);
+      if (((disableInt >> 6) & 1))
+        return RewriteResponse(REWRITE_DONE, node);
+      return RewriteBITVECTOR_PLUS(node);
     case kind::BITVECTOR_NOT:
-      if (! ((disableInt >> 7) & 1))
-        return RewriteBITVECTOR_NOT(node);
+      if (((disableInt >> 7) & 1))
+        return RewriteResponse(REWRITE_DONE, node);
+      return RewriteBITVECTOR_NOT(node);
     case kind::BITVECTOR_NEG:
-      if (! ((disableInt >> 8) & 1))
-        return RewriteBITVECTOR_NEG(node);
+      if (((disableInt >> 8) & 1))
+        return RewriteResponse(REWRITE_DONE, node);
+      return RewriteBITVECTOR_NEG(node);
     case kind::BITVECTOR_AND:
-      if (! ((disableInt >> 9) & 1))
-        return RewriteBITVECTOR_AND(node);
+      if (((disableInt >> 9) & 1))
+        return RewriteResponse(REWRITE_DONE, node);
+      return RewriteBITVECTOR_AND(node);
     case kind::BITVECTOR_XOR:
-      if (! ((disableInt >> 10) & 1))
-        return RewriteBITVECTOR_XOR(node);
+      if (((disableInt >> 10) & 1))
+        return RewriteResponse(REWRITE_DONE, node);
+      return RewriteBITVECTOR_XOR(node);
     case kind::BITVECTOR_SLT:
-      if (! ((disableInt >> 11) & 1))
-        return RewriteBITVECTOR_SLT(node);
+      if (((disableInt >> 11) & 1))
+        return RewriteResponse(REWRITE_DONE, node);
+      return RewriteBITVECTOR_SLT(node);
     case kind::EQUAL:
-      if (! ((disableInt >> 12) & 1))
-        return RewriteEQUAL(node);
+      if (((disableInt >> 12) & 1))
+        return RewriteResponse(REWRITE_DONE, node);
+      return RewriteEQUAL(node);
     case kind::BITVECTOR_ULT:
-      if (! ((disableInt >> 13) & 1))
-        return RewriteBITVECTOR_ULT(node);
+      if (((disableInt >> 13) & 1))
+        return RewriteResponse(REWRITE_DONE, node);
+      return RewriteBITVECTOR_ULT(node);
     default:
       counter[1999]++;
       return RewriteResponse(REWRITE_DONE, node);
