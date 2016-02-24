@@ -24,4 +24,5 @@ using namespace CVC4::theory::booleans;
 
 
 int TheoryBoolSpecialRewriter::counter[2000];
+bool TheoryBoolSpecialRewriter::enabled[2000];
 

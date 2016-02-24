@@ -27,45 +27,26 @@ using namespace CVC4::theory::bv;
 // CVC4_THREADLOCAL(AllRewriteRules*) TheoryBVSpecialRewriter::s_allRules = NULL;
 // CVC4_THREADLOCAL(TimerStat*) TheoryBVSpecialRewriter::d_rewriteTimer = NULL;
 int TheoryBVSpecialRewriter::counter[2000];
-
+bool TheoryBVSpecialRewriter::enabled[2000];
 RewriteResponse TheoryBVSpecialRewriter::preRewrite(TNode node) {
-  int disableInt = options::autotune() ? options::disableOpt() : 0;
   switch(node.getKind()) {
     case kind::BITVECTOR_OR:
-      if (((disableInt >> 5) & 1))
-        return RewriteResponse(REWRITE_DONE, node);
       return RewriteBITVECTOR_OR(node);
     case kind::BITVECTOR_PLUS:
-      if (((disableInt >> 6) & 1))
-        return RewriteResponse(REWRITE_DONE, node);
       return RewriteBITVECTOR_PLUS(node);
     case kind::BITVECTOR_NOT:
-      if (((disableInt >> 7) & 1))
-        return RewriteResponse(REWRITE_DONE, node);
       return RewriteBITVECTOR_NOT(node);
     case kind::BITVECTOR_NEG:
-      if (((disableInt >> 8) & 1))
-        return RewriteResponse(REWRITE_DONE, node);
       return RewriteBITVECTOR_NEG(node);
     case kind::BITVECTOR_AND:
-      if (((disableInt >> 9) & 1))
-        return RewriteResponse(REWRITE_DONE, node);
       return RewriteBITVECTOR_AND(node);
     case kind::BITVECTOR_XOR:
-      if (((disableInt >> 10) & 1))
-        return RewriteResponse(REWRITE_DONE, node);
       return RewriteBITVECTOR_XOR(node);
     case kind::BITVECTOR_SLT:
-      if (((disableInt >> 11) & 1))
-        return RewriteResponse(REWRITE_DONE, node);
       return RewriteBITVECTOR_SLT(node);
     case kind::EQUAL:
-      if (((disableInt >> 12) & 1))
-        return RewriteResponse(REWRITE_DONE, node);
       return RewriteEQUAL(node);
     case kind::BITVECTOR_ULT:
-      if (((disableInt >> 13) & 1))
-        return RewriteResponse(REWRITE_DONE, node);
       return RewriteBITVECTOR_ULT(node);
     default:
       counter[1999]++;

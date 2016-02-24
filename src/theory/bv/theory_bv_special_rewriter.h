@@ -23,6 +23,9 @@
 #include "theory/rewriter.h"
 #include "util/statistics_registry.h"
 #include "options/bv_options.h"
+#include "theory/booleans/theory_bool_special_rewriter.h"
+
+
 
 namespace CVC4 {
 namespace theory {
@@ -40,6 +43,7 @@ class TheoryBVSpecialRewriter {
 
 public:
   static int counter[2000];
+  static bool enabled[2000];
 
   static RewriteResponse RewriteBITVECTOR_OR(TNode node, bool prerewrite = false);
   static RewriteResponse RewriteBITVECTOR_PLUS(TNode node, bool prerewrite = false);
@@ -58,6 +62,17 @@ public:
     for (unsigned i = 0; i < 2000; i++) {
       counter[i] = 0;
     }
+    for (int i = 0; i < 2000; i++) {
+      enabled[i] = 1;
+    }
+    if (options::autotune()) {
+      std::string disableStr = options::disableOpt();
+      for (int i = 0; i < disableStr.size(); i++) {
+        if (disableStr.at(i) == '1')
+          enabled[i] = 0;
+      }
+    }
+
   }
   static void print() {
     Chat() << "BV rewrite statistics" << std::endl;

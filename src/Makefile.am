@@ -426,6 +426,7 @@ libcvc4_la_SOURCES = \
     theory/booleans/theory_bool_generated_rewriter_NOT.cpp \
     theory/booleans/theory_bool_generated_rewriter_IFF.cpp \
     theory/booleans/theory_bool_generated_rewriter_ITE.cpp \
+    theory/booleans/theory_bool_generated_rewriter_IMPLIES.cpp \
   	theory/booleans/bool_generated_encodings.h \
 	theory/booleans/bool_generated_encodings.cpp \
 	theory/booleans/circuit_propagator.h \

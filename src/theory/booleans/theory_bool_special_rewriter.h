@@ -41,12 +41,24 @@ class TheoryBoolSpecialRewriter {
   static RewriteResponse RewriteNOT(TNode node, bool prerewrite = false);
   static RewriteResponse RewriteIFF(TNode node, bool prerewrite = false);
   static RewriteResponse RewriteITE(TNode node, bool prerewrite = false);
+  static RewriteResponse RewriteIMPLIES(TNode node, bool prerewrite = false);
 public:
   static int counter[2000];
+  static bool enabled[2000];
   
   static void initialize() {
     for (int i = 0; i < 2000; i++) {
       counter[i] = 0;
+    }
+    for (int i = 0; i < 2000; i++) {
+      enabled[i] = 1;
+    }
+    if (options::autotune()) {
+      std::string disableStr = options::disableOpt();
+      for (int i = 0; i < disableStr.size(); i++) {
+        if (disableStr.at(i) == '1')
+          enabled[i] = 0;
+      }
     }
   }
   static void print() {
@@ -58,28 +70,19 @@ public:
   }
   
   static RewriteResponse rewrite(TNode node) {
-    int disableInt = options::autotune() ? options::disableOpt() : 0;
     switch(node.getKind()) {
       case kind::AND :
-        if (disableInt & 1)
-          return RewriteResponse(REWRITE_DONE, node);
         return RewriteAND(node);
       case kind::NOT :
-        if ((disableInt >> 1) & 1)
-          return RewriteResponse(REWRITE_DONE, node);
         return RewriteNOT(node);
       case kind::IFF :
-        if ((disableInt >> 2) & 1)
-          return RewriteResponse(REWRITE_DONE, node);
         return RewriteIFF(node);
       case kind::ITE :
-        if ((disableInt >> 3) & 1)
-          return RewriteResponse(REWRITE_DONE, node);
         return RewriteITE(node);
       case kind::OR :
-        if ((disableInt >> 4) & 1)
-          return RewriteResponse(REWRITE_DONE, node);
         return RewriteOR(node);
+      case kind::IMPLIES:
+        return RewriteIMPLIES(node);
       default:
         counter[1999]++;
         return RewriteResponse(REWRITE_DONE, node);

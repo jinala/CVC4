@@ -68,7 +68,7 @@ expert-option bvIntroducePow2 --bv-intro-pow2 bool :default false
  
 expert-option autotune --autotune bool :default false
  Autotune for encodings
-expert-option disableOpt --disable-opt int :default 0
+expert-option disableOpt --disable-opt std::string :default ""
  disable some optimizations
 
 endmodule
