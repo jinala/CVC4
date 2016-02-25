@@ -65,6 +65,13 @@ public:
     for (int i = 0; i < 2000; i++) {
       enabled[i] = 1;
     }
+    if (options::autotune()) {
+      std::string disableStr = options::disableOpt();
+      for (int i = 0; i < disableStr.size(); i++) {
+        if (disableStr.at(i) == '1')
+        enabled[i] = 0;
+      }
+    }
   }
   static void print() {
     Chat() << "BV rewrite statistics" << std::endl;
