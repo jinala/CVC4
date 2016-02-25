@@ -3934,6 +3934,7 @@ void SmtEnginePrivate::processAssertions() {
   }
 
   ::CVC4::theory::booleans::TheoryBoolSpecialRewriter::initialize();
+  ::CVC4::theory::bv::TheoryBVSpecialRewriter::initializeRewrites();
   // Push the formula to SAT
   {
     Chat() << "converting to CNF..." << endl;

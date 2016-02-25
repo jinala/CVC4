@@ -45,7 +45,6 @@ class RewriterInitializer {
   static RewriterInitializer s_rewriterInitializer;
   RewriterInitializer() {
     Rewriter::init();
-    ::CVC4::theory::bv::TheoryBVSpecialRewriter::initializeRewrites();
   }
   ~RewriterInitializer() { Rewriter::shutdown(); }
 };/* class RewriterInitializer */
