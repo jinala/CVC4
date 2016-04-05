@@ -8,33 +8,6 @@ using namespace CVC4::theory;
 using namespace CVC4::theory::booleans;
 using namespace CVC4::theory::bv;
 
-Node rewrite_4_0(Node node) {
-  std::vector<Node> children;
-  children.push_back(node[0]);
-  children.push_back(node[1]);
-  children.push_back(node[2]);
-  if (options::printStats()) TheoryBoolSpecialRewriter::counter[4]++;
-  return utils::mkSpecialBool(children, 4);
-}
-Node rewrite_4(TNode node, const bool* predicates) {
-  if (predicates[0] && true && true && true) {
-    return rewrite_4_0(node);
-  }
-  else {
-    return node;
-  }
-}
-RewriteResponse TheoryBoolSpecialRewriter::RewriteITE(TNode node,  bool prewrite) {
-  bool predicates[1];
-  for (int i = 0; i < 1; i++) {
-    predicates[i] = false;
-  }
-  predicates[0] = node.getKind() == kind::ITE && node.getNumChildren() == 3;
-  Node response;
-  if (TheoryBoolSpecialRewriter::enabled[4]) {
-    response = rewrite_4(node, predicates);
-    if (response != node) return RewriteResponse(REWRITE_DONE, response);
-  }
-  if (options::printStats()) TheoryBoolSpecialRewriter::counter[1999]++;
+RewriteResponse TheoryBoolSpecialRewriter::RewriteITE(TNode node, bool prerewrite) {
   return RewriteResponse(REWRITE_DONE, node);
 }

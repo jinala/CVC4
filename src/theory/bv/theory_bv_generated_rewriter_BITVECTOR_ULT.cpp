@@ -8,16 +8,16 @@ using namespace CVC4;
 using namespace CVC4::theory;
 using namespace CVC4::theory::bv;
 
-Node rewrite_2_0(Node node) {
+Node rewrite_32_0(Node node) {
   std::vector<Node> children;
   children.push_back(node[0]);
   children.push_back(node[1]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[2]++;
-  return utils::mkSpecialPredicate(children, 2);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[32]++;
+  return utils::mkSpecialPredicate(children, 32);
 }
-Node rewrite_2(TNode node, const bool* predicates) {
+Node rewrite_32(TNode node, const bool* predicates) {
   if (predicates[0] && true && true) {
-    return rewrite_2_0(node);
+    return rewrite_32_0(node);
   }
   else {
     return node;
@@ -30,8 +30,8 @@ RewriteResponse TheoryBVSpecialRewriter::RewriteBITVECTOR_ULT(TNode node,  bool 
   }
   predicates[0] = node.getKind() == kind::BITVECTOR_ULT && node.getNumChildren() == 2;
   Node response;
-  if (TheoryBVSpecialRewriter::enabled[2]) {
-    response = rewrite_2(node, predicates);
+  if (TheoryBVSpecialRewriter::enabled[32]) {
+    response = rewrite_32(node, predicates);
     if (response != node) return RewriteResponse(REWRITE_DONE, response);
   }
   if (options::printStats()) TheoryBVSpecialRewriter::counter[1999]++;

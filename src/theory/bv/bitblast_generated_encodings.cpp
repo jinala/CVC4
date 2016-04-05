@@ -3,7 +3,7 @@
 using namespace CVC4;
 using namespace CVC4::theory;
 using namespace CVC4::theory::bv;
-void encoding_13(const std::vector<std::vector<Node> >& inputs, std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
+void encoding_29(const std::vector<std::vector<Node> >& inputs, std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
   std::vector<Node> inpV;
   std::vector<Node> outV;
   std::vector<Node> in0 = inputs[0];
@@ -55,8 +55,8 @@ for (int k = 0; k < N; k++) {
     inpV.push_back(tt_0);
     inpV.push_back(tt_1);
     inpV.push_back(tt_3);
-    if (cnf->hasEncoding(13, inpV)) {
-      outV = cnf->getCachedEncoding(13, inpV);
+    if (cnf->hasEncoding(29, inpV)) {
+      outV = cnf->getCachedEncoding(29, inpV);
       out[k] = outV[0];
       tmp[k] = outV[1];
       continue;
@@ -91,7 +91,7 @@ for (int k = 0; k < N; k++) {
     }
 
 }
-void encoding_14(const std::vector<std::vector<Node> >& inputs, std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
+void encoding_30(const std::vector<std::vector<Node> >& inputs, std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
   std::vector<Node> inpV;
   std::vector<Node> outV;
   std::vector<Node> in0 = inputs[0];
@@ -143,8 +143,8 @@ for (int k = 0; k < N; k++) {
     inpV.push_back(tt_0);
     inpV.push_back(tt_1);
     inpV.push_back(tt_3);
-    if (cnf->hasEncoding(14, inpV)) {
-      outV = cnf->getCachedEncoding(14, inpV);
+    if (cnf->hasEncoding(30, inpV)) {
+      outV = cnf->getCachedEncoding(30, inpV);
       out[k] = outV[0];
       tmp[k] = outV[1];
       continue;
@@ -179,101 +179,19 @@ for (int k = 0; k < N; k++) {
     }
 
 }
-void encoding_15(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
-    std::vector<Node> inpV;
-    std::vector<Node> outV;
-    std::vector<Node> in0 = inputs[0];
-    std::vector<Node> in1 = inputs[1];
-
-    for (size_t i = 0; i < in0.size(); i++) {
-      out.push_back(nm->mkSkolem("out", nm->booleanType())); 
-    }
-    // Begin iterator
-    for (size_t k = 0; k < in0.size(); k++) {
-      Node in_k_0 = in0[k];
-      Node neg_in_k_0 = nm->mkNode(kind::NOT, in_k_0);
-      Node in_k_1 = in1[k];
-      Node neg_in_k_1 = nm->mkNode(kind::NOT, in_k_1);
-
-
-      inpV.clear();
-      inpV.push_back(in_k_0);
-      inpV.push_back(in_k_1);
-      if (cnf->hasEncoding(15, inpV)) {
-        outV = cnf->getCachedEncoding(15, inpV);
-        out[k] = outV[0];
-        continue;
-      }
-      Node out_k = out[k];
-      Node neg_out_k = nm->mkNode(kind::NOT, out_k);
-
-      outV.clear();
-      outV.push_back(out_k);
-
-        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_0, neg_out_k), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_in_k_0, neg_in_k_1, out_k), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_1, neg_out_k), false, false, RULE_INVALID, TNode::null());
-
-    }
-
-}
-void encoding_16(const std::vector<std::vector<Node> >& inputs,   std::vector<Node>& out, prop::CnfStream* cnf, NodeManager* nm) {
-    std::vector<Node> inpV;
-    std::vector<Node> outV;
-    std::vector<Node> in0 = inputs[0];
-    std::vector<Node> in1 = inputs[1];
-
-    for (size_t i = 0; i < in0.size(); i++) {
-      out.push_back(nm->mkSkolem("out", nm->booleanType())); 
-    }
-    // Begin iterator
-    for (size_t k = 0; k < in0.size(); k++) {
-      Node in_k_0 = in0[k];
-      Node neg_in_k_0 = nm->mkNode(kind::NOT, in_k_0);
-      Node in_k_1 = in1[k];
-      Node neg_in_k_1 = nm->mkNode(kind::NOT, in_k_1);
-
-
-      inpV.clear();
-      inpV.push_back(in_k_0);
-      inpV.push_back(in_k_1);
-      if (cnf->hasEncoding(16, inpV)) {
-        outV = cnf->getCachedEncoding(16, inpV);
-        out[k] = outV[0];
-        continue;
-      }
-      Node out_k = out[k];
-      Node neg_out_k = nm->mkNode(kind::NOT, out_k);
-
-      outV.clear();
-      outV.push_back(out_k);
-
-        cnf->convertAndAssert(nm->mkNode(kind::OR, in_k_0, in_k_1, neg_out_k), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_in_k_0, out_k), false, false, RULE_INVALID, TNode::null());
-        cnf->convertAndAssert(nm->mkNode(kind::OR, neg_in_k_1, out_k), false, false, RULE_INVALID, TNode::null());
-
-    }
-
-}
 void CVC4::theory::bv::optimalEncodingFixedWidth(int enc_id, const std::vector<std::vector<Node> > & inputs,  std::vector<Node>& out, prop::CnfStream* cnf) {
   NodeManager* nm = NodeManager::currentNM();
-  if (enc_id == 13) { 
-    encoding_13(inputs, out, cnf, nm);
+  if (enc_id == 29) { 
+    encoding_29(inputs, out, cnf, nm);
   }
-  else if (enc_id == 14) {
-    encoding_14(inputs, out, cnf, nm);
-  }
-  else if (enc_id == 15) {
-    encoding_15(inputs, out, cnf, nm);
-  }
-  else if (enc_id == 16) {
-    encoding_16(inputs, out, cnf, nm);
+  else if (enc_id == 30) {
+    encoding_30(inputs, out, cnf, nm);
   }
   else {
     Assert(false);
   }
 }/* optimalEncodingFixedWidth */
-Node encoding_17(const std::vector<std::vector<Node> >& inputs,   prop::CnfStream* cnf, NodeManager* nm) {
+Node encoding_31(const std::vector<std::vector<Node> >& inputs,   prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -321,14 +239,61 @@ for (int k = 0; k < N; k++) {
       inpV.push_back(tt_0);
       inpV.push_back(tt_1);
       inpV.push_back(tt_2);
-      if (cnf->hasEncoding(17, inpV)) {
-        outV = cnf->getCachedEncoding(17, inpV);
+      if (cnf->hasEncoding(31, inpV)) {
+        outV = cnf->getCachedEncoding(31, inpV);
     if(k == (N - 1))/*sketch_..v_bool.sk:24*/
         out = outV[0];
     else
         tmp[k] = outV[0];
         continue;
       }
+
+    if (true) {
+     Node nn;
+     bool simplified = false;
+     // constant simplification
+     if (tt_2 == mkFalse<Node>()) {
+       nn = tt_2;
+       simplified = true;
+     } else if (tt_0 == tt_1) {
+       nn = tt_2;
+       simplified = true;
+     } else if (tt_2 == mkTrue<Node>()) {
+       
+       if (tt_0 == mkTrue<Node>()) {
+         nn = tt_1;
+         simplified = true;
+       } else if (tt_1 == mkTrue<Node>()) {
+         nn = tt_0;
+         simplified = true;
+       } else if (tt_0 == mkFalse<Node>()) {
+         nn = neg_tt_1;
+         simplified = true;
+       } else if (tt_1 == mkFalse<Node>()) {
+         nn = neg_tt_0;
+         simplified = true;
+       } else {
+         nn = nm->mkNode(kind::IFF, tt_0, tt_1);
+         simplified = true;
+       }
+     }
+     
+     if (simplified) {
+       if (k == N-1) {
+         out = nn;
+       } else {
+         tmp[k] = nn;
+       }
+       continue;
+     } else {
+       //Chat() << "Cannot be simplified" << std::endl;
+       //Chat() << tt_0 << std::endl;
+       //Chat() << tt_1 << std::endl;
+       //Chat() << tt_2 << std::endl;
+     }
+       
+   }
+ 
     if(k == (N - 1))/*sketch_..v_bool.sk:24*/
     {
       tt_3 = out;
@@ -352,7 +317,7 @@ for (int k = 0; k < N; k++) {
     return out; 
 
 }
-Node encoding_18(const std::vector<std::vector<Node> >& inputs,   prop::CnfStream* cnf, NodeManager* nm) {
+Node encoding_32(const std::vector<std::vector<Node> >& inputs,   prop::CnfStream* cnf, NodeManager* nm) {
     std::vector<Node> inpV;
     std::vector<Node> outV;
     std::vector<Node> in0 = inputs[0];
@@ -400,8 +365,8 @@ for (int k = 0; k < N; k++) {
       inpV.push_back(tt_0);
       inpV.push_back(tt_1);
       inpV.push_back(tt_2);
-      if (cnf->hasEncoding(18, inpV)) {
-        outV = cnf->getCachedEncoding(18, inpV);
+      if (cnf->hasEncoding(32, inpV)) {
+        outV = cnf->getCachedEncoding(32, inpV);
     if(k == (N - 1))/*sketch_..v_bool.sk:24*/
         out = outV[0];
     else
@@ -434,11 +399,11 @@ for (int k = 0; k < N; k++) {
 }
 Node CVC4::theory::bv::optimalEncodingPredicate(int enc_id, const std::vector<std::vector<Node> >& inputs,  prop::CnfStream* cnf) {
   NodeManager* nm = NodeManager::currentNM();
-  if (enc_id == 17) { 
-    return encoding_17(inputs, cnf, nm);
+  if (enc_id == 31) { 
+    return encoding_31(inputs, cnf, nm);
   }
-  else if (enc_id == 18) {
-    return encoding_18(inputs, cnf, nm);
+  else if (enc_id == 32) {
+    return encoding_32(inputs, cnf, nm);
   }
   else {
     Assert(false);
