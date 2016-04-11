@@ -11,90 +11,88 @@ using namespace CVC4::theory::bv;
 Node rewrite_14_0(Node node) {
   std::vector<Node> children;
   children.push_back(node[0]);
-  if (options::checkDuplicates()) {
-  if (TheoryBoolSpecialRewriter::nodes.find(node[0]) != TheoryBoolSpecialRewriter::nodes.end()) {
-    TheoryBoolSpecialRewriter::nodes[node[0]] += 1;
-  } else {
-    TheoryBoolSpecialRewriter::nodes[node[0]] = 1;
-  }}
   children.push_back(node[1][0]);
-  if (options::checkDuplicates()) {
-  if (TheoryBoolSpecialRewriter::nodes.find(node[1][0]) != TheoryBoolSpecialRewriter::nodes.end()) {
-    TheoryBoolSpecialRewriter::nodes[node[1][0]] += 1;
-  } else {
-    TheoryBoolSpecialRewriter::nodes[node[1][0]] = 1;
-  }}
   children.push_back(node[1][1]);
   if (options::checkDuplicates()) {
-  if (TheoryBoolSpecialRewriter::nodes.find(node[1][1]) != TheoryBoolSpecialRewriter::nodes.end()) {
-    TheoryBoolSpecialRewriter::nodes[node[1][1]] += 1;
-  } else {
-    TheoryBoolSpecialRewriter::nodes[node[1][1]] = 1;
-  }}
+    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node] = 1;
+    }
+    if (TheoryBoolSpecialRewriter::nodes.find(node[1]) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node[1]] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
+    }
+    if (TheoryBoolSpecialRewriter::nodes.find(node[1]) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node[1]] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
+    }
+  }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[14]++;
   return utils::mkSpecialBool(children, 14);
 }
 Node rewrite_14_1(Node node) {
   std::vector<Node> children;
   children.push_back(node[0]);
-  if (options::checkDuplicates()) {
-  if (TheoryBoolSpecialRewriter::nodes.find(node[0]) != TheoryBoolSpecialRewriter::nodes.end()) {
-    TheoryBoolSpecialRewriter::nodes[node[0]] += 1;
-  } else {
-    TheoryBoolSpecialRewriter::nodes[node[0]] = 1;
-  }}
   children.push_back(node[1][1]);
-  if (options::checkDuplicates()) {
-  if (TheoryBoolSpecialRewriter::nodes.find(node[1][1]) != TheoryBoolSpecialRewriter::nodes.end()) {
-    TheoryBoolSpecialRewriter::nodes[node[1][1]] += 1;
-  } else {
-    TheoryBoolSpecialRewriter::nodes[node[1][1]] = 1;
-  }}
   children.push_back(node[1][0]);
   if (options::checkDuplicates()) {
-  if (TheoryBoolSpecialRewriter::nodes.find(node[1][0]) != TheoryBoolSpecialRewriter::nodes.end()) {
-    TheoryBoolSpecialRewriter::nodes[node[1][0]] += 1;
-  } else {
-    TheoryBoolSpecialRewriter::nodes[node[1][0]] = 1;
-  }}
+    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node] = 1;
+    }
+    if (TheoryBoolSpecialRewriter::nodes.find(node[1]) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node[1]] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
+    }
+    if (TheoryBoolSpecialRewriter::nodes.find(node[1]) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node[1]] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
+    }
+  }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[14]++;
   return utils::mkSpecialBool(children, 14);
 }
 Node rewrite_1_0(Node node) {
   std::vector<Node> children;
   children.push_back(node[0][0]);
-  if (options::checkDuplicates()) {
-  if (TheoryBoolSpecialRewriter::nodes.find(node[0][0]) != TheoryBoolSpecialRewriter::nodes.end()) {
-    TheoryBoolSpecialRewriter::nodes[node[0][0]] += 1;
-  } else {
-    TheoryBoolSpecialRewriter::nodes[node[0][0]] = 1;
-  }}
   children.push_back(node[1]);
   if (options::checkDuplicates()) {
-  if (TheoryBoolSpecialRewriter::nodes.find(node[1]) != TheoryBoolSpecialRewriter::nodes.end()) {
-    TheoryBoolSpecialRewriter::nodes[node[1]] += 1;
-  } else {
-    TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
-  }}
+    if (TheoryBoolSpecialRewriter::nodes.find(node[0]) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node[0]] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node[0]] = 1;
+    }
+    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node] = 1;
+    }
+  }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[1]++;
   return utils::mkSpecialBool(children, 1);
 }
 Node rewrite_25_0(Node node) {
   std::vector<Node> children;
   children.push_back(node[0]);
-  if (options::checkDuplicates()) {
-  if (TheoryBoolSpecialRewriter::nodes.find(node[0]) != TheoryBoolSpecialRewriter::nodes.end()) {
-    TheoryBoolSpecialRewriter::nodes[node[0]] += 1;
-  } else {
-    TheoryBoolSpecialRewriter::nodes[node[0]] = 1;
-  }}
   children.push_back(node[1]);
   if (options::checkDuplicates()) {
-  if (TheoryBoolSpecialRewriter::nodes.find(node[1]) != TheoryBoolSpecialRewriter::nodes.end()) {
-    TheoryBoolSpecialRewriter::nodes[node[1]] += 1;
-  } else {
-    TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
-  }}
+    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node] = 1;
+    }
+    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node] = 1;
+    }
+  }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[25]++;
   return utils::mkSpecialBool(children, 25);
 }
@@ -151,5 +149,10 @@ RewriteResponse TheoryBoolSpecialRewriter::RewriteIMPLIES(TNode node,  bool prew
     if (response != node) return RewriteResponse(REWRITE_DONE, response);
   }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[1999]++;
+  if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
+    TheoryBoolSpecialRewriter::nodes[node] += 1;
+  } else {
+    TheoryBoolSpecialRewriter::nodes[node] = 1;
+  }
   return RewriteResponse(REWRITE_DONE, node);
 }
