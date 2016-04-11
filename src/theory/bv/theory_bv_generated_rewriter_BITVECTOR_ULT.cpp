@@ -18,11 +18,6 @@ Node rewrite_32_0(Node node) {
     } else {
       TheoryBVSpecialRewriter::nodes[node] = 1;
     }
-    if (TheoryBVSpecialRewriter::nodes.find(node) != TheoryBVSpecialRewriter::nodes.end()) {
-      TheoryBVSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBVSpecialRewriter::nodes[node] = 1;
-    }
   }
   if (options::printStats()) TheoryBVSpecialRewriter::counter[32]++;
   return utils::mkSpecialPredicate(children, 32);

@@ -18,11 +18,6 @@ Node rewrite_31_0(Node node) {
     } else {
       TheoryBVSpecialRewriter::nodes[node] = 1;
     }
-    if (TheoryBVSpecialRewriter::nodes.find(node) != TheoryBVSpecialRewriter::nodes.end()) {
-      TheoryBVSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBVSpecialRewriter::nodes[node] = 1;
-    }
   }
   if (options::printStats()) TheoryBVSpecialRewriter::counter[31]++;
   return utils::mkSpecialPredicate(children, 31);
@@ -32,11 +27,6 @@ Node rewrite_31_1(Node node) {
   children.push_back(node[1]);
   children.push_back(node[0]);
   if (options::checkDuplicates()) {
-    if (TheoryBVSpecialRewriter::nodes.find(node) != TheoryBVSpecialRewriter::nodes.end()) {
-      TheoryBVSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBVSpecialRewriter::nodes[node] = 1;
-    }
     if (TheoryBVSpecialRewriter::nodes.find(node) != TheoryBVSpecialRewriter::nodes.end()) {
       TheoryBVSpecialRewriter::nodes[node] += 1;
     } else {

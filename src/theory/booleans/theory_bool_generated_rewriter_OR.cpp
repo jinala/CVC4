@@ -13,15 +13,15 @@ Node rewrite_15_0(Node node) {
   children.push_back(node[1][0]);
   children.push_back(node[0][0]);
   if (options::checkDuplicates()) {
-    if (TheoryBoolSpecialRewriter::nodes.find(node[1]) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node[1]] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
-    }
     if (TheoryBoolSpecialRewriter::nodes.find(node[0]) != TheoryBoolSpecialRewriter::nodes.end()) {
       TheoryBoolSpecialRewriter::nodes[node[0]] += 1;
     } else {
       TheoryBoolSpecialRewriter::nodes[node[0]] = 1;
+    }
+    if (TheoryBoolSpecialRewriter::nodes.find(node[1]) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node[1]] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
     }
   }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[15]++;
@@ -51,15 +51,15 @@ Node rewrite_28_0(Node node) {
   children.push_back(node[0][0]);
   children.push_back(node[1]);
   if (options::checkDuplicates()) {
-    if (TheoryBoolSpecialRewriter::nodes.find(node[0]) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node[0]] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node[0]] = 1;
-    }
     if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
       TheoryBoolSpecialRewriter::nodes[node] += 1;
     } else {
       TheoryBoolSpecialRewriter::nodes[node] = 1;
+    }
+    if (TheoryBoolSpecialRewriter::nodes.find(node[0]) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node[0]] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node[0]] = 1;
     }
   }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[28]++;
@@ -70,15 +70,15 @@ Node rewrite_28_1(Node node) {
   children.push_back(node[1][0]);
   children.push_back(node[0]);
   if (options::checkDuplicates()) {
-    if (TheoryBoolSpecialRewriter::nodes.find(node[1]) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node[1]] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
-    }
     if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
       TheoryBoolSpecialRewriter::nodes[node] += 1;
     } else {
       TheoryBoolSpecialRewriter::nodes[node] = 1;
+    }
+    if (TheoryBoolSpecialRewriter::nodes.find(node[1]) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node[1]] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
     }
   }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[28]++;
@@ -90,16 +90,6 @@ Node rewrite_11_0(Node node) {
   children.push_back(node[2]);
   children.push_back(node[1]);
   if (options::checkDuplicates()) {
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
     if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
       TheoryBoolSpecialRewriter::nodes[node] += 1;
     } else {
@@ -120,16 +110,6 @@ Node rewrite_11_1(Node node) {
     } else {
       TheoryBoolSpecialRewriter::nodes[node] = 1;
     }
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
   }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[11]++;
   return utils::mkSpecialBool(children, 11);
@@ -140,16 +120,6 @@ Node rewrite_11_2(Node node) {
   children.push_back(node[0]);
   children.push_back(node[1]);
   if (options::checkDuplicates()) {
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
     if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
       TheoryBoolSpecialRewriter::nodes[node] += 1;
     } else {
@@ -170,16 +140,6 @@ Node rewrite_11_3(Node node) {
     } else {
       TheoryBoolSpecialRewriter::nodes[node] = 1;
     }
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
   }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[11]++;
   return utils::mkSpecialBool(children, 11);
@@ -190,16 +150,6 @@ Node rewrite_11_4(Node node) {
   children.push_back(node[2]);
   children.push_back(node[0]);
   if (options::checkDuplicates()) {
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
     if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
       TheoryBoolSpecialRewriter::nodes[node] += 1;
     } else {
@@ -220,16 +170,6 @@ Node rewrite_11_5(Node node) {
     } else {
       TheoryBoolSpecialRewriter::nodes[node] = 1;
     }
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
   }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[11]++;
   return utils::mkSpecialBool(children, 11);
@@ -244,11 +184,6 @@ Node rewrite_27_0(Node node) {
     } else {
       TheoryBoolSpecialRewriter::nodes[node] = 1;
     }
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
   }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[27]++;
   return utils::mkSpecialBool(children, 27);
@@ -258,11 +193,6 @@ Node rewrite_27_1(Node node) {
   children.push_back(node[0]);
   children.push_back(node[1]);
   if (options::checkDuplicates()) {
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
     if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
       TheoryBoolSpecialRewriter::nodes[node] += 1;
     } else {

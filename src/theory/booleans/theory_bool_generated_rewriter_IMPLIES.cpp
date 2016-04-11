@@ -24,11 +24,6 @@ Node rewrite_14_0(Node node) {
     } else {
       TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
     }
-    if (TheoryBoolSpecialRewriter::nodes.find(node[1]) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node[1]] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
-    }
   }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[14]++;
   return utils::mkSpecialBool(children, 14);
@@ -49,11 +44,6 @@ Node rewrite_14_1(Node node) {
     } else {
       TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
     }
-    if (TheoryBoolSpecialRewriter::nodes.find(node[1]) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node[1]] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node[1]] = 1;
-    }
   }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[14]++;
   return utils::mkSpecialBool(children, 14);
@@ -63,15 +53,15 @@ Node rewrite_1_0(Node node) {
   children.push_back(node[0][0]);
   children.push_back(node[1]);
   if (options::checkDuplicates()) {
-    if (TheoryBoolSpecialRewriter::nodes.find(node[0]) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node[0]] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node[0]] = 1;
-    }
     if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
       TheoryBoolSpecialRewriter::nodes[node] += 1;
     } else {
       TheoryBoolSpecialRewriter::nodes[node] = 1;
+    }
+    if (TheoryBoolSpecialRewriter::nodes.find(node[0]) != TheoryBoolSpecialRewriter::nodes.end()) {
+      TheoryBoolSpecialRewriter::nodes[node[0]] += 1;
+    } else {
+      TheoryBoolSpecialRewriter::nodes[node[0]] = 1;
     }
   }
   if (options::printStats()) TheoryBoolSpecialRewriter::counter[1]++;
@@ -82,11 +72,6 @@ Node rewrite_25_0(Node node) {
   children.push_back(node[0]);
   children.push_back(node[1]);
   if (options::checkDuplicates()) {
-    if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
-      TheoryBoolSpecialRewriter::nodes[node] += 1;
-    } else {
-      TheoryBoolSpecialRewriter::nodes[node] = 1;
-    }
     if (TheoryBoolSpecialRewriter::nodes.find(node) != TheoryBoolSpecialRewriter::nodes.end()) {
       TheoryBoolSpecialRewriter::nodes[node] += 1;
     } else {
