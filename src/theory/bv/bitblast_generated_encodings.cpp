@@ -72,6 +72,7 @@ for (int k = 0; k < N; k++) {
     outV.clear();
     outV.push_back(tt_2);
     outV.push_back(tt_4);
+    cnf->cacheEncoding(29, inpV, outV);
 
       cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, neg_tt_2, neg_tt_3), false, false, RULE_INVALID, TNode::null());
       cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, tt_4), false, false, RULE_INVALID, TNode::null());
@@ -160,6 +161,7 @@ for (int k = 0; k < N; k++) {
     outV.clear();
     outV.push_back(tt_2);
     outV.push_back(tt_4);
+    cnf->cacheEncoding(30, inpV, outV);
 
       cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, neg_tt_2, neg_tt_3), false, false, RULE_INVALID, TNode::null());
       cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, tt_4), false, false, RULE_INVALID, TNode::null());
@@ -247,53 +249,6 @@ for (int k = 0; k < N; k++) {
         tmp[k] = outV[0];
         continue;
       }
-
-    if (true) {
-     Node nn;
-     bool simplified = false;
-     // constant simplification
-     if (tt_2 == mkFalse<Node>()) {
-       nn = tt_2;
-       simplified = true;
-     } else if (tt_0 == tt_1) {
-       nn = tt_2;
-       simplified = true;
-     } else if (tt_2 == mkTrue<Node>()) {
-       
-       if (tt_0 == mkTrue<Node>()) {
-         nn = tt_1;
-         simplified = true;
-       } else if (tt_1 == mkTrue<Node>()) {
-         nn = tt_0;
-         simplified = true;
-       } else if (tt_0 == mkFalse<Node>()) {
-         nn = neg_tt_1;
-         simplified = true;
-       } else if (tt_1 == mkFalse<Node>()) {
-         nn = neg_tt_0;
-         simplified = true;
-       } else {
-         nn = nm->mkNode(kind::IFF, tt_0, tt_1);
-         simplified = true;
-       }
-     }
-     
-     if (simplified) {
-       if (k == N-1) {
-         out = nn;
-       } else {
-         tmp[k] = nn;
-       }
-       continue;
-     } else {
-       //Chat() << "Cannot be simplified" << std::endl;
-       //Chat() << tt_0 << std::endl;
-       //Chat() << tt_1 << std::endl;
-       //Chat() << tt_2 << std::endl;
-     }
-       
-   }
- 
     if(k == (N - 1))/*sketch_..v_bool.sk:24*/
     {
       tt_3 = out;
@@ -306,6 +261,7 @@ for (int k = 0; k < N; k++) {
     }
       outV.clear();
       outV.push_back(tt_3);
+      cnf->cacheEncoding(31, inpV, outV);
 
         cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, tt_1, neg_tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
         cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_1, neg_tt_3), false, false, RULE_INVALID, TNode::null());
@@ -385,6 +341,7 @@ for (int k = 0; k < N; k++) {
     }
       outV.clear();
       outV.push_back(tt_3);
+      cnf->cacheEncoding(32, inpV, outV);
 
         cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_1, tt_3), false, false, RULE_INVALID, TNode::null());
         cnf->convertAndAssert(nm->mkNode(kind::OR, tt_0, neg_tt_2, tt_3), false, false, RULE_INVALID, TNode::null());
