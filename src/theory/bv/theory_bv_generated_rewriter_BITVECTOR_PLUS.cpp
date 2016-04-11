@@ -11,28 +11,76 @@ using namespace CVC4::theory::bv;
 Node rewrite_29_0(Node node) {
   std::vector<Node> children;
   children.push_back(node[1][0]);
+  if (options::checkDuplicates()) {
+  if (TheoryBVSpecialRewriter::nodes.find(node[1][0]) != TheoryBVSpecialRewriter::nodes.end()) {
+    TheoryBVSpecialRewriter::nodes[node[1][0]] += 1;
+  } else {
+    TheoryBVSpecialRewriter::nodes[node[1][0]] = 1;
+  }}
   children.push_back(node[0]);
+  if (options::checkDuplicates()) {
+  if (TheoryBVSpecialRewriter::nodes.find(node[0]) != TheoryBVSpecialRewriter::nodes.end()) {
+    TheoryBVSpecialRewriter::nodes[node[0]] += 1;
+  } else {
+    TheoryBVSpecialRewriter::nodes[node[0]] = 1;
+  }}
   if (options::printStats()) TheoryBVSpecialRewriter::counter[29]++;
   return utils::mkSpecialFixedWidth(children, 29);
 }
 Node rewrite_29_1(Node node) {
   std::vector<Node> children;
   children.push_back(node[0][0]);
+  if (options::checkDuplicates()) {
+  if (TheoryBVSpecialRewriter::nodes.find(node[0][0]) != TheoryBVSpecialRewriter::nodes.end()) {
+    TheoryBVSpecialRewriter::nodes[node[0][0]] += 1;
+  } else {
+    TheoryBVSpecialRewriter::nodes[node[0][0]] = 1;
+  }}
   children.push_back(node[1]);
+  if (options::checkDuplicates()) {
+  if (TheoryBVSpecialRewriter::nodes.find(node[1]) != TheoryBVSpecialRewriter::nodes.end()) {
+    TheoryBVSpecialRewriter::nodes[node[1]] += 1;
+  } else {
+    TheoryBVSpecialRewriter::nodes[node[1]] = 1;
+  }}
   if (options::printStats()) TheoryBVSpecialRewriter::counter[29]++;
   return utils::mkSpecialFixedWidth(children, 29);
 }
 Node rewrite_30_0(Node node) {
   std::vector<Node> children;
   children.push_back(node[0]);
+  if (options::checkDuplicates()) {
+  if (TheoryBVSpecialRewriter::nodes.find(node[0]) != TheoryBVSpecialRewriter::nodes.end()) {
+    TheoryBVSpecialRewriter::nodes[node[0]] += 1;
+  } else {
+    TheoryBVSpecialRewriter::nodes[node[0]] = 1;
+  }}
   children.push_back(node[1]);
+  if (options::checkDuplicates()) {
+  if (TheoryBVSpecialRewriter::nodes.find(node[1]) != TheoryBVSpecialRewriter::nodes.end()) {
+    TheoryBVSpecialRewriter::nodes[node[1]] += 1;
+  } else {
+    TheoryBVSpecialRewriter::nodes[node[1]] = 1;
+  }}
   if (options::printStats()) TheoryBVSpecialRewriter::counter[30]++;
   return utils::mkSpecialFixedWidth(children, 30);
 }
 Node rewrite_30_1(Node node) {
   std::vector<Node> children;
   children.push_back(node[1]);
+  if (options::checkDuplicates()) {
+  if (TheoryBVSpecialRewriter::nodes.find(node[1]) != TheoryBVSpecialRewriter::nodes.end()) {
+    TheoryBVSpecialRewriter::nodes[node[1]] += 1;
+  } else {
+    TheoryBVSpecialRewriter::nodes[node[1]] = 1;
+  }}
   children.push_back(node[0]);
+  if (options::checkDuplicates()) {
+  if (TheoryBVSpecialRewriter::nodes.find(node[0]) != TheoryBVSpecialRewriter::nodes.end()) {
+    TheoryBVSpecialRewriter::nodes[node[0]] += 1;
+  } else {
+    TheoryBVSpecialRewriter::nodes[node[0]] = 1;
+  }}
   if (options::printStats()) TheoryBVSpecialRewriter::counter[30]++;
   return utils::mkSpecialFixedWidth(children, 30);
 }
