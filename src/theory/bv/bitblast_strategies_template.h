@@ -391,7 +391,7 @@ void DefaultMultBB (TNode node, std::vector<T>& res, TBitblaster<T>* bb) {
     newres.clear(); 
     // constructs a simple shift and add multiplier building the result
     // in res
-    if (options::doOptimization() && options::optimizeFullAdder()){
+    if (options::doOptimization() && options::optimizeMult()){
       shiftOptimalAddMultiplier(res, current, newres, bb->getCnfStream());
     } else {
       shiftAddMultiplier(res, current, newres);

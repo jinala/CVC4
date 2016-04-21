@@ -303,7 +303,7 @@ std::vector<Node> inline optimalFullAdder(const Node a, const Node b,
   
   std::vector<Node> outputs;
   
-  if (true) {
+  if (options::cacheFullAdder()) {
     
     if (cnf->hasEncoding(1999,inputs)) {
       return cnf->getCachedEncoding(1999,inputs);
