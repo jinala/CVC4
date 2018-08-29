@@ -8,131 +8,156 @@ using namespace CVC4;
 using namespace CVC4::theory;
 using namespace CVC4::theory::bv;
 
-Node rewrite_35_0(Node node) {
+Node rewrite_29_0(Node node) {
   std::vector<Node> children;
   children.push_back(node[1][0]);
   children.push_back(node[1][1]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[35]++;
-  return utils::mkSpecialPredicate(children, 35);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[29]++;
+  return utils::mkSpecialPredicate(children, 29);
 }
-Node rewrite_35_1(Node node) {
+Node rewrite_29_1(Node node) {
   std::vector<Node> children;
   children.push_back(node[1][1]);
   children.push_back(node[1][0]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[35]++;
-  return utils::mkSpecialPredicate(children, 35);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[29]++;
+  return utils::mkSpecialPredicate(children, 29);
 }
-Node rewrite_35_2(Node node) {
+Node rewrite_29_2(Node node) {
   std::vector<Node> children;
   children.push_back(node[1][1]);
   children.push_back(node[1][0]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[35]++;
-  return utils::mkSpecialPredicate(children, 35);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[29]++;
+  return utils::mkSpecialPredicate(children, 29);
 }
-Node rewrite_35_3(Node node) {
+Node rewrite_29_3(Node node) {
   std::vector<Node> children;
   children.push_back(node[1][0]);
   children.push_back(node[1][1]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[35]++;
-  return utils::mkSpecialPredicate(children, 35);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[29]++;
+  return utils::mkSpecialPredicate(children, 29);
 }
-Node rewrite_43_0(Node node) {
+Node rewrite_32_0(Node node) {
   std::vector<Node> children;
   children.push_back(node[1][1]);
   children.push_back(node[1][0]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[43]++;
-  return utils::mkSpecialPredicate(children, 43);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[32]++;
+  return utils::mkSpecialPredicate(children, 32);
 }
-Node rewrite_43_1(Node node) {
+Node rewrite_32_1(Node node) {
   std::vector<Node> children;
   children.push_back(node[1][0]);
   children.push_back(node[1][1]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[43]++;
-  return utils::mkSpecialPredicate(children, 43);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[32]++;
+  return utils::mkSpecialPredicate(children, 32);
 }
-Node rewrite_43_2(Node node) {
+Node rewrite_32_2(Node node) {
   std::vector<Node> children;
   children.push_back(node[1][1]);
   children.push_back(node[1][0]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[43]++;
-  return utils::mkSpecialPredicate(children, 43);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[32]++;
+  return utils::mkSpecialPredicate(children, 32);
 }
-Node rewrite_43_3(Node node) {
+Node rewrite_32_3(Node node) {
   std::vector<Node> children;
   children.push_back(node[1][0]);
   children.push_back(node[1][1]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[43]++;
-  return utils::mkSpecialPredicate(children, 43);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[32]++;
+  return utils::mkSpecialPredicate(children, 32);
 }
-Node rewrite_40_0(Node node) {
+Node rewrite_31_0(Node node) {
   std::vector<Node> children;
   children.push_back(node[1]);
   children.push_back(node[0][1]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[40]++;
-  return utils::mkSpecialPredicate(children, 40);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[31]++;
+  return utils::mkSpecialPredicate(children, 31);
 }
-Node rewrite_40_1(Node node) {
+Node rewrite_31_1(Node node) {
   std::vector<Node> children;
   children.push_back(node[1]);
   children.push_back(node[0][0]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[40]++;
-  return utils::mkSpecialPredicate(children, 40);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[31]++;
+  return utils::mkSpecialPredicate(children, 31);
 }
-Node rewrite_5_0(Node node) {
+Node rewrite_38_0(Node node) {
+  std::vector<Node> children;
+  children.push_back(node[0][1]);
+  children.push_back(node[1]);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[38]++;
+  return utils::mkSpecialPredicate(children, 38);
+}
+Node rewrite_38_1(Node node) {
+  std::vector<Node> children;
+  children.push_back(node[0][0]);
+  children.push_back(node[1]);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[38]++;
+  return utils::mkSpecialPredicate(children, 38);
+}
+Node rewrite_27_0(Node node) {
   std::vector<Node> children;
   children.push_back(node[0]);
   children.push_back(node[1]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[5]++;
-  return utils::mkSpecialPredicate(children, 5);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[27]++;
+  return utils::mkSpecialPredicate(children, 27);
 }
-Node rewrite_5(TNode node, const bool* predicates) {
+Node rewrite_27(TNode node, const bool* predicates) {
   if (predicates[2] && predicates[1] && true && true && predicates[0] && node[0][1] == node[1][0] && node[0][0] == node[1][1]) {
-    return rewrite_35_0(node);
+    return rewrite_29_0(node);
   }
   else if (predicates[2] && predicates[1] && true && true && predicates[0] && node[0][0] == node[1][0] && node[0][1] == node[1][1]) {
-    return rewrite_35_1(node);
+    return rewrite_29_1(node);
   }
   else if (predicates[2] && predicates[1] && true && true && predicates[0] && node[0][1] == node[1][0] && node[0][0] == node[1][1]) {
-    return rewrite_35_2(node);
+    return rewrite_29_2(node);
   }
   else if (predicates[2] && predicates[1] && true && true && predicates[0] && node[0][0] == node[1][0] && node[0][1] == node[1][1]) {
-    return rewrite_35_3(node);
+    return rewrite_29_3(node);
   }
   else {
     return node;
   }
 }
-Node rewrite_35(TNode node, const bool* predicates) {
+Node rewrite_29(TNode node, const bool* predicates) {
   if (predicates[2] && predicates[3] && true && true && predicates[4] && node[0][0] == node[1][0] && node[0][1] == node[1][1]) {
-    return rewrite_43_0(node);
+    return rewrite_32_0(node);
   }
   else if (predicates[2] && predicates[3] && true && true && predicates[4] && node[0][0] == node[1][0] && node[0][1] == node[1][1]) {
-    return rewrite_43_1(node);
+    return rewrite_32_1(node);
   }
   else if (predicates[2] && predicates[3] && true && true && predicates[4] && node[0][1] == node[1][0] && node[0][0] == node[1][1]) {
-    return rewrite_43_2(node);
+    return rewrite_32_2(node);
   }
   else if (predicates[2] && predicates[3] && true && true && predicates[4] && node[0][1] == node[1][0] && node[0][0] == node[1][1]) {
-    return rewrite_43_3(node);
+    return rewrite_32_3(node);
   }
   else {
     return node;
   }
 }
-Node rewrite_43(TNode node, const bool* predicates) {
+Node rewrite_32(TNode node, const bool* predicates) {
   if (predicates[2] && predicates[1] && true && true && node[0][0] == node[1]) {
-    return rewrite_40_0(node);
+    return rewrite_31_0(node);
   }
   else if (predicates[2] && predicates[1] && true && true && node[0][1] == node[1]) {
-    return rewrite_40_1(node);
+    return rewrite_31_1(node);
   }
   else {
     return node;
   }
 }
-Node rewrite_40(TNode node, const bool* predicates) {
+Node rewrite_31(TNode node, const bool* predicates) {
+  if (predicates[2] && predicates[1] && true && true && node[0][0] == node[1]) {
+    return rewrite_38_0(node);
+  }
+  else if (predicates[2] && predicates[1] && true && true && node[0][1] == node[1]) {
+    return rewrite_38_1(node);
+  }
+  else {
+    return node;
+  }
+}
+Node rewrite_38(TNode node, const bool* predicates) {
   if (predicates[2] && true && true) {
-    return rewrite_5_0(node);
+    return rewrite_27_0(node);
   }
   else {
     return node;
@@ -153,20 +178,24 @@ RewriteResponse TheoryBVSpecialRewriter::RewriteBITVECTOR_ULT(TNode node,  bool 
     predicates[4] = node[1].getKind() == kind::BITVECTOR_OR && node[1].getNumChildren() == 2;
   }
   Node response;
-  if (TheoryBVSpecialRewriter::enabled[35]) {
-    response = rewrite_35(node, predicates);
+  if (TheoryBVSpecialRewriter::enabled[29]) {
+    response = rewrite_29(node, predicates);
     if (response != node) return RewriteResponse(REWRITE_DONE, response);
   }
-  if (TheoryBVSpecialRewriter::enabled[43]) {
-    response = rewrite_43(node, predicates);
+  if (TheoryBVSpecialRewriter::enabled[32]) {
+    response = rewrite_32(node, predicates);
     if (response != node) return RewriteResponse(REWRITE_DONE, response);
   }
-  if (TheoryBVSpecialRewriter::enabled[40]) {
-    response = rewrite_40(node, predicates);
+  if (TheoryBVSpecialRewriter::enabled[31]) {
+    response = rewrite_31(node, predicates);
     if (response != node) return RewriteResponse(REWRITE_DONE, response);
   }
-  if (TheoryBVSpecialRewriter::enabled[5]) {
-    response = rewrite_5(node, predicates);
+  if (TheoryBVSpecialRewriter::enabled[38]) {
+    response = rewrite_38(node, predicates);
+    if (response != node) return RewriteResponse(REWRITE_DONE, response);
+  }
+  if (TheoryBVSpecialRewriter::enabled[27]) {
+    response = rewrite_27(node, predicates);
     if (response != node) return RewriteResponse(REWRITE_DONE, response);
   }
   if (options::printStats()) TheoryBVSpecialRewriter::counter[1999]++;

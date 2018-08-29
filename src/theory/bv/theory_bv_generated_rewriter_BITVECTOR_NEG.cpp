@@ -8,26 +8,26 @@ using namespace CVC4;
 using namespace CVC4::theory;
 using namespace CVC4::theory::bv;
 
-Node rewrite_18_0(Node node) {
+Node rewrite_22_0(Node node) {
   std::vector<Node> children;
   children.push_back(node[0][1]);
   children.push_back(node[0][0]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[18]++;
-  return utils::mkSpecialFixedWidth(children, 18);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[22]++;
+  return utils::mkSpecialFixedWidth(children, 22);
 }
-Node rewrite_18_1(Node node) {
+Node rewrite_22_1(Node node) {
   std::vector<Node> children;
   children.push_back(node[0][0]);
   children.push_back(node[0][1]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[18]++;
-  return utils::mkSpecialFixedWidth(children, 18);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[22]++;
+  return utils::mkSpecialFixedWidth(children, 22);
 }
-Node rewrite_18(TNode node, const bool* predicates) {
+Node rewrite_22(TNode node, const bool* predicates) {
   if (predicates[1] && predicates[0] && true && true) {
-    return rewrite_18_0(node);
+    return rewrite_22_0(node);
   }
   else if (predicates[1] && predicates[0] && true && true) {
-    return rewrite_18_1(node);
+    return rewrite_22_1(node);
   }
   else {
     return node;
@@ -43,8 +43,8 @@ RewriteResponse TheoryBVSpecialRewriter::RewriteBITVECTOR_NEG(TNode node,  bool 
     predicates[0] = node[0].getKind() == kind::BITVECTOR_OR && node[0].getNumChildren() == 2;
   }
   Node response;
-  if (TheoryBVSpecialRewriter::enabled[18]) {
-    response = rewrite_18(node, predicates);
+  if (TheoryBVSpecialRewriter::enabled[22]) {
+    response = rewrite_22(node, predicates);
     if (response != node) return RewriteResponse(REWRITE_DONE, response);
   }
   if (options::printStats()) TheoryBVSpecialRewriter::counter[1999]++;

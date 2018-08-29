@@ -8,61 +8,61 @@ using namespace CVC4;
 using namespace CVC4::theory;
 using namespace CVC4::theory::bv;
 
-Node rewrite_47_0(Node node) {
+Node rewrite_35_0(Node node) {
   std::vector<Node> children;
   children.push_back(node[1][0]);
   children.push_back(node[1][1]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[47]++;
-  return utils::mkSpecialPredicate(children, 47);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[35]++;
+  return utils::mkSpecialPredicate(children, 35);
 }
-Node rewrite_47_1(Node node) {
+Node rewrite_35_1(Node node) {
   std::vector<Node> children;
   children.push_back(node[1][1]);
   children.push_back(node[1][0]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[47]++;
-  return utils::mkSpecialPredicate(children, 47);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[35]++;
+  return utils::mkSpecialPredicate(children, 35);
 }
-Node rewrite_47_2(Node node) {
+Node rewrite_35_2(Node node) {
   std::vector<Node> children;
   children.push_back(node[1][0]);
   children.push_back(node[1][1]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[47]++;
-  return utils::mkSpecialPredicate(children, 47);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[35]++;
+  return utils::mkSpecialPredicate(children, 35);
 }
-Node rewrite_47_3(Node node) {
+Node rewrite_35_3(Node node) {
   std::vector<Node> children;
   children.push_back(node[1][1]);
   children.push_back(node[1][0]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[47]++;
-  return utils::mkSpecialPredicate(children, 47);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[35]++;
+  return utils::mkSpecialPredicate(children, 35);
 }
-Node rewrite_17_0(Node node) {
+Node rewrite_28_0(Node node) {
   std::vector<Node> children;
   children.push_back(node[0]);
   children.push_back(node[1]);
-  if (options::printStats()) TheoryBVSpecialRewriter::counter[17]++;
-  return utils::mkSpecialPredicate(children, 17);
+  if (options::printStats()) TheoryBVSpecialRewriter::counter[28]++;
+  return utils::mkSpecialPredicate(children, 28);
 }
-Node rewrite_17(TNode node, const bool* predicates) {
+Node rewrite_28(TNode node, const bool* predicates) {
   if (predicates[0] && predicates[1] && true && true && predicates[2] && node[0][1] == node[1][0] && node[0][0] == node[1][1]) {
-    return rewrite_47_0(node);
+    return rewrite_35_0(node);
   }
   else if (predicates[0] && predicates[1] && true && true && predicates[2] && node[0][1] == node[1][0] && node[0][0] == node[1][1]) {
-    return rewrite_47_1(node);
+    return rewrite_35_1(node);
   }
   else if (predicates[0] && predicates[1] && true && true && predicates[2] && node[0][0] == node[1][0] && node[0][1] == node[1][1]) {
-    return rewrite_47_2(node);
+    return rewrite_35_2(node);
   }
   else if (predicates[0] && predicates[1] && true && true && predicates[2] && node[0][0] == node[1][0] && node[0][1] == node[1][1]) {
-    return rewrite_47_3(node);
+    return rewrite_35_3(node);
   }
   else {
     return node;
   }
 }
-Node rewrite_47(TNode node, const bool* predicates) {
+Node rewrite_35(TNode node, const bool* predicates) {
   if (predicates[0] && true && true) {
-    return rewrite_17_0(node);
+    return rewrite_28_0(node);
   }
   else {
     return node;
@@ -81,12 +81,12 @@ RewriteResponse TheoryBVSpecialRewriter::RewriteBITVECTOR_SLT(TNode node,  bool 
     predicates[2] = node[1].getKind() == kind::BITVECTOR_PLUS && node[1].getNumChildren() == 2;
   }
   Node response;
-  if (TheoryBVSpecialRewriter::enabled[47]) {
-    response = rewrite_47(node, predicates);
+  if (TheoryBVSpecialRewriter::enabled[35]) {
+    response = rewrite_35(node, predicates);
     if (response != node) return RewriteResponse(REWRITE_DONE, response);
   }
-  if (TheoryBVSpecialRewriter::enabled[17]) {
-    response = rewrite_17(node, predicates);
+  if (TheoryBVSpecialRewriter::enabled[28]) {
+    response = rewrite_28(node, predicates);
     if (response != node) return RewriteResponse(REWRITE_DONE, response);
   }
   if (options::printStats()) TheoryBVSpecialRewriter::counter[1999]++;
